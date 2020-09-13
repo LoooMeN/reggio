@@ -9,7 +9,9 @@
 
 <body>
     <h1>WHO DIS?</h1>
-    {% block child %} <h1>HELLO HERE!</h1>{% endblock %}
+    {% block child %} 
+        <p>Is me, lemme <a href="{{ url_for('login') }}">login!</a></p>
+    {% endblock %}
 </body>
 
 </html>

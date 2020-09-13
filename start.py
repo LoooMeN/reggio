@@ -1,1 +1,1 @@
-from application import app, routes
+from reggio import app
