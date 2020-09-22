@@ -1,0 +1,33 @@
+{%extends 'main.html'%}
+{% block body %}
+    <style>
+        img {
+            width: 50px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 0 20px;
+        }
+
+        tr:first-child td {
+            border: none;
+        }
+    </style>
+    <h1>Дети</h1>
+    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
+    <table search=true>
+        <tr>
+            <td></td>
+            <td>Имя</td>
+            <td>Фамилия</td>
+        </tr>
+        {% for child in children %}
+        <tr searchable=true id={{child.id}}>
+            <td class='image'><img src='{{child.avatar}}'></td>
+            <td searchable=true class='name text'>{{child.name}}</td>
+            <td searchable=true class='surname text'>{{child.surname}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/utility.js')}}"></script>
+    <title>{{title}}</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<body>
+    {% include 'flash.html' %}
+    <div style='display: flex; margin: 0;'>
+        <div style='border: 1px solid black; margin-right: 25px; width: 300px; background-color: #B18B94; display: flex; justify-content: space-around; flex-direction: column; height: 100vh; align-items: center; box-sizing: border-box;'>
+            <div>
+                {% if current_user.is_authenticated %}
+                    <img style='width: 200px;' src="/{{ current_user.avatar }}">
+                    <p>{{ current_user.name }}</p>
+                    <p>{{ current_user.surname }}</p>
+                {% else %}
+                    <img style='width: 200px;' src="{{url_for('static', filename='images/avatars/defaultUserImage.png')}}">
+                {% endif %}
+            </div>
+            {% for menuItem in menu %}
+                {% if menuItem[1] is mapping %}
+                    <div>
+                        <h3>{{menuItem[0]}}</h3>
+                        {% for name, link in menuItem[1].items() %}
+                            <p><a style="color: black; text-decoration: none;" href="{{url_for(link)}}">{{name}}</a></p>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p><a style="color: black; text-decoration: none;" href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div>{%block body%}{%endblock%}</div>
+    </div>
+</body>
+</html>

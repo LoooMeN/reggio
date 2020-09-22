@@ -1,0 +1,71 @@
+{%extends 'main.html'%}
+{% block body %}
+    <style>
+        img {
+            width: 50px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 0 20px;
+        }
+
+        tr:first-child td {
+            border: none;
+        }
+    </style>
+
+    <h1>Пользователи</h1>
+    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
+
+    <table search=true>
+        <tr>
+            <td>{{form.username.label}}</td>
+            <td>{{form.email.label}}</td>
+            <td>{{form.userType.label}}</td>
+            <td>{{form.name.label}}</td>
+            <td>{{form.surname.label}}</td>
+            <td>{{form.phone.label}}</td>
+            <td>{{form.viber.label}}</td>
+            <td>{{form.avatar.label}}</td>
+        </tr>
+    {% for user in users %}
+        {% if user.userType != 'superAdmin'%}
+            <tr searchable=true id={{user.id}}>
+                <td searchable=true class='username'>{{user.username}}</td>
+                <td searchable=true class='email text'>{{user.email}}</td>
+                <td searchable=true class='select'>{{user.userType}}</td>
+                <td searchable=true class='name text'>{{user.name}}</td>
+                <td searchable=true class='surname text'>{{user.surname}}</td>
+                <td searchable=true class='phone text'>{{user.phone}}</td>
+                <td class='viber text link'><a href="{{user.viber}}">link</a></td>
+                <td class='image'><img src='{{user.avatar}}'></td>
+                <td onclick="editUser(this)">edit</td>
+                <td><a href="{{url_for('deleteUser')}}?id={{user.id}}">delete</a></td>
+            </tr>
+        {%endif%}
+    {%endfor%}
+    </table>
+    <br><br><br><br>
+    {%if form%}
+    <form method='POST' enctype="multipart/form-data">
+        <table>
+            <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>
+            <tr><td>{{form.password.label}}</td><td>{{form.password}}</td></tr>
+            <tr><td>{{form.email.label}}</td><td>{{form.email}}</td></tr>
+            <tr><td>{{form.name.label}}</td><td>{{form.name}}</td></tr>
+            <tr><td>{{form.surname.label}}</td><td>{{form.surname}}</td></tr>
+            <tr><td>{{form.phone.label}}</td><td>{{form.phone}}</td></tr>
+            <tr><td>{{form.viber.label}}</td><td>{{form.viber}}</td></tr>
+            <tr><td>{{form.userType.label}}</td><td>{{form.userType}}</td></tr>
+            <tr><td>{{form.avatar.label}}</td><td>{{form.avatar}}</td></tr>
+        </table>
+        {{form.submit}}
+    </form>
+    {%endif%}
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("updateUser")}}'+query;
+        }
+    </script>
+{% endblock %}

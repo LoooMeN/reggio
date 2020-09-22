@@ -1,0 +1,6 @@
+db_type = 'mysql'
+db_login = 'italent7_test'
+db_pass = 'aws777awe878'
+db_host = 'italent7.mysql.tools'
+db_name = 'italent7_test'
+secret_key = b'VALERUSBLADISFTW'
