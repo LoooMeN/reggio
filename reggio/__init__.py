@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-from secret import *
+from reggio.secret import *
 
 
 connection_string = '%s://%s:%s@%s/%s' % (db_type, db_login, db_pass, db_host, db_name)
