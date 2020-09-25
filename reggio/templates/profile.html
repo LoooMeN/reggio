@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'main.html' %}
+{% block body %}
+    <style>
+        img {
+            width: 50px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 0 20px;
+        }
+
+        tr:first-child td {
+            border: none;
+        }
+    </style>
+    <h1>User Profile</h1>
+    <table>
+        <tr>
+            <td>Имя</td>
+            <td>Фамилия</td>
+            <td>Почта</td>
+            <td>Телефон</td>
+            <td>Вайбер</td>
+            <td>Аватар</td>
+            <td>Тип</td>
+        </tr>
+        <tr>
+            <td>{{user.name}}</td>
+            <td>{{user.surname}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.phone}}</td>
+            <td>{{user.viber}}</td>
+            <td>{{user.avatar}}</td>
+            <td>{{user.userType}}</td>
+        </tr>
+    </table>
+{% endblock %}

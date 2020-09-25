@@ -25,8 +25,10 @@ def defineMenu():
             ])
         else :
             pass
+        menu.append((u'Профиль', 'profile'))
         menu.append((u'Выйти', 'logout'))
     else:
+
         menu = [
             (u"Главная", "main"),
             (u'Войти', 'login')
