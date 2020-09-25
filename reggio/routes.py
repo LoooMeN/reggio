@@ -12,22 +12,12 @@ from reggio.utils import *
 import reggio.users
 import reggio.children
 import reggio.teachers
+import reggio.admin
 
 
 @app.route('/test')
 def test():
     return 'sex'
-
-@app.route('/admin/individualClasses')
-def adminIndividualClasses():
-    if not checkPageAvailability(['admin']):
-        return redirect(url_for('main'))
-    individualClasses = individualClass.query.all()
-    return render_template(
-        'adminIndividualClasses.html',
-        individualClasses=individualClasses,
-        title=u'Індивідулки',
-        menu=defineMenu())
 
 @app.route('/') # dashboard if admin else logo prompt
 def main():
