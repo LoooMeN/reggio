@@ -10,3 +10,8 @@ flask run
 
 vanya development
 docker run -v C:\Users\Vanya\Desktop\reggio:/usr/src/app -p 5000:5000 looomen/reggio
+
+
+git add .
+git commit -m "тут опиши что ты сделал"
+git push
