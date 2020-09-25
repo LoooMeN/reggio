@@ -9,14 +9,20 @@ def defineMenu():
             menu = [
                 (u"Главная", "main"),
                 (u"Пользователи", "users"),
+                (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"})
             ]
         elif current_user.userType == 'superAdmin':
             menu = [
                 (u"Главная", "main"),
                 (u"Пользователи", "users"),
                 (u"Дети", "children"),
-                (u"Учителя", {u"Список": "teachers", u"Индивидуалки": "individualClasses"}),
+                (u"Учителя", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
+                (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}),
                 ("resetDB", "resetDB")
+            ]
+        elif current_user.userType == 'teacher':
+            menu = [
+                (u"Учителя", {u"Индивидуалки": "individualClasses"}),
             ]
         else :
             menu = [
@@ -25,9 +31,9 @@ def defineMenu():
         menu.append((u'Выйти', 'logout'))
     else:
         menu = [
-            (u"Главная", "main")
+            (u"Главная", "main"),
+            (u'Войти', 'login')
         ]
-        menu.append((u'Войти', 'login'))
     return menu
 
 def checkPageAvailability(accesGranted):

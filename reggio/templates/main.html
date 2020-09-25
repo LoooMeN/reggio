@@ -21,8 +21,6 @@
                     <img style='width: 200px;' src="/{{ current_user.avatar }}">
                     <p>{{ current_user.name }}</p>
                     <p>{{ current_user.surname }}</p>
-                {% else %}
-                    <img style='width: 200px;' src="{{url_for('static', filename='images/avatars/defaultUserImage.png')}}">
                 {% endif %}
             </div>
             {% for menuItem in menu %}

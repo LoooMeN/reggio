@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 
 from reggio import app, db
-from reggio.models import User, Child, Teacher
+from reggio.models import User, Child, Teacher, individualClass
 from reggio.forms import SignInForm, CreateUser
 from reggio.utils import *
 import reggio.users
@@ -16,8 +16,18 @@ import reggio.teachers
 
 @app.route('/test')
 def test():
-    print(getChildren())
     return 'sex'
+
+@app.route('/admin/individualClasses')
+def adminIndividualClasses():
+    if not checkPageAvailability(['admin']):
+        return redirect(url_for('main'))
+    individualClasses = individualClass.query.all()
+    return render_template(
+        'adminIndividualClasses.html',
+        individualClasses=individualClasses,
+        title=u'Індивідулки',
+        menu=defineMenu())
 
 @app.route('/') # dashboard if admin else logo prompt
 def main():

@@ -74,7 +74,7 @@ class CreateUser(FlaskForm):
     submit = SubmitField('Submit')
 
 class CreateTeacherIndividual(FlaskForm):
-    studentUsername = StringField(u'Ученик(ца)', [DataRequired()], render_kw={"list": "childrenList"})
+    studentUsername = StringField(u'Ученик(ца)', [DataRequired()], render_kw={"list": "childrenList", "autocomplete": "off"})
     timeSpent = IntegerField(u'Потраченное время (в минутах)', [DataRequired()], render_kw={"type": "number"})
     lessonDate = DateField(u'Дата урока', [DataRequired()], render_kw={"type": "date"})
     grade = IntegerField(u'Оценка', [DataRequired()], render_kw={"type": "number"})

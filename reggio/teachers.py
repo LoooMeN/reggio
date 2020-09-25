@@ -16,38 +16,42 @@ def getChildren():
         choices.append((child.username, name))
     return choices
 
+def createIndividual(username, formChild):
+    childName = formChild.surname+' '+formChild.name
+    newIndividual = individualClass(
+        studentUsername=username,
+        studentName=childName,
+        timeSpent=request.form.get('timeSpent'),
+        lessonDate=request.form.get('lessonDate'),
+        grade=request.form.get('grade'),
+        topic=request.form.get('topic'),
+        comment=request.form.get('comment'),
+        creationDate=date.today(),
+        teacherUsername=current_user.username
+    )
+    db.session.add(newIndividual)
+    db.session.commit()
+
 @app.route('/teachers/individualClasses', methods=('GET', 'POST'))
-def individualClasses():
-    createIndividual = CreateTeacherIndividual(csrf_enabled=False)
-    if createIndividual.validate_on_submit():
+def teachersIndividualClasses():
+    if not checkPageAvailability(['teacher']):
+        return redirect(url_for('main'))
+    createIndividualForm = CreateTeacherIndividual(csrf_enabled=False)
+    if createIndividualForm.validate_on_submit():
         username = request.form.get('studentUsername')
         formChild = Child.query.filter_by(username=username).first()
         if formChild:
-            childName = formChild.surname+' '+formChild.name
-            newIndividual = individualClass(
-                studentUsername=username,
-                studentName=childName,
-                timeSpent=request.form.get('timeSpent'),
-                lessonDate=request.form.get('lessonDate'),
-                grade=request.form.get('grade'),
-                topic=request.form.get('topic'),
-                comment=request.form.get('comment'),
-                creationDate=date.today(),
-                teacherUsername=current_user.username
-            )
-            db.session.add(newIndividual)
-            db.session.commit()
-            return redirect(url_for('individualClasses'))
+            createIndividual(username, formChild)
+            return redirect(url_for('teachersIndividualClasses'))
         else:
             flash(u'Такої дитини немає у системі, будь ласка оберіть зі списку.')
-    children = getChildren()
     individuals = individualClass.query.all()
     individuals.sort(key=lambda r: r.lessonDate, reverse=True)
     return render_template('teachersIndividualClasses.html',
         title='Individual',
         menu=defineMenu(),
-        form=createIndividual,
-        children=children,
+        form=createIndividualForm,
+        children=getChildren(),
         individuals=individuals)
 
 

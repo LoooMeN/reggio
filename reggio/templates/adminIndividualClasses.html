@@ -1,0 +1,43 @@
+{%extends 'main.html'%}
+{% block body %}
+    <h1>Индивидуалки</h1>
+    <style>
+        img {
+            width: 50px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 0 20px;
+        }
+
+        tr:first-child td {
+            border: none;
+        }
+    </style>
+    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
+    <table search=true>
+        <tr>
+            <td>Створено</td>
+            <td>Вчитель</td>
+            <td>Студент</td>
+            <td>Часу витрачено</td>
+            <td>Оцінка</td>
+            <td>Тема</td>
+            <td>Коментар</td>
+            <td>Дата уроку</td>
+        </tr>
+        {% for individualClass in individualClasses %}
+            <tr searchable=true>
+                <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
+                <td searchable=true>{{individualClass.teacherUsername}}</td>
+                <td searchable=true>{{individualClass.studentName}}</td>
+                <td searchable=true>{{individualClass.timeSpent}}</td>
+                <td searchable=true>{{individualClass.grade}}</td>
+                <td searchable=true>{{individualClass.topic}}</td>
+                <td searchable=true>{{individualClass.comment}}</td>
+                <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
+            </tr>
+        {%endfor%}
+    </table>
+{% endblock %}
