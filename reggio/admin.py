@@ -2,7 +2,7 @@
 from flask import request, flash, redirect, url_for, render_template
 
 from reggio import app, db
-from reggio.models import individualClass
+from reggio.models import individualClass, Teacher
 from reggio.utils import *
 
 
@@ -11,8 +11,10 @@ def adminIndividualClasses():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
     individualClasses = individualClass.query.all()
+    teacherList = Teacher.query.all()
     return render_template(
         'adminIndividualClasses.html',
+        teacherList=teacherList,
         individualClasses=individualClasses,
         title=u'Індивідулки',
         menu=defineMenu())

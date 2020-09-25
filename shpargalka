@@ -1,7 +1,14 @@
+$Env:FLASK_APP = "start.py"
+$Env:FLASK_ENV = "development"
+$Env:PYTHONDONTWRITEBYTECODE = 1
+
 # http://192.168.0.1:5000/
 # docker run -v $(pwd):/usr/src/app -p 5000:5000 looomen/reggio
 # docker build -t looomen/reggio .
 
+
+# https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient
+Фикс для mysql
 
 vanya development
 docker run -v C:\Users\Vanya\Desktop\reggio:/usr/src/app -p 5000:5000 looomen/reggio
