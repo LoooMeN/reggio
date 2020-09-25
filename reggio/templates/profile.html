@@ -23,7 +23,6 @@
             <td>Телефон</td>
             <td>Вайбер</td>
             <td>Аватар</td>
-            <td>Тип</td>
         </tr>
         <tr>
             <td>{{user.name}}</td>
@@ -32,7 +31,28 @@
             <td>{{user.phone}}</td>
             <td>{{user.viber}}</td>
             <td>{{user.avatar}}</td>
-            <td>{{user.userType}}</td>
         </tr>
     </table>
+
+    {% if user.userType == 'child' %}
+        <h3>Ваші Індивідуалки</h3>
+        <table>
+            <tr>
+                <td>Тема</td>
+                <td>Оценка</td>
+                <td>Коментарий</td>
+                <td>Время</td>
+                <td>Дата урока</td>
+            </tr>
+            {% for individual in individuals %}
+                <tr>
+                    <td>{{individual.topic}}</td>
+                    <td>{{individual.grade}}</td>
+                    <td>{{individual.comment}}</td>
+                    <td>{{individual.timeSpent}}</td>
+                    <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
+                </tr>
+            {%endfor%}
+        </table>
+    {% endif %}
 {% endblock %}
