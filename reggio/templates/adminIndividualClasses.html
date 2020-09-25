@@ -41,13 +41,13 @@
         {% for individualClass in individualClasses %}
             <tr searchable=true>
                 <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
-                <td searchable=true>{{individualClass.teacherUsername}}</td>
+                <td searchable=true>{{individualClass.teacherName}}</td>
                 <td searchable=true>{{individualClass.studentName}}</td>
                 <td searchable=true>{{individualClass.timeSpent}}</td>
                 <td searchable=true>{{individualClass.grade}}</td>
                 <td searchable=true>{{individualClass.topic}}</td>
                 <td searchable=true>{{individualClass.comment}}</td>
-                <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
+                <td searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</td>
                 <td><a href="{{url_for('deleteIndividualClasses')}}?id={{individualClass.id}}">delete</a></td>
             </tr>
         {%endfor%}

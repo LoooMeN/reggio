@@ -11,6 +11,7 @@ def adminIndividualClasses():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
     individualClasses = individualClass.query.all()
+    individualClasses.sort(key=lambda r: r.creationDate, reverse=True)
     teacherList = Teacher.query.all()
     return render_template(
         'adminIndividualClasses.html',

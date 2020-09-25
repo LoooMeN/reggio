@@ -1,5 +1,7 @@
 # coding: utf-8
 import os
+from random import randrange
+
 from flask import render_template, url_for, request, flash, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import current_user, login_user, logout_user
@@ -59,5 +61,95 @@ def resetDB():
     db.create_all()
     admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='adminName', surname='adminSurname', password=generate_password_hash('123'), avatar=os.path.join('static', 'images', 'avatars', 'defaultUserImage.png'))
     db.session.add(admin)
+
+    children = []
+    users = []
+    teachers = []
+    individuals = []
+    counter = 1
+    while counter < 16:
+        username = 'child' + str(counter)
+        email = 'child' + str(counter) + '@gmail.com'
+        userType = 'child'
+        name = 'child' + str(counter)
+        surname = 'childovich' + str(counter)
+        password = generate_password_hash('123')
+        avatar = os.path.join('static', 'images', 'avatars', 'defaultUserImage.png')
+        users.append(User(
+            username=username,
+            userType=userType,
+            email=email,
+            name=name,
+            surname=surname,
+            password=password,
+            avatar=avatar
+        ))
+        children.append(Child(
+            username=username,
+            name=name,
+            surname=surname,
+            avatar=avatar
+        ))
+        counter += 1
+
+    counter = 1
+    while counter < 6:
+        username = 'teacher' + str(counter)
+        email = 'teacher' + str(counter) + '@gmail.com'
+        userType = 'teacher'
+        name = 'teacher' + str(counter)
+        surname = 'teacherovich' + str(counter)
+        password = generate_password_hash('123')
+        avatar = os.path.join('static', 'images', 'avatars', 'defaultUserImage.png')
+        users.append(User(
+            username=username,
+            userType=userType,
+            name=name,
+            email=email,
+            surname=surname,
+            password=password,
+            avatar=avatar
+        ))
+        teachers.append(Teacher(
+            username=username,
+            name=name,
+            surname=surname,
+            avatar=avatar
+        ))
+        counter += 1
+
+    for childItem in children:
+        teacher = teachers[randrange(6)]
+        teacherUsername = teacher.username
+        teacherName = teacher.surname+' '+teacher.name
+        studentUsername = childItem.username
+        studentName = childItem.surname + ' ' + childItem.name
+        timeSpent = randrange(15, 45)
+        creationDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
+        lessonDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
+        grade = randrange(12)
+        topic = 'flexi'
+        individuals.append(individualClass(
+            teacherUsername=teacherUsername,
+            teacherName=teacherName,
+            studentUsername=studentUsername,
+            studentName=studentName,
+            timeSpent=timeSpent,
+            creationDate=creationDate,
+            lessonDate=lessonDate,
+            grade=grade,
+            topic=topic
+        ))
+        db.session.add(childItem)
+
+    for teacherItem in teachers:
+        db.session.add(teacherItem)
+
+    for individualItem in individuals:
+        db.session.add(individualItem)
+
+    for userItem in users:
+        db.session.add(userItem)
+
     db.session.commit()
     return redirect(url_for('main'))
