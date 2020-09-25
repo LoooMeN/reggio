@@ -47,7 +47,7 @@
                 <td searchable=true>{{individualClass.grade}}</td>
                 <td searchable=true>{{individualClass.topic}}</td>
                 <td searchable=true>{{individualClass.comment}}</td>
-                <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
+                <td searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</td>
                 <td><a href="{{url_for('deleteIndividualClasses')}}?id={{individualClass.id}}">delete</a></td>
             </tr>
         {%endfor%}

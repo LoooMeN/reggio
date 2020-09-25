@@ -119,8 +119,9 @@ def resetDB():
         counter += 1
 
     for childItem in children:
-        teacherUsername = 'teacher1'
-        teacherName = 'teacher teacherovich'
+        teacher = teachers[randrange(6)]
+        teacherUsername = teacher.username
+        teacherName = teacher.surname+' '+teacher.name
         studentUsername = childItem.username
         studentName = childItem.surname + ' ' + childItem.name
         timeSpent = randrange(15, 45)
