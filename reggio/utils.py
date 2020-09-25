@@ -7,7 +7,7 @@ def defineMenu():
     if current_user.is_authenticated:
         menu = [(u"Главная", "main")]
         if current_user.userType == 'admin':
-            menu.extend([
+             menu.extend([
                 (u"Пользователи", "users"),
                 (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"})
             ])
@@ -21,7 +21,7 @@ def defineMenu():
             ])
         elif current_user.userType == 'teacher':
             menu.extend([
-                (u"Учителя", {u"Индивидуалки": "individualClasses"}),
+                (u"Учителя", {u"Индивидуалки": "teachersIndividualClasses"}),
             ])
         else :
             pass
