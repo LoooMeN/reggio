@@ -44,9 +44,9 @@ def teachersIndividualClasses():
         formChild = Child.query.filter_by(username=username).first()
         if formChild:
             createIndividual(username, formChild)
-            return redirect(url_for('teachersIndividualClasses'))
         else:
             flash(u'Такої дитини немає у системі, будь ласка оберіть зі списку.')
+        return redirect(url_for('teachersIndividualClasses'))
     individuals = individualClass.query.all()
     individuals.sort(key=lambda r: r.lessonDate, reverse=True)
     return render_template('teachersIndividualClasses.html',
