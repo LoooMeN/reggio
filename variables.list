@@ -1,6 +1,12 @@
 FLASK_APP=start.py
 FLASK_ENV=development
 PYTHONDONTWRITEBYTECODE=1
+flask run
+
 # http://192.168.0.1:5000/
 # docker run -v $(pwd):/usr/src/app -p 5000:5000 looomen/reggio
 # docker build -t looomen/reggio .
+
+
+vanya development
+docker run -v C:\Users\Vanya\Desktop\reggio:/usr/src/app -p 5000:5000 looomen/reggio
