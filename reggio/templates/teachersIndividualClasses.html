@@ -1,6 +1,6 @@
 {%extends 'main.html'%}
 {% block body %}
-    <h1>Индивидуалки</h1>
+    <h1>Ваші індивідуалки</h1>
 
     <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
     {%if form%}
@@ -48,7 +48,6 @@
         </table>
 
         <table>
-            <tr><td>{{form.studentUsername.label}}</td><td>{{form.studentUsername}}</td></tr>
             <datalist id="childrenList">
                 {% for child in children %}
                     <option value="{{child[0]}}">{{child[1]}}</option>
