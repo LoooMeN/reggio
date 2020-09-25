@@ -18,7 +18,10 @@ def getChildren():
 
 def createIndividual(username, formChild):
     childName = formChild.surname+' '+formChild.name
+    teacherName = current_user.surname + ' ' +current_user.name
     newIndividual = individualClass(
+        teacherUsername=current_user.username,
+        teacherName=teacherName,
         studentUsername=username,
         studentName=childName,
         timeSpent=request.form.get('timeSpent'),
@@ -26,8 +29,7 @@ def createIndividual(username, formChild):
         grade=request.form.get('grade'),
         topic=request.form.get('topic'),
         comment=request.form.get('comment'),
-        creationDate=date.today(),
-        teacherUsername=current_user.username
+        creationDate=date.today()
     )
     db.session.add(newIndividual)
     db.session.commit()

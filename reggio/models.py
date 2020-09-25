@@ -36,6 +36,7 @@ class individualClass(db.Model):
     __tablename__ = 'individualClass'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     teacherUsername = db.Column(db.String(255), nullable=False)
+    teacherName = db.Column(db.String(255))
     studentUsername = db.Column(db.String(255), nullable=False)
     studentName = db.Column(db.String(255))
     timeSpent = db.Column(db.Integer)

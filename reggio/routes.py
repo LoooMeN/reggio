@@ -13,6 +13,7 @@ import reggio.users
 import reggio.children
 import reggio.teachers
 import reggio.admin
+import reggio.profile
 
 
 @app.route('/test')
