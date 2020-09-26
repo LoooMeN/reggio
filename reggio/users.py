@@ -8,6 +8,7 @@ from reggio.models import User, Child, Teacher
 from reggio.forms import CreateUser
 from reggio.utils import *
 
+
 def deleteSubTable(user):
     entity = '';
     if user.userType == 'child':

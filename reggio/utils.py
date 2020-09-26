@@ -7,7 +7,7 @@ def defineMenu():
     if current_user.is_authenticated:
         menu = [(u"Главная", "main")]
         if current_user.userType == 'admin':
-             menu.extend([
+            menu.extend([
                 (u"Пользователи", "users"),
                 (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"})
             ])
@@ -23,7 +23,7 @@ def defineMenu():
             menu.extend([
                 (u"Учителя", {u"Индивидуалки": "teachersIndividualClasses"}),
             ])
-        else :
+        else:
             pass
         menu.append((u'Профиль', 'profile'))
         menu.append((u'Выйти', 'logout'))
@@ -34,6 +34,7 @@ def defineMenu():
             (u'Войти', 'login')
         ]
     return menu
+
 
 def checkPageAvailability(accesGranted):
     if current_user.is_authenticated:
