@@ -1,0 +1,21 @@
+html {
+    --main-bg-color: #B18B94;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.errorBox {
+    border: 1px solid black;
+    margin-right: 25px;
+    width: 300px;
+    background-color: var(--main-bg-color);
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 100vh;
+    align-items: center;
+    box-sizing: border-box;
+}

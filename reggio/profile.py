@@ -27,9 +27,17 @@ def profile():
                 individuals = individualClass.query.filter_by(studentUsername=current_user.username).limit(20)
             else:
                 individuals = individualClass.query.filter_by(teacherUsername=current_user.username).limit(20)
-            return render_template('profile.html', user=current_user, individuals=individuals, title='profile',
-                                   menu=defineMenu())
-        return render_template('profile.html', user=current_user, title='profile', menu=defineMenu())
+            return render_template(
+                'profile.html',
+                user=current_user,
+                individuals=individuals,
+                title='profile',
+                menu=defineMenu())
+        return render_template(
+            'profile.html',
+            user=current_user,
+            title='profile',
+            menu=defineMenu())
     return render_template(
         'main.html',
         title='Main',
