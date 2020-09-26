@@ -1,6 +1,7 @@
 # coding: utf-8
 import os
 from random import randrange
+from datetime import datetime, timedelta
 
 from flask import render_template, url_for, request, flash, redirect
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -20,7 +21,13 @@ import reggio.profile
 
 @app.route('/test')
 def test():
-    return 'sex'
+    nowdate = datetime.today()
+    d = nowdate - timedelta(days=14)
+    flash(d < nowdate)
+    return render_template(
+        'main.html',
+        title='TEST',
+        menu=defineMenu())
 
 @app.route('/') # dashboard if admin else logo prompt
 def main():
