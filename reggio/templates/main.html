@@ -10,7 +10,7 @@
 <body>
     {% include 'flash.html' %}
     <div style='display: flex; margin: 0;'>
-        <div class='errorBox'>
+        <div class='errorBox shadow'>
             <div>
                 {% if current_user.is_authenticated %}
                     <img style='width: 200px;' src="/{{ current_user.avatar }}">
