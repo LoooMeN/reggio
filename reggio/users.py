@@ -4,7 +4,7 @@ from flask import render_template, url_for, request, flash, redirect
 from werkzeug.security import generate_password_hash
 
 from reggio import app, db
-from reggio.models import User, Child, Teacher
+from reggio.models import User, Child, Teacher, Parent
 from reggio.forms import CreateUser
 from reggio.utils import *
 
@@ -15,6 +15,8 @@ def deleteSubTable(user):
         entity = db.session.merge(Child.query.filter_by(username=user.username).first())
     if user.userType == 'teacher':
         entity = db.session.merge(Teacher.query.filter_by(username=user.username).first())
+    if user.userType == 'parent':
+        entity = db.session.merge(Parent.query.filter_by(username=user.username).first())
     
     if entity != '':
         db.session.delete(entity)
@@ -25,6 +27,8 @@ def addSubTable(user):
         entity = Child()
     if user.userType == 'teacher':
         entity = Teacher()
+    if user.userType == 'parent':
+        entity = Parent()
 
     if entity != '':
         entity.username = user.username
@@ -39,6 +43,8 @@ def updateSubtables(prevType, user):
         entity = Child.query.filter_by(username=user.username).first()
     elif prevType == 'teacher':
         entity = Teacher.query.filter_by(username=user.username).first()
+    elif prevType == 'parent':
+        entity = Parent.query.filter_by(username=user.username).first()
     else:
         addSubTable(user)
 

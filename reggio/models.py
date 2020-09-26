@@ -34,6 +34,14 @@ class Teacher(db.Model):
     name = db.Column(db.String(120))
     surname = db.Column(db.String(120))
 
+class Parent(db.Model):
+    __tablename__ = 'parent'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    username = db.Column(db.String(80), nullable=False)
+    avatar = db.Column(db.String(255))
+    name = db.Column(db.String(120))
+    surname = db.Column(db.String(120))
+
 
 class individualClass(db.Model):
     __tablename__ = 'individualClass'
