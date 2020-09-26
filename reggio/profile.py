@@ -1,5 +1,6 @@
 # coding: utf-8
 from flask import render_template, url_for, request, flash, redirect
+from datetime import datetime, timedelta
 
 from reggio import app, db
 from reggio.models import individualClass, User, Teacher, Child
@@ -20,9 +21,9 @@ def profile():
         return redirect(url_for('main'))
     if hasIndividual(current_user.userType):
         if current_user.userType == "child":
-            individuals = individualClass.query.filter_by(studentUsername=current_user.username).limit(20)
+            individuals = individualClass.query.filter_by(studentUsername=current_user.username).filter(individualClass.creationDate > datetime.today() - timedelta(days=14))
         else:
-            individuals = individualClass.query.filter_by(teacherUsername=current_user.username).limit(20)
+            individuals = individualClass.query.filter_by(teacherUsername=current_user.username).filter(individualClass.creationDate > datetime.today() - timedelta(days=14))
         return render_template(
             'profile.html',
             user=current_user,
