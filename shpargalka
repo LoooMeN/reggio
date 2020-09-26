@@ -20,4 +20,5 @@ git pull
 Когда закончил всегда пуш
 git add .
 git commit -m "тут опиши что ты сделал"
+git pull
 git push
