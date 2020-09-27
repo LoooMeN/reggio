@@ -43,7 +43,7 @@ def teachersIndividualClasses():
     individuals = IndividualClass.query.all()
     individuals.sort(key=lambda r: r.lessonDate, reverse=True)
     return render_template('teachersIndividualClasses.html',
-                           title='Individual',
+                           title='Індивідуалки',
                            menu=defineMenu(),
                            form=createIndividualForm,
                            children=getChildren(),
@@ -56,6 +56,6 @@ def teachers():
         return redirect(url_for('main'))
     teachers = Teacher.query.all()
     return render_template('teachers.html',
-                           title='Teachers',
+                           title='Вчителі',
                            menu=defineMenu(),
                            teachers=teachers)

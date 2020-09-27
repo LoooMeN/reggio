@@ -15,12 +15,12 @@
             border: none;
         }
     </style>
-    <h1>User Profile</h1>
+    <h1>Мій Профіль</h1>
     <table>
         <tr>
-            <td>Имя</td>
-            <td>Фамилия</td>
-            <td>Почта</td>
+            <td>Ім'я</td>
+            <td>Прізвище</td>
+            <td>Пошта</td>
             <td>Телефон</td>
             <td>Вайбер</td>
             <td>Аватар</td>
@@ -30,9 +30,9 @@
             <td class='surname text'>{{user.surname}}</td>
             <td class='email text'>{{user.email}}</td>
             <td class='phone text '>{{user.phone}}</td>
-            <td class='viber text link'><a href="{{user.viber}}">link</a></td>
+            <td class='viber text link'><a href="{{user.viber}}">Посилання</a></td>
             <td class='image'><img src='/{{user.avatar}}'></td>
-            <td onclick="editUser(this)">edit</td>
+            <td onclick="editUser(this)">Редагувати</td>
         </tr>
     </table>
     {% if not individuals[0] %}
@@ -42,12 +42,12 @@
         <table>
         {% if user.userType == 'child' %}
                 <tr>
-                    <td>Тичер</td>
+                    <td>Вчитель</td>
                     <td>Тема</td>
-                    <td>Оценка</td>
-                    <td>Коментарий</td>
-                    <td>Время</td>
-                    <td>Дата урока</td>
+                    <td>Оцінка</td>
+                    <td>Коментар</td>
+                    <td>Час</td>
+                    <td>Дата уроку</td>
                 </tr>
                 {% for individual in individuals %}
                     <tr>
@@ -61,12 +61,12 @@
                 {%endfor%}
             {% else %}
                 <tr>
-                    <td>Студент</td>
+                    <td>Учень</td>
                     <td>Тема</td>
-                    <td>Оценка</td>
-                    <td>Коментарий</td>
-                    <td>Время</td>
-                    <td>Дата урока</td>
+                    <td>Оцінка</td>
+                    <td>Коментар</td>
+                    <td>Час</td>
+                    <td>Дата уроку</td>
                 </tr>
                 {% for individual in individuals %}
                     <tr>

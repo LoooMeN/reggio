@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Индивидуалки</h1>
+    <h1>Індивідуалки</h1>
     <style>
         img {
             width: 50px;
@@ -65,10 +65,10 @@
                 <td searchable=true>{{individualClass.topic}}</td>
                 <td searchable=true>{{individualClass.comment}}</td>
                 <td searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</td>
-                <td><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}">delete</a></td>
+                <td><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}">Видалити</a></td>
             </tr>
         {%endfor%}
     </table>
-    <button onclick='deleteMany()'>Delete Selected</button>
-    <button>Download Selected</button>
+    <button onclick='deleteMany()'>Видалити вибране</button>
+    <button>Завантажити вибране</button>
 {% endblock %}

@@ -22,34 +22,34 @@ def getTeachers():
 
 def defineMenu():
     if current_user.is_authenticated:
-        menu = [(u"Главная", "main")]
+        menu = [(u"Головна", "main")]
         if current_user.userType == 'admin':
             menu.extend([
-                (u"Пользователи", "users"),
+                (u"Користувачі", "users"),
                 (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"})
             ])
         elif current_user.userType == 'superAdmin':
             menu.extend([
-                (u"Пользователи", "users"),
-                (u"Дети", "children"),
-                (u"Учителя", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
+                (u"Користувачі", "users"),
+                (u"Учні", "children"),
+                (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
                 (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}),
                 (u"Батьки", {u"Список": "parent"}),
                 ("resetDB", "resetDB")
             ])
         elif current_user.userType == 'teacher':
             menu.extend([
-                (u"Учителя", {u"Индивидуалки": "teachersIndividualClasses"}),
+                (u"Вчителі", {u"Индивидуалки": "teachersIndividualClasses"}),
             ])
         elif current_user.userType == 'parent':
             menu.append((u"Батьки", {u"Список": "parent"}))
         else:
             pass
-        menu.append((u'Профиль', 'profile'))
-        menu.append((u'Выйти', 'logout'))
+        menu.append((u'Профіль', 'profile'))
+        menu.append((u'Вийти', 'logout'))
     else:
         menu = [
-            (u'Войти', 'login')
+            (u'Авторизація', 'login')
         ]
     return menu
 
@@ -59,5 +59,5 @@ def checkPageAvailability(accesGranted):
         guestType = current_user.userType
         if guestType == 'superAdmin' or guestType in accesGranted:
             return True
-    flash('No permission')
+    flash('Немає прав')
     return False

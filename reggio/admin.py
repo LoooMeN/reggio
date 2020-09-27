@@ -34,7 +34,7 @@ def adminIndividualClasses():
     GetIndividualForm = GetIndividual()
     if GetIndividualForm.validate_on_submit():
         individualClasses = filterIndividuals()
-        if individualClasses == None:
+        if individualClasses is None:
             return redirect(url_for('adminIndividualClasses'))
     else:
         individualClasses = IndividualClass.query.all()

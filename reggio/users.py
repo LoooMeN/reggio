@@ -76,7 +76,7 @@ def updateUser():
     try:
         db.session.commit()
     except:
-        flash(u'Ошибка записи в базу данных. Возможно вы ввели дубль емейла или юзернейма.')
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту.')
     return redirect(url_for('users'))
 
 
@@ -109,7 +109,7 @@ def users():
         username = request.form.get('username')
         email = request.form.get('email')
         if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-            flash('User exists')
+            flash('Користувач відсутній')
         else:
             addUser(addUserForm)
             return redirect(url_for('users'))
@@ -117,7 +117,7 @@ def users():
     return render_template('users.html',
                            users=users,
                            form=addUserForm,
-                           title='Users',
+                           title='Користувачі',
                            menu=defineMenu())
 
 

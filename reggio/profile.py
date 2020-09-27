@@ -31,12 +31,12 @@ def profile():
             'profile.html',
             user=current_user,
             individuals=individuals,
-            title='profile',
+            title='Профіль',
             menu=defineMenu())
     return render_template(
         'profile.html',
         user=current_user,
-        title='profile',
+        title='Профіль',
         menu=defineMenu())
 
 
@@ -55,5 +55,5 @@ def updateProfile():
     try:
         db.session.commit()
     except:
-        flash(u'Ошибка записи в базу данных. Возможно вы ввели дубль емейла или юзернейма.')
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту..')
     return redirect(url_for('profile'))

@@ -14,13 +14,13 @@
             border: none;
         }
     </style>
-    <h1>Дети</h1>
+    <h1>Учні</h1>
     <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
     <table search=true>
         <tr>
             <td></td>
-            <td>Имя</td>
-            <td>Фамилия</td>
+            <td>Ім'я</td>
+            <td>Прізвище</td>
         </tr>
         {% for child in children %}
         <tr searchable=true id={{child.id}}>

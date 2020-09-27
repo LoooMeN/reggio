@@ -27,13 +27,13 @@ def test():
     flash(d < nowdate)
     return render_template(
         'main.html',
-        title='TEST',
+        title='Секас',
         menu=defineMenu())
 
 @app.route('/') # dashboard if admin else logo prompt
 def main():
     if current_user.is_authenticated:
-        return render_template('child.html', title='Main', menu=defineMenu())
+        return render_template('child.html', title='Головна', menu=defineMenu())
     return redirect(url_for('login'))
 
 @app.route('/login', methods=('GET', 'POST'))
@@ -45,13 +45,13 @@ def login():
             login_user(user)
             return redirect(url_for('main'))
         else:
-            flash('Incorrect credentials, homie')
+            flash('Невірні дані')
     elif current_user.is_authenticated:
         return redirect(url_for('main'))
     return render_template(
         'login.html',
         signinForm=signinForm,
-        title='Login',
+        title='Авторизація',
         menu=defineMenu())
 
 @app.route('/logout')
