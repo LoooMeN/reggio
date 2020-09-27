@@ -50,6 +50,7 @@
     <br><br><br><br>
     {%if form%}
     <form method='POST' enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
         <table>
             <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>
             <tr><td>{{form.password.label}}</td><td>{{form.password}}</td></tr>

@@ -10,7 +10,26 @@ from wtforms.validators import DataRequired, Email, Length, ValidationError, Opt
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
 from reggio import app
-from reggio.models import Child
+from reggio.models import Child, Teacher
+
+
+def existanceValidator(entityType):
+    errorMessages = {
+        "teacher": u"Такого вчителя не існує.",
+        "child": u"Такого учня не існує."
+    }
+
+    def _existanceValidator(form, field):
+        username = field.data
+        selection = ''
+        if entityType == 'teacher':
+            selection = Teacher.query.filter_by(username=username).first()
+        else:
+            selection = Child.query.filter_by(username=username).first()
+        if not selection:
+            raise ValidationError(errorMessages[entityType])
+
+    return _existanceValidator
 
 
 def imageSizeValidator(min=-1, max=-1, directory='static'):
@@ -89,7 +108,7 @@ class CreateTeacherIndividual(FlaskForm):
 class GetIndividual(FlaskForm):
     timeBefore = DateField(u'До', [Optional()], render_kw={"type": "date"})
     timeAfter = DateField(u'Після', [Optional()], render_kw={"type": "date"})
-    teacherUsername = StringField(u'Вчитель', [Optional()], render_kw={"list": "teachersList", "autocomplete": "off"})
-    studentUsername = StringField(u'Учень(иця)', [Optional()],
+    teacherUsername = StringField(u'Вчитель', [Optional(), existanceValidator('teacher')], render_kw={"list": "teachersList", "autocomplete": "off"})
+    studentUsername = StringField(u'Учень(иця)', [Optional(), existanceValidator('child')],
                                   render_kw={"list": "childrenList", "autocomplete": "off"})
     submit = SubmitField(u'Застосувати')

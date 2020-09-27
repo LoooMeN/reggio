@@ -34,14 +34,11 @@ def test():
 def main():
     if current_user.is_authenticated:
         return render_template('child.html', user=current_user.username.upper(), title='Main', menu=defineMenu())
-    return render_template(
-        'tsar.html',
-        title='Main',
-        menu=defineMenu())
+    return redirect(url_for('login'))
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
-    signinForm = SignInForm(csrf_enabled=False)
+    signinForm = SignInForm(crsf_enabled=False)
     if signinForm.validate_on_submit():
         user = User.query.filter_by(username=request.form.get('username')).first()
         if user and check_password_hash(user.password, request.form.get('password')):
@@ -61,7 +58,7 @@ def login():
 def logout():
     if current_user.is_authenticated:
         logout_user()
-    return redirect(url_for('main'))
+    return redirect(url_for('login'))
 
 @app.route('/resetdb')
 def resetDB():

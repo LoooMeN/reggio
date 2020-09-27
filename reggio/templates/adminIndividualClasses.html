@@ -23,6 +23,7 @@
     <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
     <div id='filter'>
         <form method="POST">
+            {{ form.hidden_tag() }}
             <datalist id="childrenList">
                 {% for child in childrenList %}
                     <option value="{{child[0]}}">{{child[1]}}</option>
@@ -69,4 +70,5 @@
         {%endfor%}
     </table>
     <button onclick='deleteMany()'>Delete Selected</button>
+    <button>Download Selected</button>
 {% endblock %}

@@ -12,7 +12,9 @@ from reggio.forms import GetIndividual
 from datetime import datetime, timedelta
 
 def filterIndividuals():
-
+    #check dates
+    # flash()
+    # return None
     individualClasses = IndividualClass.query.all()
     if request.form.get('studentUsername'):
         individualClasses = [n for n in individualClasses if n.studentUsername == request.form.get('studentUsername')]
@@ -29,9 +31,11 @@ def filterIndividuals():
 def adminIndividualClasses():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
-    GetIndividualForm = GetIndividual(csrf_enabled=False)
+    GetIndividualForm = GetIndividual()
     if GetIndividualForm.validate_on_submit():
         individualClasses = filterIndividuals()
+        if individualClasses == None:
+            return redirect(url_for('adminIndividualClasses'))
     else:
         individualClasses = IndividualClass.query.all()
     individualClasses.sort(key=lambda r: r.creationDate, reverse=True)

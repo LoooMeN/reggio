@@ -104,7 +104,7 @@ def addUser(addUserForm):
 def users():
     if not checkPageAvailability([]):
         return redirect(url_for('main'))
-    addUserForm = CreateUser(csrf_enabled=False)
+    addUserForm = CreateUser()
     if addUserForm.validate_on_submit():
         username = request.form.get('username')
         email = request.form.get('email')

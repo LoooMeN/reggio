@@ -2,6 +2,7 @@
 {%block body%}
 <h2>LOGIN SCREEN</h2>
 <form method='POST'>
+    {{ signinForm.hidden_tag() }}
     <div>{{signinForm.username.label}}{{signinForm.username}}</div>
     <div>{{signinForm.password.label}}{{signinForm.password}}</div>
     {{signinForm.submit}}

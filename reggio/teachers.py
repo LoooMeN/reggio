@@ -31,7 +31,7 @@ def createIndividual(username, formChild):
 def teachersIndividualClasses():
     if not checkPageAvailability(['teacher']):
         return redirect(url_for('main'))
-    createIndividualForm = CreateTeacherIndividual(csrf_enabled=False)
+    createIndividualForm = CreateTeacherIndividual()
     if createIndividualForm.validate_on_submit():
         username = request.form.get('studentUsername')
         formChild = Child.query.filter_by(username=username).first()
