@@ -1,12 +1,29 @@
 # coding: utf-8
-from flask import request, flash, redirect, url_for, render_template
+from datetime import datetime
 
+from flask import request, flash, redirect, url_for, render_template
+from sqlalchemy import and_
 from reggio import app, db
 from reggio.models import individualClass, Teacher
 from reggio.utils import *
 
-
 from reggio.forms import GetIndividual
+
+from datetime import datetime, timedelta
+
+def filterIndividuals():
+
+    individualClasses = individualClass.query.all()
+    if request.form.get('studentUsername'):
+        individualClasses = [n for n in individualClasses if n.studentUsername == request.form.get('studentUsername')]
+    if request.form.get('teacherUsername'):
+        individualClasses = [n for n in individualClasses if n.teacherUsername == request.form.get('teacherUsername')]
+    if request.form.get('timeBefore'):
+        individualClasses = [n for n in individualClasses if n.creationDate <= datetime.strptime(request.form.get('timeBefore'), '%y-%m-%d').date()]
+    if request.form.get('timeAfter'):
+        individualClasses = [n for n in individualClasses if n.creationDate >= datetime.strptime(request.form.get('timeAfter'), '%y-%m-%d').date()]
+    return individualClasses
+
 
 @app.route('/admin/individualClasses', methods=('GET', 'POST'))
 def adminIndividualClasses():
@@ -14,7 +31,7 @@ def adminIndividualClasses():
         return redirect(url_for('main'))
     GetIndividualForm = GetIndividual(csrf_enabled=False)
     if GetIndividualForm.validate_on_submit():
-        # individualClass
+        individualClasses = filterIndividuals()
         flash(request.form)
     else:
         individualClasses = individualClass.query.all()
