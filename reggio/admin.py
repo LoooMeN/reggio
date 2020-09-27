@@ -31,10 +31,12 @@ def adminIndividualClasses():
         return redirect(url_for('main'))
     GetIndividualForm = GetIndividual(csrf_enabled=False)
     if GetIndividualForm.validate_on_submit():
+<<<<<<< HEAD
         individualClasses = filterIndividuals()
+=======
+>>>>>>> 19253adac94a77c86caa5e77f4e3737ae5943ce7
         flash(request.form)
-    else:
-        individualClasses = individualClass.query.all()
+    individualClasses = individualClass.query.all()
     individualClasses.sort(key=lambda r: r.creationDate, reverse=True)
     teacherList = getTeachers()
     childrenList = getChildren()
@@ -48,12 +50,24 @@ def adminIndividualClasses():
         menu=defineMenu())
 
 
+@app.route('/admin/deleteIndividualClass', methods=["GET"])
+def deleteIndividualClass():
+    if not checkPageAvailability(['admin']):
+        return redirect(url_for('main'))
+    IndividualClassesID = request.args.get('id')
+    IndividualClasses = individualClass.query.filter_by(id=IndividualClassesID).first()
+    db.session.delete(IndividualClasses)
+    db.session.commit()
+    return redirect(url_for('adminIndividualClasses'))
+
 @app.route('/admin/deleteIndividualClasses', methods=["GET"])
 def deleteIndividualClasses():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
-    IndividualClassesID = request.args.get('id')
-    IndividualClasses = db.session.merge(individualClass.query.filter_by(id=IndividualClassesID).first())
-    db.session.delete(IndividualClasses)
+    IndividualClassesIDs = request.args.get('ids')
+    IndividualClassesIDs = IndividualClassesIDs.split(';')
+    for IndividualClass in IndividualClassesIDs:
+        selectedToDel = individualClass.query.filter_by(id=IndividualClass).first()
+        db.session.delete(selectedToDel)
     db.session.commit()
-    return redirect(url_for('adminIndividualClasses'))
+    return 'deleted'

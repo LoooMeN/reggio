@@ -1,4 +1,9 @@
 {%extends 'main.html'%}
+
+{% block headerIncludes %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <h1>Индивидуалки</h1>
     <style>
@@ -37,6 +42,7 @@
     </div>
     <table search=true>
         <tr>
+            <td><input type="checkbox" id="checkAll"></td>
             <td>Створено</td>
             <td>Вчитель</td>
             <td>Студент</td>
@@ -48,6 +54,7 @@
         </tr>
         {% for individualClass in individualClasses %}
             <tr searchable=true>
+                <td><input type="checkbox" classid={{individualClass.id}} class='rowSelect'></td>
                 <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
                 <td searchable=true>{{individualClass.teacherName}}</td>
                 <td searchable=true>{{individualClass.studentName}}</td>
@@ -56,8 +63,9 @@
                 <td searchable=true>{{individualClass.topic}}</td>
                 <td searchable=true>{{individualClass.comment}}</td>
                 <td searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</td>
-                <td><a href="{{url_for('deleteIndividualClasses')}}?id={{individualClass.id}}">delete</a></td>
+                <td><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}">delete</a></td>
             </tr>
         {%endfor%}
     </table>
+    <button onclick='deleteMany()'>Delete Selected</button>
 {% endblock %}
