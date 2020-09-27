@@ -17,7 +17,7 @@ def defineMenu():
                 (u"Дети", "children"),
                 (u"Учителя", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
                 (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}),
-                (u'Мої дітки', 'parent'),
+                (u"Батьки", {u"Список": "parent"}),
                 ("resetDB", "resetDB")
             ])
         elif current_user.userType == 'teacher':
@@ -25,7 +25,7 @@ def defineMenu():
                 (u"Учителя", {u"Индивидуалки": "teachersIndividualClasses"}),
             ])
         elif current_user.userType == 'parent':
-            menu.append((u'Мої дітки', 'parent'))
+            menu.append((u"Батьки", {u"Список": "parent"}))
         else:
             pass
         menu.append((u'Профиль', 'profile'))

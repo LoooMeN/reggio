@@ -10,7 +10,8 @@ from reggio.utils import *
 def parent():
     if not checkPageAvailability(["parent"]):
         return redirect(url_for('main'))
-    return render_template(
-        'parent.html',
-        title='parent',
-        menu=defineMenu())
+    parents = Parent.query.all()
+    return render_template('parent.html',
+        title=u'Батьки',
+        menu=defineMenu(),
+        parents=parents)
