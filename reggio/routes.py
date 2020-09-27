@@ -137,7 +137,7 @@ def resetDB():
         lessonDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
         grade = randrange(12)
         topic = 'flexi'
-        individuals.append(individualClass(
+        individuals.append(IndividualClass(
             teacherUsername=teacherUsername,
             teacherName=teacherName,
             studentUsername=studentUsername,

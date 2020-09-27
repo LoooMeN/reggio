@@ -6,7 +6,7 @@ from reggio.models import Child, Teacher
 
 def getChildren():
     children = Child.query.all()
-    choices = [];
+    choices = []
     for child in children:
         name = "%s %s" % (child.surname, child.name)
         choices.append((child.username, name))
@@ -14,7 +14,7 @@ def getChildren():
 
 def getTeachers():
     teachers = Teacher.query.all()
-    choices = [];
+    choices = []
     for teacher in teachers:
         name = "%s %s" % (teacher.surname, teacher.name)
         choices.append((teacher.username, name))

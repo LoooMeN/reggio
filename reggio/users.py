@@ -10,16 +10,17 @@ from reggio.utils import *
 
 
 def deleteSubTable(user):
-    entity = '';
+    entity = ''
     if user.userType == 'child':
         entity = Child.query.filter_by(username=user.username).first()
     if user.userType == 'teacher':
         entity = Teacher.query.filter_by(username=user.username).first()
     if user.userType == 'parent':
         entity = Parent.query.filter_by(username=user.username).first()
-    
+
     if entity != '':
         db.session.delete(entity)
+
 
 def addSubTable(user):
     entity = ''
@@ -36,6 +37,7 @@ def addSubTable(user):
         entity.name = user.name
         entity.surname = user.surname
         db.session.add(entity)
+
 
 def updateSubtables(prevType, user):
     entity = ''
@@ -55,6 +57,7 @@ def updateSubtables(prevType, user):
         elif prevType != request.args.get("userType"):
             db.session.delete(entity)
             addSubTable(user)
+
 
 @app.route('/updateUser')
 def updateUser():
@@ -76,6 +79,7 @@ def updateUser():
         flash(u'Ошибка записи в базу данных. Возможно вы ввели дубль емейла или юзернейма.')
     return redirect(url_for('users'))
 
+
 def addUser(addUserForm):
     avatar = os.path.join('static', 'images', 'avatars', 'defaultUserImage.png')
     if addUserForm.avatar.data:
@@ -95,6 +99,7 @@ def addUser(addUserForm):
     addSubTable(newUser)
     db.session.commit()
 
+
 @app.route('/users', methods=('GET', 'POST'))
 def users():
     if not checkPageAvailability([]):
@@ -110,10 +115,11 @@ def users():
             return redirect(url_for('users'))
     users = User.query.all()
     return render_template('users.html',
-        users=users,
-        form=addUserForm,
-        title='Users',
-        menu=defineMenu())
+                           users=users,
+                           form=addUserForm,
+                           title='Users',
+                           menu=defineMenu())
+
 
 @app.route('/deleteUser', methods=["GET"])
 def deleteUser():
