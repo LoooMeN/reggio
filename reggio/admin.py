@@ -4,7 +4,7 @@ from datetime import datetime
 from flask import request, flash, redirect, url_for, render_template
 from sqlalchemy import and_
 from reggio import app, db
-from reggio.models import individualClass, Teacher
+from reggio.models import IndividualClass, Teacher
 from reggio.utils import *
 
 from reggio.forms import GetIndividual
@@ -13,15 +13,15 @@ from datetime import datetime, timedelta
 
 def filterIndividuals():
 
-    individualClasses = individualClass.query.all()
+    individualClasses = IndividualClass.query.all()
     if request.form.get('studentUsername'):
         individualClasses = [n for n in individualClasses if n.studentUsername == request.form.get('studentUsername')]
     if request.form.get('teacherUsername'):
         individualClasses = [n for n in individualClasses if n.teacherUsername == request.form.get('teacherUsername')]
     if request.form.get('timeBefore'):
-        individualClasses = [n for n in individualClasses if n.creationDate <= datetime.strptime(request.form.get('timeBefore'), '%y-%m-%d').date()]
+        individualClasses = [n for n in individualClasses if n.creationDate <= datetime.strptime(request.form.get('timeBefore')+' 00:00:00', '%Y-%m-%d %H:%M:%S')]
     if request.form.get('timeAfter'):
-        individualClasses = [n for n in individualClasses if n.creationDate >= datetime.strptime(request.form.get('timeAfter'), '%y-%m-%d').date()]
+        individualClasses = [n for n in individualClasses if n.creationDate >= datetime.strptime(request.form.get('timeAfter')+' 00:00:00', '%Y-%m-%d %H:%M:%S')]
     return individualClasses
 
 
@@ -34,7 +34,7 @@ def adminIndividualClasses():
         individualClasses = filterIndividuals()
         flash(request.form)
     else:
-        individualClasses = individualClass.query.all()
+        individualClasses = IndividualClass.query.all()
     individualClasses.sort(key=lambda r: r.creationDate, reverse=True)
     teacherList = getTeachers()
     childrenList = getChildren()
@@ -48,12 +48,24 @@ def adminIndividualClasses():
         menu=defineMenu())
 
 
+@app.route('/admin/deleteIndividualClass', methods=["GET"])
+def deleteIndividualClass():
+    if not checkPageAvailability(['admin']):
+        return redirect(url_for('main'))
+    IndividualClassesID = request.args.get('id')
+    IndividualClasses = IndividualClass.query.filter_by(id=IndividualClassesID).first()
+    db.session.delete(IndividualClasses)
+    db.session.commit()
+    return redirect(url_for('adminIndividualClasses'))
+
 @app.route('/admin/deleteIndividualClasses', methods=["GET"])
 def deleteIndividualClasses():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
-    IndividualClassesID = request.args.get('id')
-    IndividualClasses = db.session.merge(individualClass.query.filter_by(id=IndividualClassesID).first())
-    db.session.delete(IndividualClasses)
+    IndividualClassesIDs = request.args.get('ids')
+    IndividualClassesIDs = IndividualClassesIDs.split(';')
+    for IndividualClassID in IndividualClassesIDs:
+        selectedToDel = IndividualClass.query.filter_by(id=IndividualClass).first()
+        db.session.delete(selectedToDel)
     db.session.commit()
-    return redirect(url_for('adminIndividualClasses'))
+    return 'deleted'

@@ -43,7 +43,7 @@ class Parent(db.Model):
     surname = db.Column(db.String(120))
 
 
-class individualClass(db.Model):
+class IndividualClass(db.Model):
     __tablename__ = 'individualClass'
     id = db.Column(db.Integer, primary_key=True, unique=True)
     teacherUsername = db.Column(db.String(255), nullable=False)
