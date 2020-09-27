@@ -32,7 +32,6 @@ def adminIndividualClasses():
     GetIndividualForm = GetIndividual(csrf_enabled=False)
     if GetIndividualForm.validate_on_submit():
         individualClasses = filterIndividuals()
-        flash(request.form)
     else:
         individualClasses = IndividualClass.query.all()
     individualClasses.sort(key=lambda r: r.creationDate, reverse=True)
