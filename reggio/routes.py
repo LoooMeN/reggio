@@ -33,7 +33,7 @@ def test():
 @app.route('/') # dashboard if admin else logo prompt
 def main():
     if current_user.is_authenticated:
-        return render_template('child.html', user=current_user.username.upper(), title='Main', menu=defineMenu())
+        return render_template('child.html', title='Main', menu=defineMenu())
     return redirect(url_for('login'))
 
 @app.route('/login', methods=('GET', 'POST'))

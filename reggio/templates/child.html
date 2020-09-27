@@ -1,4 +1,4 @@
 {% extends 'tsar.html' %}
 {% block child %}
-    <h1>HELLO THERE, {{ user }}!</h1>
+    <h1>HELLO THERE, {{ current_user.name }} {{ current_user.surname }}!</h1>
 {% endblock %}
