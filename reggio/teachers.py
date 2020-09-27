@@ -9,8 +9,8 @@ from reggio.forms import CreateTeacherIndividual
 
 
 def createIndividual(username, formChild):
-    childName = formChild.surname+' '+formChild.name
-    teacherName = current_user.surname + ' ' +current_user.name
+    childName = formChild.surname + ' ' + formChild.name
+    teacherName = current_user.surname + ' ' + current_user.name
     newIndividual = IndividualClass(
         teacherUsername=current_user.username,
         teacherName=teacherName,
@@ -25,6 +25,7 @@ def createIndividual(username, formChild):
     )
     db.session.add(newIndividual)
     db.session.commit()
+
 
 @app.route('/teachers/individualClasses', methods=('GET', 'POST'))
 def teachersIndividualClasses():
@@ -42,11 +43,11 @@ def teachersIndividualClasses():
     individuals = IndividualClass.query.all()
     individuals.sort(key=lambda r: r.lessonDate, reverse=True)
     return render_template('teachersIndividualClasses.html',
-        title='Individual',
-        menu=defineMenu(),
-        form=createIndividualForm,
-        children=getChildren(),
-        individuals=individuals)
+                           title='Individual',
+                           menu=defineMenu(),
+                           form=createIndividualForm,
+                           children=getChildren(),
+                           individuals=individuals)
 
 
 @app.route('/teachers')
@@ -55,6 +56,6 @@ def teachers():
         return redirect(url_for('main'))
     teachers = Teacher.query.all()
     return render_template('teachers.html',
-        title='Teachers',
-        menu=defineMenu(),
-        teachers=teachers)
+                           title='Teachers',
+                           menu=defineMenu(),
+                           teachers=teachers)

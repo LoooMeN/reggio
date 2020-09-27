@@ -64,7 +64,7 @@ def deleteIndividualClasses():
     IndividualClassesIDs = request.args.get('ids')
     IndividualClassesIDs = IndividualClassesIDs.split(';')
     for IndividualClassID in IndividualClassesIDs:
-        selectedToDel = IndividualClass.query.filter_by(id=IndividualClass).first()
+        selectedToDel = IndividualClass.query.filter_by(id=IndividualClassID).first()
         db.session.delete(selectedToDel)
     db.session.commit()
-    return 'deleted'
+    return redirect(url_for('adminIndividualClasses'))

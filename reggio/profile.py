@@ -15,15 +15,18 @@ def hasIndividual(userType):
     else:
         return False
 
+
 @app.route('/profile/')
 def profile():
     if not current_user.is_authenticated:
         return redirect(url_for('main'))
     if hasIndividual(current_user.userType):
         if current_user.userType == "child":
-            individuals = IndividualClass.query.filter_by(studentUsername=current_user.username).filter(individualClass.creationDate > datetime.today() - timedelta(days=14))
+            individuals = IndividualClass.query.filter_by(studentUsername=current_user.username).filter(
+                IndividualClass.creationDate > datetime.today() - timedelta(days=14))
         else:
-            individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(individualClass.creationDate > datetime.today() - timedelta(days=14))
+            individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
+                IndividualClass.creationDate > datetime.today() - timedelta(days=14))
         return render_template(
             'profile.html',
             user=current_user,

@@ -89,7 +89,7 @@ def addUser(addUserForm):
         surname=request.form.get('surname'),
         phone=request.form.get('phone'),
         viber=request.form.get('viber'),
-        avatar = avatar
+        avatar=avatar
     )
     db.session.add(newUser)
     addSubTable(newUser)

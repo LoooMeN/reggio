@@ -16,7 +16,6 @@ from reggio.models import Child
 def imageSizeValidator(min=-1, max=-1, directory='static'):
     sizeMessage = u"Фото должно быть не меньше %d и не больше %d пикселей по обоим параметрам." % (min, max)
     nameMessage = u"Фото с таким именем уже существует, переименуйте его пожалуйста."
-    
 
     def _imageSizeValidator(form, field):
         f = field.data
@@ -35,12 +34,14 @@ def imageSizeValidator(min=-1, max=-1, directory='static'):
 
     return _imageSizeValidator
 
+
 class SignInForm(FlaskForm):
     username = StringField('Username', [
         DataRequired()])
     password = PasswordField('Password', [
         DataRequired()])
     submit = SubmitField('Submit')
+
 
 class CreateUser(FlaskForm):
     username = StringField('Username', [
@@ -52,19 +53,19 @@ class CreateUser(FlaskForm):
     phone = StringField('phone', render_kw={"placeholder": "+3800000000"})
     viber = StringField('viber')
     userType = SelectField('Type',
-        choices=[
-            ('parent', u'Родитель'),
-            ('admin', u'Админ'),
-            ('child', u'Ребёнок'),
-            ('teacher', u'Преподаватель'),
-            ('tutor', u'Тьютор'),
-            ('zavhoz', u'Завхоз'),
-            ('chef', u'Повар'),
-            ('accountant', u'Бахгалтер'),
-            ('financist', u'Финансист'),
-            ('lawyer', u'Юрист'),
-            ('medic', u'Медик'),
-            ('psychologist', u'Психолог')])
+                           choices=[
+                               ('parent', u'Родитель'),
+                               ('admin', u'Админ'),
+                               ('child', u'Ребёнок'),
+                               ('teacher', u'Преподаватель'),
+                               ('tutor', u'Тьютор'),
+                               ('zavhoz', u'Завхоз'),
+                               ('chef', u'Повар'),
+                               ('accountant', u'Бахгалтер'),
+                               ('financist', u'Финансист'),
+                               ('lawyer', u'Юрист'),
+                               ('medic', u'Медик'),
+                               ('psychologist', u'Психолог')])
     password = PasswordField('Password', [
         DataRequired()])
     avatar = FileField('image', [
@@ -73,8 +74,10 @@ class CreateUser(FlaskForm):
     ])
     submit = SubmitField('Submit')
 
+
 class CreateTeacherIndividual(FlaskForm):
-    studentUsername = StringField(u'Ученик(ца)', [DataRequired()], render_kw={"list": "childrenList", "autocomplete": "off"})
+    studentUsername = StringField(u'Ученик(ца)', [DataRequired()],
+                                  render_kw={"list": "childrenList", "autocomplete": "off"})
     timeSpent = IntegerField(u'Потраченное время (в минутах)', [DataRequired()], render_kw={"type": "number"})
     lessonDate = DateField(u'Дата урока', [DataRequired()], render_kw={"type": "date"})
     grade = IntegerField(u'Оценка', [DataRequired()], render_kw={"type": "number"})
@@ -82,9 +85,11 @@ class CreateTeacherIndividual(FlaskForm):
     comment = TextAreaField(u'Комментарий к уроку')
     submit = SubmitField('Submit')
 
+
 class GetIndividual(FlaskForm):
     timeBefore = DateField(u'До', [Optional()], render_kw={"type": "date"})
     timeAfter = DateField(u'Після', [Optional()], render_kw={"type": "date"})
     teacherUsername = StringField(u'Вчитель', [Optional()], render_kw={"list": "teachersList", "autocomplete": "off"})
-    studentUsername = StringField(u'Учень(иця)', [Optional()], render_kw={"list": "childrenList", "autocomplete": "off"})
+    studentUsername = StringField(u'Учень(иця)', [Optional()],
+                                  render_kw={"list": "childrenList", "autocomplete": "off"})
     submit = SubmitField(u'Застосувати')
