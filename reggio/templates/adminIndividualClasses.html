@@ -17,15 +17,23 @@
     </style>
     <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
     <div id='filter'>
-        {% if teacherList %}
-            <select id='teacherSelect'>
-                {% for teacher in teacherList %}
-                    <option>{{teacher.surname}} {{teacher.name}}</option>
+        <form method="POST">
+            <datalist id="childrenList">
+                {% for child in childrenList %}
+                    <option value="{{child[0]}}">{{child[1]}}</option>
                 {% endfor %}
-            </select>
-            <input type="date" name="" id="">
-            <input type="date" name="" id="">
-        {% endif %}
+            </datalist>
+            {{form.studentUsername.label}}{{form.studentUsername}}
+            <datalist id="teachersList">
+                {% for teacher in teacherList %}
+                    <option value="{{teacher[0]}}">{{teacher[1]}}</option>
+                {% endfor %}
+            </datalist>
+            {{form.teacherUsername.label}}{{form.teacherUsername}}
+            {{form.timeBefore.label}}{{form.timeBefore}}
+            {{form.timeAfter.label}}{{form.timeAfter}}
+            {{form.submit}}
+        </form>
     </div>
     <table search=true>
         <tr>

@@ -81,3 +81,10 @@ class CreateTeacherIndividual(FlaskForm):
     topic = StringField(u'Тема урока', [DataRequired()])
     comment = TextAreaField(u'Комментарий к уроку')
     submit = SubmitField('Submit')
+
+class GetIndividual(FlaskForm):
+    timeBefore = DateField(u'До', [Optional()], render_kw={"type": "date"})
+    timeAfter = DateField(u'Після', [Optional()], render_kw={"type": "date"})
+    teacherUsername = StringField(u'Вчитель', [Optional()], render_kw={"list": "teachersList", "autocomplete": "off"})
+    studentUsername = StringField(u'Учень(иця)', [Optional()], render_kw={"list": "childrenList", "autocomplete": "off"})
+    submit = SubmitField(u'Застосувати')

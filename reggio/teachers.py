@@ -8,14 +8,6 @@ from reggio.utils import *
 from reggio.forms import CreateTeacherIndividual
 
 
-def getChildren():
-    children = Child.query.all()
-    choices = [];
-    for child in children:
-        name = "%s %s" % (child.surname, child.name)
-        choices.append((child.username, name))
-    return choices
-
 def createIndividual(username, formChild):
     childName = formChild.surname+' '+formChild.name
     teacherName = current_user.surname + ' ' +current_user.name

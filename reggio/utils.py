@@ -2,6 +2,23 @@
 from flask import flash
 from flask_login import current_user
 
+from reggio.models import Child, Teacher
+
+def getChildren():
+    children = Child.query.all()
+    choices = [];
+    for child in children:
+        name = "%s %s" % (child.surname, child.name)
+        choices.append((child.username, name))
+    return choices
+
+def getTeachers():
+    teachers = Teacher.query.all()
+    choices = [];
+    for teacher in teachers:
+        name = "%s %s" % (teacher.surname, teacher.name)
+        choices.append((teacher.username, name))
+    return choices
 
 def defineMenu():
     if current_user.is_authenticated:

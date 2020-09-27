@@ -6,16 +6,26 @@ from reggio.models import individualClass, Teacher
 from reggio.utils import *
 
 
-@app.route('/admin/individualClasses')
+from reggio.forms import GetIndividual
+
+@app.route('/admin/individualClasses', methods=('GET', 'POST'))
 def adminIndividualClasses():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
-    individualClasses = individualClass.query.all()
+    GetIndividualForm = GetIndividual(csrf_enabled=False)
+    if GetIndividualForm.validate_on_submit():
+        # individualClass
+        flash(request.form)
+    else:
+        individualClasses = individualClass.query.all()
     individualClasses.sort(key=lambda r: r.creationDate, reverse=True)
-    teacherList = Teacher.query.all()
+    teacherList = getTeachers()
+    childrenList = getChildren()
     return render_template(
         'adminIndividualClasses.html',
         teacherList=teacherList,
+        form=GetIndividualForm,
+        childrenList=childrenList,
         individualClasses=individualClasses,
         title=u'Індивідулки',
         menu=defineMenu())
