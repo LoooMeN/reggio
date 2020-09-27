@@ -6,6 +6,8 @@
     <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <title>{{title}}</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {%block headerIncludes%}{%endblock%}
 </head>
 <body>
     {% include 'flash.html' %}
@@ -13,7 +15,7 @@
         <div class='errorBox shadow'>
             <div>
                 {% if current_user.is_authenticated %}
-                    <img style='width: 200px;' src="/{{ current_user.avatar }}">
+                    <img style='width: 200px; border-radius: 100px;' src="/{{ current_user.avatar }}">
                     <p>{{ current_user.name }}</p>
                     <p>{{ current_user.surname }}</p>
                 {% endif %}

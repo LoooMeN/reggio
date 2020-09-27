@@ -12,11 +12,11 @@ from reggio.utils import *
 def deleteSubTable(user):
     entity = '';
     if user.userType == 'child':
-        entity = db.session.merge(Child.query.filter_by(username=user.username).first())
+        entity = Child.query.filter_by(username=user.username).first()
     if user.userType == 'teacher':
-        entity = db.session.merge(Teacher.query.filter_by(username=user.username).first())
+        entity = Teacher.query.filter_by(username=user.username).first()
     if user.userType == 'parent':
-        entity = db.session.merge(Parent.query.filter_by(username=user.username).first())
+        entity = Parent.query.filter_by(username=user.username).first()
     
     if entity != '':
         db.session.delete(entity)
@@ -120,7 +120,7 @@ def deleteUser():
     if not checkPageAvailability([]):
         return redirect(url_for('main'))
     userID = request.args.get('id')
-    user = db.session.merge(User.query.filter_by(id=userID).first())
+    user = User.query.filter_by(id=userID).first()
     avatarFilename = os.path.split(user.avatar)[-1]
     if avatarFilename != 'defaultUserImage.png':
         os.remove(os.path.join(app.instance_path, user.avatar))
