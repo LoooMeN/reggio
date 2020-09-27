@@ -9,7 +9,7 @@ from flask_login import current_user, login_user, logout_user
 from werkzeug.utils import secure_filename
 
 from reggio import app, db
-from reggio.models import User, Child, Teacher, individualClass
+from reggio.models import User, Child, Teacher, IndividualClass
 from reggio.forms import SignInForm, CreateUser
 from reggio.utils import *
 import reggio.users

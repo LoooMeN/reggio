@@ -3,7 +3,7 @@ from flask import render_template, url_for, redirect, request
 from datetime import date
 
 from reggio import app, db
-from reggio.models import Teacher, Child, individualClass
+from reggio.models import Teacher, Child, IndividualClass
 from reggio.utils import *
 from reggio.forms import CreateTeacherIndividual
 
@@ -11,7 +11,7 @@ from reggio.forms import CreateTeacherIndividual
 def createIndividual(username, formChild):
     childName = formChild.surname+' '+formChild.name
     teacherName = current_user.surname + ' ' +current_user.name
-    newIndividual = individualClass(
+    newIndividual = IndividualClass(
         teacherUsername=current_user.username,
         teacherName=teacherName,
         studentUsername=username,
@@ -39,7 +39,7 @@ def teachersIndividualClasses():
         else:
             flash(u'Такої дитини немає у системі, будь ласка оберіть зі списку.')
         return redirect(url_for('teachersIndividualClasses'))
-    individuals = individualClass.query.all()
+    individuals = IndividualClass.query.all()
     individuals.sort(key=lambda r: r.lessonDate, reverse=True)
     return render_template('teachersIndividualClasses.html',
         title='Individual',
