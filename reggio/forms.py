@@ -41,7 +41,7 @@ def imageSizeValidator(min=-1, max=-1, directory='static'):
         if f:
             filename = secure_filename(f.filename)
             filepath = os.path.join(
-                app.instance_path, directory, filename
+                app.root_path, directory, filename
             )
             if os.path.exists(filepath):
                 raise ValidationError(nameMessage)

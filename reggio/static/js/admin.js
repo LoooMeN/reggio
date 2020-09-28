@@ -20,7 +20,7 @@ function deleteMany() {
         return
     }
 
-    axios.get('/admin/deleteIndividualClasses?api=1&ids='+toDel.join(';'))
+    axios.get('/admin/deleteIndividualClasses?ids='+toDel.join(';'))
     .then(response => {
         document.location.reload();
     })
@@ -28,6 +28,7 @@ function deleteMany() {
 
 function downloadMany() {
     let checkboxes = document.querySelectorAll('.rowSelect')
+    let preferredFilename = document.querySelector('#preferredFilename').value
 
     let toDownload = []
     checkboxes.forEach(checkbox => {
@@ -40,9 +41,11 @@ function downloadMany() {
         return
     }
 
-    axios.get('/admin/downloadIndividualClasses?api=1&ids='+toDownload.join(';'))
+    axios.get('/admin/createIndividualClassXLSX?ids='+toDownload.join(';'))
     .then(response => {
-        document.location.reload();
+        console.log(response.data)
+        window.open('/admin/downloadXLSX?preferredFilename='+preferredFilename+'&filename='+response.data)
+        axios.get('/admin/deleteXLSX?filename='+response.data)
     })
 }
 
