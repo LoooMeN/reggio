@@ -40,7 +40,7 @@
             {{form.timeAfter.label}}{{form.timeAfter}}
             {{form.submit}}
         </form>
-        <a href="{{url_for('adminIndividualClasses')}}"><button>Сброс</button></a>
+        <a href="{{url_for('adminIndividualClasses')}}"><button>Зкинути</button></a>
     </div>
     <table search=true>
         <tr>
@@ -70,5 +70,5 @@
         {%endfor%}
     </table>
     <button onclick='deleteMany()'>Видалити вибране</button>
-    <button>Завантажити вибране</button>
+    <button onclick="downloadMany()">Завантажити вибране</button>
 {% endblock %}

@@ -16,10 +16,31 @@ function deleteMany() {
         }
     })
     if (toDel.length <= 0) {
-        alert('Ви не обрали не одну індивідуалку');
+        alert('Ви не обрали жодну індивідуалку');
         return
     }
+
     axios.get('/admin/deleteIndividualClasses?api=1&ids='+toDel.join(';'))
+    .then(response => {
+        document.location.reload();
+    })
+}
+
+function downloadMany() {
+    let checkboxes = document.querySelectorAll('.rowSelect')
+
+    let toDownload = []
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            toDownload.push(checkbox.getAttribute('classid').toString())
+        }
+    })
+    if (toDownload.length <= 0) {
+        alert('Ви не обрали жодну індивідуалку');
+        return
+    }
+
+    axios.get('/admin/downloadIndividualClasses?api=1&ids='+toDownload.join(';'))
     .then(response => {
         document.location.reload();
     })
