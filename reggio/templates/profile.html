@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% block body %}
+    <script src="{{url_for('static', filename='js/users.js')}}"></script>
     <style>
         img {
             width: 50px;
@@ -14,72 +15,75 @@
             border: none;
         }
     </style>
-    <h1>User Profile</h1>
+    <h1>Мій Профіль</h1>
     <table>
         <tr>
-            <td>Имя</td>
-            <td>Фамилия</td>
-            <td>Почта</td>
+            <td>Ім'я</td>
+            <td>Прізвище</td>
+            <td>Пошта</td>
             <td>Телефон</td>
             <td>Вайбер</td>
             <td>Аватар</td>
         </tr>
         <tr>
-            <td>{{user.name}}</td>
-            <td>{{user.surname}}</td>
-            <td>{{user.email}}</td>
-            <td>{{user.phone}}</td>
-            <td>{{user.viber}}</td>
-            <td>{{user.avatar}}</td>
+            <td class='name text' >{{user.name}}</td>
+            <td class='surname text'>{{user.surname}}</td>
+            <td class='email text'>{{user.email}}</td>
+            <td class='phone text '>{{user.phone}}</td>
+            <td class='viber text link'><a href="{{user.viber}}">Посилання</a></td>
+            <td class='image'><img src='/{{user.avatar}}'></td>
+            <td onclick="editUser(this)">Редагувати</td>
         </tr>
     </table>
-    {% if hasIndividual(user.userType) %}
-        {% if not list(individuals)%}
-            <h3>Ви неуч</h3>
-        {% else %}
-            {% if user.userType == 'child' %}
-                <h3>Ваші Індивідуалки</h3>
-                <table>
+    {% if not individuals[0] %}
+        <h3>У вас не було індивідуалок останні 2 тижня</h3>
+    {% else %}
+        <h3>Ваші індивідуалки за останні 2 тижня</h3>
+        <table>
+        {% if user.userType == 'child' %}
+                <tr>
+                    <td>Вчитель</td>
+                    <td>Тема</td>
+                    <td>Оцінка</td>
+                    <td>Коментар</td>
+                    <td>Час</td>
+                    <td>Дата уроку</td>
+                </tr>
+                {% for individual in individuals %}
                     <tr>
-                        <td>Тема</td>
-                        <td>Оценка</td>
-                        <td>Коментарий</td>
-                        <td>Время</td>
-                        <td>Дата урока</td>
+                        <td>{{individual.teacherName}}</td>
+                        <td>{{individual.topic}}</td>
+                        <td>{{individual.grade}}</td>
+                        <td>{{individual.comment}}</td>
+                        <td>{{individual.timeSpent}}</td>
+                        <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
                     </tr>
-                    {% for individual in individuals %}
-                        <tr>
-                            <td>{{individual.topic}}</td>
-                            <td>{{individual.grade}}</td>
-                            <td>{{individual.comment}}</td>
-                            <td>{{individual.timeSpent}}</td>
-                            <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
-                        </tr>
-                    {%endfor%}
-                </table>
-                {% else %}
-                <h3>Ваші Індивідуалки</h3>
-                <table>
+                {%endfor%}
+            {% else %}
+                <tr>
+                    <td>Учень</td>
+                    <td>Тема</td>
+                    <td>Оцінка</td>
+                    <td>Коментар</td>
+                    <td>Час</td>
+                    <td>Дата уроку</td>
+                </tr>
+                {% for individual in individuals %}
                     <tr>
-                        <td>Студент</td>
-                        <td>Тема</td>
-                        <td>Оценка</td>
-                        <td>Коментарий</td>
-                        <td>Время</td>
-                        <td>Дата урока</td>
+                        <td>{{individual.studentName}}</td>
+                        <td>{{individual.topic}}</td>
+                        <td>{{individual.grade}}</td>
+                        <td>{{individual.comment}}</td>
+                        <td>{{individual.timeSpent}}</td>
+                        <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
                     </tr>
-                    {% for individual in individuals %}
-                        <tr>
-                            <td>{{individual.studentName}}</td>
-                            <td>{{individual.topic}}</td>
-                            <td>{{individual.grade}}</td>
-                            <td>{{individual.comment}}</td>
-                            <td>{{individual.timeSpent}}</td>
-                            <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
-                        </tr>
-                    {%endfor%}
-                </table>
-            {% endif %}
+                {%endfor%}
         {% endif %}
+        </table>
     {% endif %}
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("updateProfile")}}'+query;
+        }
+    </script>
 {% endblock %}

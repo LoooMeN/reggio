@@ -12,6 +12,6 @@ def children():
         return redirect(url_for('main'))
     children = Child.query.all()
     return render_template('children.html',
-        title='Children',
-        menu=defineMenu(),
-        children=children)
+                           title='Учні',
+                           menu=defineMenu(),
+                           children=children)

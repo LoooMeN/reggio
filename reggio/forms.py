@@ -10,20 +10,38 @@ from wtforms.validators import DataRequired, Email, Length, ValidationError, Opt
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from werkzeug.utils import secure_filename
 from reggio import app
-from reggio.models import Child
+from reggio.models import Child, Teacher
+
+
+def existanceValidator(entityType):
+    errorMessages = {
+        "teacher": u"Такого вчителя не існує.",
+        "child": u"Такого учня не існує."
+    }
+
+    def _existanceValidator(form, field):
+        username = field.data
+        selection = ''
+        if entityType == 'teacher':
+            selection = Teacher.query.filter_by(username=username).first()
+        else:
+            selection = Child.query.filter_by(username=username).first()
+        if not selection:
+            raise ValidationError(errorMessages[entityType])
+
+    return _existanceValidator
 
 
 def imageSizeValidator(min=-1, max=-1, directory='static'):
-    sizeMessage = u"Фото должно быть не меньше %d и не больше %d пикселей по обоим параметрам." % (min, max)
-    nameMessage = u"Фото с таким именем уже существует, переименуйте его пожалуйста."
-    
+    sizeMessage = u"Фото повинно бути не менше %d та не більше %d пікселів обом параметрам." % (min, max)
+    nameMessage = u"Фото з таким ім'ям уже існує, перейменуйте будьласка."
 
     def _imageSizeValidator(form, field):
         f = field.data
         if f:
             filename = secure_filename(f.filename)
             filepath = os.path.join(
-                app.instance_path, directory, filename
+                app.root_path, directory, filename
             )
             if os.path.exists(filepath):
                 raise ValidationError(nameMessage)
@@ -35,49 +53,62 @@ def imageSizeValidator(min=-1, max=-1, directory='static'):
 
     return _imageSizeValidator
 
+
 class SignInForm(FlaskForm):
-    username = StringField('Username', [
+    username = StringField('Юзернейм', [
         DataRequired()])
-    password = PasswordField('Password', [
+    password = PasswordField('Пароль', [
         DataRequired()])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Увійти')
+
 
 class CreateUser(FlaskForm):
-    username = StringField('Username', [
+    username = StringField('Юзернейм', [
         DataRequired()])
-    email = StringField('Email', [
+    email = StringField('Пошта', [
         DataRequired(), Email()])
-    name = StringField('Name')
-    surname = StringField('Surname')
-    phone = StringField('phone', render_kw={"placeholder": "+3800000000"})
-    viber = StringField('viber')
-    userType = SelectField('Type',
-        choices=[
-            ('parent', u'Родитель'),
-            ('admin', u'Админ'),
-            ('child', u'Ребёнок'),
-            ('teacher', u'Преподаватель'),
-            ('tutor', u'Тьютор'),
-            ('zavhoz', u'Завхоз'),
-            ('chef', u'Повар'),
-            ('accountant', u'Бахгалтер'),
-            ('financist', u'Финансист'),
-            ('lawyer', u'Юрист'),
-            ('medic', u'Медик'),
-            ('psychologist', u'Психолог')])
-    password = PasswordField('Password', [
+    name = StringField("Ім'я")
+    surname = StringField('Прізвище')
+    phone = StringField('Телефон', render_kw={"placeholder": "+3800000000"})
+    viber = StringField('Вайбер')
+    userType = SelectField('Тип',
+                           choices=[
+                               ('parent', u'Батьки'),
+                               ('admin', u'Адмін'),
+                               ('child', u'Учень'),
+                               ('teacher', u'Вчитель'),
+                               ('tutor', u'Репетитор'),
+                               ('zavhoz', u'Завхоз'),
+                               ('chef', u'Кухар'),
+                               ('accountant', u'Бахгалтер'),
+                               ('financist', u'Фінансист'),
+                               ('lawyer', u'Юрист'),
+                               ('medic', u'Медик'),
+                               ('psychologist', u'Психолог')])
+    password = PasswordField('Пароль', [
         DataRequired()])
-    avatar = FileField('image', [
+    avatar = FileField('Зоображення', [
         imageSizeValidator(min=190, max=500, directory=os.path.join('static', 'images', 'avatars')),
         FileAllowed(['jpg', 'png', 'jpeg'], u'Только картинки типов: jpg, png, jpeg!')
     ])
-    submit = SubmitField('Submit')
+    submit = SubmitField('Створити')
+
 
 class CreateTeacherIndividual(FlaskForm):
-    studentUsername = StringField(u'Ученик(ца)', [DataRequired()], render_kw={"list": "childrenList", "autocomplete": "off"})
-    timeSpent = IntegerField(u'Потраченное время (в минутах)', [DataRequired()], render_kw={"type": "number"})
-    lessonDate = DateField(u'Дата урока', [DataRequired()], render_kw={"type": "date"})
-    grade = IntegerField(u'Оценка', [DataRequired()], render_kw={"type": "number"})
-    topic = StringField(u'Тема урока', [DataRequired()])
-    comment = TextAreaField(u'Комментарий к уроку')
-    submit = SubmitField('Submit')
+    studentUsername = StringField(u'Учень(иця)', [DataRequired()],
+                                  render_kw={"list": "childrenList", "autocomplete": "off"})
+    timeSpent = IntegerField(u'Потрачений час (у хвилинах)', [DataRequired()], render_kw={"type": "number"})
+    lessonDate = DateField(u'Дата уроку', [DataRequired()], render_kw={"type": "date"})
+    grade = IntegerField(u'Оцінка', [DataRequired()], render_kw={"type": "number"})
+    topic = StringField(u'Тема уроку', [DataRequired()])
+    comment = TextAreaField(u'Комментар до уроку')
+    submit = SubmitField('Створити')
+
+
+class GetIndividual(FlaskForm):
+    timeBefore = DateField(u'До', [Optional()], render_kw={"type": "date"})
+    timeAfter = DateField(u'Після', [Optional()], render_kw={"type": "date"})
+    teacherUsername = StringField(u'Вчитель', [Optional(), existanceValidator('teacher')], render_kw={"list": "teachersList", "autocomplete": "off"})
+    studentUsername = StringField(u'Учень(иця)', [Optional(), existanceValidator('child')],
+                                  render_kw={"list": "childrenList", "autocomplete": "off"})
+    submit = SubmitField(u'Застосувати')

@@ -1,6 +1,11 @@
 {%extends 'main.html'%}
+
+{% block headerIncludes %}
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
 {% block body %}
-    <h1>Индивидуалки</h1>
+    <h1>Індивідуалки</h1>
     <style>
         img {
             width: 50px;
@@ -17,18 +22,29 @@
     </style>
     <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
     <div id='filter'>
-        {% if teacherList %}
-            <select id='teacherSelect'>
-                {% for teacher in teacherList %}
-                    <option>{{teacher.surname}} {{teacher.name}}</option>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <datalist id="childrenList">
+                {% for child in childrenList %}
+                    <option value="{{child[0]}}">{{child[1]}}</option>
                 {% endfor %}
-            </select>
-            <input type="date" name="" id="">
-            <input type="date" name="" id="">
-        {% endif %}
+            </datalist>
+            {{form.studentUsername.label}}{{form.studentUsername}}
+            <datalist id="teachersList">
+                {% for teacher in teacherList %}
+                    <option value="{{teacher[0]}}">{{teacher[1]}}</option>
+                {% endfor %}
+            </datalist>
+            {{form.teacherUsername.label}}{{form.teacherUsername}}
+            {{form.timeBefore.label}}{{form.timeBefore}}
+            {{form.timeAfter.label}}{{form.timeAfter}}
+            {{form.submit}}
+        </form>
+        <a href="{{url_for('adminIndividualClasses')}}"><button>Зкинути</button></a>
     </div>
     <table search=true>
         <tr>
+            <td><input type="checkbox" id="checkAll"></td>
             <td>Створено</td>
             <td>Вчитель</td>
             <td>Студент</td>
@@ -40,6 +56,7 @@
         </tr>
         {% for individualClass in individualClasses %}
             <tr searchable=true>
+                <td><input type="checkbox" classid={{individualClass.id}} class='rowSelect'></td>
                 <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
                 <td searchable=true>{{individualClass.teacherName}}</td>
                 <td searchable=true>{{individualClass.studentName}}</td>
@@ -48,8 +65,12 @@
                 <td searchable=true>{{individualClass.topic}}</td>
                 <td searchable=true>{{individualClass.comment}}</td>
                 <td searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</td>
-                <td><a href="{{url_for('deleteIndividualClasses')}}?id={{individualClass.id}}">delete</a></td>
+                <td><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}">Видалити</a></td>
             </tr>
         {%endfor%}
     </table>
+    <button onclick='deleteMany()'>Видалити вибране</button>
+    <label for="preferredFilename">Имя для файла</label>
+    <input type="text" name="preferredFilename" id="preferredFilename">
+    <button onclick="downloadMany()">Завантажити вибране</button>
 {% endblock %}

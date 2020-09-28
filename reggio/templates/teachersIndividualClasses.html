@@ -3,8 +3,6 @@
     <h1>Ваші індивідуалки</h1>
 
     <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-    {%if form%}
-    <form method='POST'>
         <style>
             img {
                 width: 50px;
@@ -32,7 +30,7 @@
                 <td>{{form.grade.label}}</td>
                 <td>{{form.topic.label}}</td>
                 <td>{{form.comment.label}}</td>
-                <td>Дата создания</td>
+                <td>Дата створення</td>
             </tr>
             {% for individual in individuals %}
                 <tr searchable=true>
@@ -47,12 +45,16 @@
             {%endfor%}
         </table>
 
+        {%if form%}
+        <form method='POST'>
+            {{ form.hidden_tag() }}
         <table>
             <datalist id="childrenList">
                 {% for child in children %}
                     <option value="{{child[0]}}">{{child[1]}}</option>
                 {% endfor %}
             </datalist>
+            <tr><td>{{form.studentUsername.label}}</td><td>{{form.studentUsername}}</td></tr>
             <tr><td>{{form.timeSpent.label}}</td><td>{{form.timeSpent}}</td></tr>
             <tr><td>{{form.lessonDate.label}}</td><td>{{form.lessonDate}}</td></tr>
             <tr><td>{{form.grade.label}}</td><td>{{form.grade}}</td></tr>
