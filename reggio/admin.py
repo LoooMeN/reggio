@@ -2,6 +2,7 @@
 import os
 import pathlib
 from datetime import datetime
+from os.path import dirname, abspath
 
 from flask import request, flash, redirect, url_for, render_template
 from sqlalchemy import and_
@@ -113,8 +114,8 @@ def downloadIndividualClasses():
         data["Коментар"].append(selectedToDownload.comment)
         data["Дата уроку"].append(selectedToDownload.lessonDate)
     DataFrame = pd.DataFrame(data)
-    # ПОФИКСИТЬ ПАТЧ
-    writer = pd.ExcelWriter('individualki.xlsx', engine='xlsxwriter')
+    filepath = os.path.join(app.instance_path, 'static', 'downloadTemp', "individual.xlsx")
+    writer = pd.ExcelWriter(filepath, engine='xlsxwriter')
     DataFrame.to_excel(writer, sheet_name='Individual')
     writer.save()
     return redirect(url_for('adminIndividualClasses'))
