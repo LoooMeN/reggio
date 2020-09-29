@@ -1,8 +1,10 @@
 # coding: utf-8
+import os
 from flask import flash
 from flask_login import current_user
-
+import sass
 from reggio.models import Child, Teacher
+
 
 def getChildren():
     children = Child.query.all()
@@ -12,6 +14,7 @@ def getChildren():
         choices.append((child.username, name))
     return choices
 
+
 def getTeachers():
     teachers = Teacher.query.all()
     choices = []
@@ -19,6 +22,7 @@ def getTeachers():
         name = "%s %s" % (teacher.surname, teacher.name)
         choices.append((teacher.username, name))
     return choices
+
 
 def defineMenu():
     menu = [(u"Головна", "main")]
@@ -46,7 +50,6 @@ def defineMenu():
         pass
     menu.append((u'Профіль', 'profile'))
     return menu
-
 
 def checkPageAvailability(accesGranted):
     if current_user.is_authenticated:
