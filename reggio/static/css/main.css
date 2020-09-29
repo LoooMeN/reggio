@@ -1,21 +1,96 @@
-html {
-    --main-bg-color: #B18B94;
-}
-
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-.errorBox {
-    border: 1px solid black;
-    margin-right: 25px;
-    width: 300px;
-    background-color: var(--main-bg-color);
-    display: flex;
-    justify-content: space-around;
-    flex-direction: column;
-    height: 100vh;
-    align-items: center;
-    box-sizing: border-box;
+.menuTopSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  justify-self: flex-start;
+}
+
+.menuBotSection {
+  width: 100%;
+  justify-self: flex-end;
+}
+
+.menuBox {
+  margin-right: 25px;
+  -webkit-box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
+          box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
+  width: 250px;
+  background-color: #CAAADE;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.collapsed {
+  margin-top: -200px;
+}
+
+.subMenu {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+.menuItemsWrapper {
+  width: 100%;
+}
+
+.menuItem {
+  overflow: hidden;
+  font-family: 'Roboto';
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 40px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.menuItem p {
+  font-size: 17px;
+}
+
+.menuItem img {
+  width: 22px;
+  height: 22px;
+  margin-right: 16px;
+  margin-left: 30px;
+}
+
+.menuItem:hover {
+  background-color: #E6B7EE;
+  border-left: 4px solid #32D7A1;
+}
+
+.delimeter {
+  width: 100%;
+  border: 1px solid #5C0B8D;
 }

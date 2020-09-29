@@ -1,10 +1,18 @@
-{% extends 'main.html' %}
-{%block body%}
-<h2>Авторизація</h2>
-<form method='POST'>
-    {{ signinForm.hidden_tag() }}
-    <div>{{signinForm.username.label}}{{signinForm.username}}</div>
-    <div>{{signinForm.password.label}}{{signinForm.password}}</div>
-    {{signinForm.submit}}
-</form>
-{%endblock%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    {% include 'flash.html' %}
+    <h2>Авторизація</h2>
+    <form method='POST'>
+        {{ signinForm.hidden_tag() }}
+        <div>{{signinForm.username.label}}{{signinForm.username}}</div>
+        <div>{{signinForm.password.label}}{{signinForm.password}}</div>
+        {{signinForm.submit}}
+    </form>    
+</body>
+</html>

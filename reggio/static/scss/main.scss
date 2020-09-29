@@ -1,0 +1,78 @@
+$base-color: #CAAADE;
+$secondary-color: #5C0B8D;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.menuTopSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-self: flex-start;
+}
+
+.menuBotSection {
+    width: 100%;
+    justify-self: flex-end;
+}
+
+
+.menuBox {
+    margin-right: 25px;
+    box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
+    width: 250px;
+    background-color: $base-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+}
+
+.collapsed {
+    margin-top: -200px;
+}
+
+.subMenu {
+    transition: all 0.5s;
+}
+
+.menuItemsWrapper {
+    width: 100%;
+}
+
+.menuItem {
+    overflow: hidden;
+    font-family: 'Roboto';
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+
+    p {
+        font-size: 17px;
+    }
+
+    img {
+        width: 22px;
+        height: 22px;
+        margin-right: 16px;
+        margin-left: 30px;
+    }
+
+    &:hover {
+        background-color: #E6B7EE;
+        border-left: 4px solid #32D7A1;
+    }
+    // border: 1px solid red;
+}
+
+.delimeter {
+    width: 100%;
+    border: 1px solid $secondary-color;
+}

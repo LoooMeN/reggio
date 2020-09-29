@@ -50,9 +50,7 @@ def login():
         return redirect(url_for('main'))
     return render_template(
         'login.html',
-        signinForm=signinForm,
-        title='Авторизація',
-        menu=defineMenu())
+        signinForm=signinForm)
 
 @app.route('/logout')
 def logout():

@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <title>{{title}}</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     {%block headerIncludes%}{%endblock%}
@@ -12,26 +14,42 @@
 <body>
     {% include 'flash.html' %}
     <div style='display: flex; margin: 0;'>
-        <div class='errorBox shadow'>
-            <div>
+        <div class='menuBox'>
+            <div class="menuTopSection">
                 {% if current_user.is_authenticated %}
-                    <img style='width: 200px; border-radius: 100px;' src="/{{ current_user.avatar }}">
+                    <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
                     <p>{{ current_user.name }}</p>
                     <p>{{ current_user.surname }}</p>
                 {% endif %}
+                <div class="delimeter"></div>
             </div>
+            <div class="menuItemsWrapper">
             {% for menuItem in menu %}
                 {% if menuItem[1] is mapping %}
-                    <div>
-                        <h3>{{menuItem[0]}}</h3>
-                        {% for name, link in menuItem[1].items() %}
-                            <p><a style="color: black; text-decoration: none;" href="{{url_for(link)}}">{{name}}</a></p>
-                        {% endfor %}
-                    </div>
+                <div class="menuItem hasSubMenu">
                 {% else %}
-                    <p><a style="color: black; text-decoration: none;" href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
+                <div class="menuItem">
                 {% endif %}
+                    <img src="{{url_for('static', filename='images/icons/peopleIcon.svg')}}" alt="">
+                    <div>
+                        {% if menuItem[1] is mapping %}
+                            <p>{{menuItem[0]}}</p>
+                            <div class="subMenu collapsed">
+                                {% for name, link in menuItem[1].items() %}
+                                    <p><a style="color: black; text-decoration: none;" href="{{url_for(link)}}">{{name}}</a></p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p><a style="color: black; text-decoration: none;" href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
+                        {% endif %}
+                    </div>
+                </div>
             {% endfor %}
+            </div>
+            <div class="menuBotSection">
+                <div class="delimeter"></div>
+                <p><a style="color: black; text-decoration: none;" href="{{url_for('logout')}}">Вийти</a></p>
+            </div>
         </div>
         <div>{%block body%}{%endblock%}</div>
     </div>
