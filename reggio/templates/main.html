@@ -27,7 +27,11 @@
         {% for menuItem in menu %}
         <div>
             <div class="menuItem">
-                <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/peopleIcon.svg')}}" alt="">
+                {% if menuItem[2] %}
+                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                {% else %}
+                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/peopleIcon.svg')}}" alt="">
+                {% endif %}
                 {% if menuItem[1] is mapping %}
                     <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
                         <p>{{menuItem[0]}}</p>

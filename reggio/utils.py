@@ -33,7 +33,7 @@ def defineMenu():
         ])
     elif current_user.userType == 'superAdmin':
         menu.extend([
-            (u"Користувачі", "users"),
+            (u"Користувачі", "users", 'peopleIcon'),
             (u"Учні", "children"),
             (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
             (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}),
