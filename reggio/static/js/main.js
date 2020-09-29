@@ -1,14 +1,17 @@
 function handleCollapsedMenuItems() {
-    let menuItemsWithSubmenu = document.querySelectorAll('.hasSubMenu');
+    let menuItemsWithSubmenu = document.querySelectorAll('.dropdownArrow');
     
     menuItemsWithSubmenu.forEach(menuItem => {
-        menuItem.addEventListener('click', () => {
-            let subMenu = menuItem.querySelector('.subMenu')
-            if (subMenu.classList.contains('collapsed')) {
-                console.log('test')
-                subMenu.classList.remove('collapsed')
+        menuItem.addEventListener('click', (event) => {
+            parent = menuItem.parentElement.parentElement.parentElement
+            let elements = parent.querySelector('.subMenu')
+            let selectedMenuItem = parent.querySelector('.menuItem')
+            if (elements.classList.contains('collapsed')) {
+                elements.classList.remove('collapsed')
+                selectedMenuItem.classList.add('menuItemHovered')
             } else {
-                subMenu.classList.add('collapsed')
+                elements.classList.add('collapsed')
+                selectedMenuItem.classList.remove('menuItemHovered')
             }
         })
     })

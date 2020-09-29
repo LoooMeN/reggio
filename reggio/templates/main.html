@@ -13,45 +13,53 @@
 </head>
 <body>
     {% include 'flash.html' %}
-    <div style='display: flex; margin: 0;'>
-        <div class='menuBox'>
-            <div class="menuTopSection">
-                {% if current_user.is_authenticated %}
-                    <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
-                    <p>{{ current_user.name }}</p>
-                    <p>{{ current_user.surname }}</p>
-                {% endif %}
-                <div class="delimeter"></div>
-            </div>
-            <div class="menuItemsWrapper">
-            {% for menuItem in menu %}
+    <div class='menuBox'>
+
+
+        <div class="menuTopSection">
+            {% if current_user.is_authenticated %}
+                <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
+                <p class='prettyFont uppercase'>{{ current_user.name }} {{ current_user.surname }}</p>
+            {% endif %}
+        </div>
+
+        <div class="menuItemsWrapper">
+        {% for menuItem in menu %}
+        <div>
+            <div class="menuItem">
+                <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/peopleIcon.svg')}}" alt="">
                 {% if menuItem[1] is mapping %}
-                <div class="menuItem hasSubMenu">
-                {% else %}
-                <div class="menuItem">
-                {% endif %}
-                    <img src="{{url_for('static', filename='images/icons/peopleIcon.svg')}}" alt="">
-                    <div>
-                        {% if menuItem[1] is mapping %}
-                            <p>{{menuItem[0]}}</p>
-                            <div class="subMenu collapsed">
-                                {% for name, link in menuItem[1].items() %}
-                                    <p><a style="color: black; text-decoration: none;" href="{{url_for(link)}}">{{name}}</a></p>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <p><a style="color: black; text-decoration: none;" href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
-                        {% endif %}
+                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                        <p>{{menuItem[0]}}</p>
+                        <div class="dropdownArrow">
+                            <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}" alt="">
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% else %}
+                    <p><a href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
+                {% endif %}
             </div>
-            <div class="menuBotSection">
-                <div class="delimeter"></div>
-                <p><a style="color: black; text-decoration: none;" href="{{url_for('logout')}}">Вийти</a></p>
+            <div class="subMenu collapsed">
+            {% if menuItem[1] is mapping %}
+                {% for name, link in menuItem[1].items() %}
+                <div class="subMenuItem">
+                    <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/subMenuArrow.svg')}}" alt="">
+                    <p><a href="{{url_for(link)}}">{{name}}</a></p>
+                </div>
+                {% endfor %}
+            {% endif %}
             </div>
         </div>
-        <div>{%block body%}{%endblock%}</div>
+        {% endfor %}
+        </div>
+
+
+        <div class="menuBotSection">
+            <p><a class='prettyFont uppercase' href="{{url_for('logout')}}">Вийти</a></p>
+        </div>
+
+
     </div>
+    <div>{%block body%}{%endblock%}</div>
 </body>
 </html>
