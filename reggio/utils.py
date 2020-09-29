@@ -25,30 +25,30 @@ def getTeachers():
 
 
 def defineMenu():
-    menu = [(u"Головна", "main")]
+    menu = [(u"Головна", "main", 'peopleIcon')]
     if current_user.userType == 'admin':
         menu.extend([
-            (u"Користувачі", "users"),
-            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"})
+            (u"Користувачі", "users", 'peopleIcon'),
+            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}, 'peopleIcon', 'subMenuArrow')
         ])
     elif current_user.userType == 'superAdmin':
         menu.extend([
             (u"Користувачі", "users", 'peopleIcon'),
-            (u"Учні", "children"),
-            (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
-            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}),
-            (u"Батьки", {u"Список": "parent"}),
-            ("resetDB", "resetDB")
+            (u"Учні", "children", 'peopleIcon'),
+            (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon', 'subMenuArrow'),
+            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses", }, 'peopleIcon', 'subMenuArrow'),
+            (u"Батьки", {u"Список": "parent"}, 'peopleIcon', 'subMenuArrow'),
+            ("resetDB", "resetDB", 'peopleIcon')
         ])
     elif current_user.userType == 'teacher':
         menu.extend([
-            (u"Вчителі", {u"Индивидуалки": "teachersIndividualClasses"}),
+            (u"Вчителі", {u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
         ])
     elif current_user.userType == 'parent':
-        menu.append((u"Батьки", {u"Список": "parent"}))
+        menu.append((u"Батьки", {u"Список": "parent"}, 'peopleIcon', 'subMenuArrow'))
     else:
         pass
-    menu.append((u'Профіль', 'profile'))
+    menu.append((u'Профіль', 'profile', 'peopleIcon'))
     return menu
 
 def checkPageAvailability(accesGranted):

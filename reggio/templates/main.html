@@ -27,16 +27,12 @@
         {% for menuItem in menu %}
         <div>
             <div class="menuItem">
-                {% if menuItem[2] %}
                     <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
-                {% else %}
-                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/peopleIcon.svg')}}" alt="">
-                {% endif %}
                 {% if menuItem[1] is mapping %}
                     <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
                         <p>{{menuItem[0]}}</p>
                         <div class="dropdownArrow">
-                            <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}" alt="">
+                            <img src="{{url_for('static', filename='images/icons/'+menuItem[3]+'.svg')}}" alt="">
                         </div>
                     </div>
                 {% else %}
@@ -47,7 +43,7 @@
             {% if menuItem[1] is mapping %}
                 {% for name, link in menuItem[1].items() %}
                 <div class="subMenuItem">
-                    <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/subMenuArrow.svg')}}" alt="">
+                    <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/'+menuItem[3]+'.svg')}}" alt="">
                     <p><a href="{{url_for(link)}}">{{name}}</a></p>
                 </div>
                 {% endfor %}
