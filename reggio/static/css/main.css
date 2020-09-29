@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @font-face {
   font-family: "Mrs White W00 Regular";
   src: url("/static/fonts/mrsWhite/4896f970151bd586455b78cc1b970bef.eot");
@@ -190,3 +191,6 @@ body {
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+=======
+*{margin:0;padding:0}.menuTopSection{display:flex;flex-direction:column;width:100%;justify-self:flex-start}.menuBotSection{width:100%;justify-self:flex-end}.menuBox{margin-right:25px;box-shadow:2px 3px 3px rgba(96,39,42,0.53);width:250px;background-color:#CAAADE;display:flex;flex-direction:column;justify-content:center;height:100vh;align-items:center}.collapsed{margin-top:-200px}.subMenu{transition:all 0.5s}.menuItemsWrapper{width:100%}.menuItem{overflow:hidden;font-family:'Roboto';position:relative;display:flex;justify-content:flex-start;align-items:center;min-height:40px;width:100%;box-sizing:border-box}.menuItem p{font-size:17px}.menuItem img{width:22px;height:22px;margin-right:16px;margin-left:30px}.menuItem:hover{background-color:#E6B7EE;border-left:4px solid #32D7A1}.delimeter{width:100%;border:1px solid #5C0B8D}
+>>>>>>> d8e279bb37c994d267b9f3cca9367538f2c30627
