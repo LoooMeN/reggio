@@ -13,42 +13,54 @@
 </head>
 <body>
     {% include 'flash.html' %}
+    <div id="showMenu" class="showMenu">
+        <img src="{{url_for('static', filename='images/icons/hamburg.svg')}}">
+    </div>
     <div class='menuBox'>
 
-
         <div class="menuTopSection">
-            {% if current_user.is_authenticated %}
+            <div class="collapseTrigger" id='collapseTrigger'>
+                <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}">
+            </div>
+            <a href="{{url_for('profile')}}">
                 <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
-                <p class='prettyFont uppercase'>{{ current_user.name }} {{ current_user.surname }}</p>
-            {% endif %}
+            </a>
+            <p class='prettyFont uppercase'>{{ current_user.name }} {{ current_user.surname }}</p>
         </div>
 
         <div class="menuItemsWrapper">
         {% for menuItem in menu %}
         <div>
-            <div class="menuItem">
-                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
-                {% if menuItem[1] is mapping %}
-                    <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
-                        <p>{{menuItem[0]}}</p>
-                        <div class="dropdownArrow">
-                            <img src="{{url_for('static', filename='images/icons/'+menuItem[3]+'.svg')}}" alt="">
-                        </div>
-                    </div>
-                {% else %}
-                    <p><a href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
-                {% endif %}
-            </div>
-            <div class="subMenu collapsed">
             {% if menuItem[1] is mapping %}
-                {% for name, link in menuItem[1].items() %}
-                <div class="subMenuItem">
-                    <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/'+menuItem[3]+'.svg')}}" alt="">
-                    <p><a href="{{url_for(link)}}">{{name}}</a></p>
+            <div class="menuItem">
+                <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                    <p>{{menuItem[0]}}</p>
+                    <div class="dropdownArrow">
+                        <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}" alt="">
+                    </div>
                 </div>
-                {% endfor %}
-            {% endif %}
             </div>
+            {% else %}
+            <a href="{{url_for(menuItem[1])}}">
+                <div class="menuItem">
+                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                    <p>{{menuItem[0]}}</p>
+                </div>
+            </a>
+            {% endif %}
+            {% if menuItem[1] is mapping %}
+            <div class="subMenu collapsed">
+                {% for name, link in menuItem[1].items() %}
+                <a href="{{url_for(link)}}">
+                    <div class="subMenuItem">
+                        <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/subMenuArrow.svg')}}" alt="">
+                        <p>{{name}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
         </div>
@@ -60,6 +72,6 @@
 
 
     </div>
-    <div>{%block body%}{%endblock%}</div>
+    <div class="contentMainBody">{%block body%}{%endblock%}</div>
 </body>
 </html>

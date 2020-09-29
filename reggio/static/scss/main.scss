@@ -20,6 +20,7 @@ $outline-color: #32D7A1;
 
 body {
     display: flex;
+    position: relative;
 }
 
 .uppercase {
@@ -31,15 +32,18 @@ body {
 }
 
 .menuBox {
-    margin-right: 25px;
+    margin-right: 35px;
     box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
-    width: 250px;
+    min-width: 250px;
     background-color: $base-color;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100vh;
+    position: relative;
+    transition: all 0.3s;
     align-items: center;
+    left: 0;
 
     a {
         color: black;
@@ -59,11 +63,39 @@ body {
     }
 
     .menuTopSection {
+        position: relative;
         border-bottom: 2px solid $separation-color;
         height: 180px;
     
         img {
             margin-bottom: 16px;
+        }
+
+        p {
+            width: 200px;
+            text-align: center;
+            line-height: 100%;
+        }
+
+        .collapseTrigger {
+            position: absolute;
+            top: 35px;
+            right: -25px;
+            width: 50px;
+            height: 50px;
+            border-radius: 100px;
+            border: 3px solid $base-color;
+            background-color: lighten($secondary-color, $amount: 10);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 22px;
+                height: 12px;
+                margin: 0;
+                transform: rotateZ(90deg);
+            }
         }
     }
 
@@ -85,6 +117,7 @@ body {
         justify-content: flex-start;
         align-items: center;
         min-height: 40px;
+        cursor: pointer;
         width: 100%;
         box-sizing: border-box;
     
@@ -106,6 +139,7 @@ body {
         }
     
         .dropdownArrow {
+            transition: transform 0.2s;
             img {
                 width: 15px;
                 height: 8px;
@@ -124,6 +158,10 @@ body {
         background-color: $secondary-color;
         border-left: 4px solid $outline-color;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+
+        .dropdownArrow {
+            transform: rotateZ(180deg);
+        }
     }
     
     .collapsed {
@@ -158,3 +196,31 @@ body {
     }
 }
 
+.showMenu {
+    background-color: $base-color;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.collapsedMenu {
+    min-width: 50px;
+    left: -250px;
+    margin-right: -100px;
+}
+
+.contentMainBody {
+    height: 100vh;
+    width: 100%;
+    overflow-y: scroll;
+}
