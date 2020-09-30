@@ -1,55 +1,46 @@
 {%extends 'main.html'%}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+<script src="{{url_for('static', filename='js/users.js')}}"></script>
+{%endblock%}
+
 {% block body %}
-    <script src="{{url_for('static', filename='js/users.js')}}"></script>
-    <style>
-        img {
-            width: 50px;
-        }
-
-        td {
-            border: 1px solid black;
-            padding: 0 20px;
-        }
-
-        tr:first-child td {
-            border: none;
-        }
-    </style>
-
-    <h1>Користувачі</h1>
-    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-
-    <table search=true>
-        <tr>
-            <td>{{form.username.label}}</td>
-            <td>{{form.email.label}}</td>
-            <td>{{form.userType.label}}</td>
-            <td>{{form.name.label}}</td>
-            <td>{{form.surname.label}}</td>
-            <td>{{form.phone.label}}</td>
-            <td>{{form.viber.label}}</td>
-            <td>{{form.avatar.label}}</td>
-        </tr>
-    {% for user in users %}
-        {% if user.userType != 'superAdmin'%}
-            <tr searchable=true id={{user.id}}>
-                <td searchable=true class='username'>{{user.username}}</td>
-                <td searchable=true class='email text'>{{user.email}}</td>
-                <td searchable=true class='select'>{{user.userType}}</td>
-                <td searchable=true class='name text'>{{user.name}}</td>
-                <td searchable=true class='surname text'>{{user.surname}}</td>
-                <td searchable=true class='phone text'>{{user.phone}}</td>
-                <td class='viber text link'><a href="{{user.viber}}">link</a></td>
-                <td class='image'><img src='{{user.avatar}}'></td>
-                <td onclick="editUser(this)">Редагувати</td>
-                <td><a href="{{url_for('deleteUser')}}?id={{user.id}}">Видалити</a></td>
+    <div>
+        <h1>Користувачі</h1>
+        <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
+        <table search=true>
+            <tr>
+                <td>{{form.username.label}}</td>
+                <td>{{form.email.label}}</td>
+                <td>{{form.userType.label}}</td>
+                <td>{{form.name.label}}</td>
+                <td>{{form.surname.label}}</td>
+                <td>{{form.phone.label}}</td>
+                <td>{{form.viber.label}}</td>
+                <td>{{form.avatar.label}}</td>
             </tr>
-        {%endif%}
-    {%endfor%}
-    </table>
-    <br><br><br><br>
+        {% for user in users %}
+            {% if user.userType != 'superAdmin'%}
+                <tr searchable=true id={{user.id}}>
+                    <td searchable=true class='username'>{{user.username}}</td>
+                    <td searchable=true class='email text'>{{user.email}}</td>
+                    <td searchable=true class='select'>{{user.userType}}</td>
+                    <td searchable=true class='name text'>{{user.name}}</td>
+                    <td searchable=true class='surname text'>{{user.surname}}</td>
+                    <td searchable=true class='phone text'>{{user.phone}}</td>
+                    <td class='viber text link'><a href="{{user.viber}}">link</a></td>
+                    <td class='image'><img src='{{user.avatar}}'></td>
+                    <td onclick="editUser(this)">Редагувати</td>
+                    <td><a href="{{url_for('deleteUser')}}?id={{user.id}}">Видалити</a></td>
+                </tr>
+            {%endif%}
+        {%endfor%}
+        </table>
+    </div>
     {%if form%}
     <form method='POST' enctype="multipart/form-data">
+        <h2>Додати користувача</h2>
         {{ form.hidden_tag() }}
         <table>
             <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>

@@ -1,0 +1,19 @@
+.contentMainBody {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    img {
+        width: 50px;
+    }
+
+    td {
+        border: 1px solid black;
+        padding: 0 20px;
+        max-width: 130px;
+    }
+
+    tr:first-child td {
+        border: none;
+    }
+}

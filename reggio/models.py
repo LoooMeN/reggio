@@ -24,6 +24,7 @@ class Child(db.Model):
     avatar = db.Column(db.String(255))
     name = db.Column(db.String(120))
     surname = db.Column(db.String(120))
+    parents = db.Column(db.String(120))
 
 
 class Teacher(db.Model):
@@ -41,6 +42,7 @@ class Parent(db.Model):
     avatar = db.Column(db.String(255))
     name = db.Column(db.String(120))
     surname = db.Column(db.String(120))
+    children = db.Column(db.String(120))
 
 
 class IndividualClass(db.Model):
