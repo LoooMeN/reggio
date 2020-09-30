@@ -123,7 +123,9 @@ def deleteXLSX():
 @app.route('/admin/downloadXLSX', methods=["GET"])
 def downloadXLSX():
     filename = request.args.get('filename')
-    preferredFilename = request.args.get('preferredFilename')
+    preferredFilename = "Individual"
+    if request.args.get('preferredFilename'):
+        preferredFilename = request.args.get('preferredFilename')
     filename = os.path.join(app.root_path, 'static', 'temp', filename)
     return send_file(filename, as_attachment=True, attachment_filename=preferredFilename+'.xlsx')
     # return 'Done'
@@ -134,7 +136,6 @@ def createIndividualClassXLSX():
     if not checkPageAvailability(['admin']):
         return redirect(url_for('main'))
     DataFrame = pd.DataFrame(createXLSX())
-    print(datetime.now())
     filepath = os.path.join(app.root_path, 'static', 'temp', "individual.xlsx")
     writer = pd.ExcelWriter(filepath, engine='xlsxwriter')
     DataFrame.to_excel(writer, sheet_name='Individual')
