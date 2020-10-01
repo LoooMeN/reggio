@@ -1,4 +1,7 @@
 {%extends 'main.html'%}
+{%block headerIncludes%}
+    <script src="{{url_for('static', filename='js/children.js')}}"></script>
+{%endblock%}
 {% block body %}
     <style>
         img {
@@ -27,7 +30,19 @@
             <td class='image'><img src='{{child.avatar}}'></td>
             <td searchable=true class='name text'>{{child.name}}</td>
             <td searchable=true class='surname text'>{{child.surname}}</td>
+            <datalist id="parentList">
+                {% for parent in parents %}
+                    <option value="{{parent[0]}}">{{parent[1]}}</option>
+                {% endfor %}
+            </datalist>
+            <td searchable=true class='parents text'>{{child.parents}}</td>
+            <td onclick="bindParent(this)">BindParent</td>
         </tr>
         {%endfor%}
     </table>
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("bindParent")}}'+query;
+        }
+    </script>
 {% endblock %}
