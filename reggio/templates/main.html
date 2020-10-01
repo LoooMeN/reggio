@@ -6,26 +6,22 @@
     <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <title>{{title}}</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     {%block headerIncludes%}{%endblock%}
 </head>
 <body>
     {% include 'flash.html' %}
-    <div id="showMenu" class="showMenu">
-        <img src="{{url_for('static', filename='images/icons/hamburg.svg')}}">
-    </div>
     <div class='menuBox'>
-
         <div class="menuTopSection">
             <div class="collapseTrigger" id='collapseTrigger'>
-                <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}">
+                <img src="{{url_for('static', filename='images/icons/hideMenu.svg')}}">
             </div>
             <a href="{{url_for('profile')}}">
                 <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
             </a>
-            <p class='prettyFont uppercase'>{{ current_user.name }} {{ current_user.surname }}</p>
+            <p>{{ current_user.name }} {{ current_user.surname }}</p>
         </div>
 
         <div class="menuItemsWrapper">
@@ -67,7 +63,7 @@
 
 
         <div class="menuBotSection">
-            <p><a class='prettyFont uppercase' href="{{url_for('logout')}}">Вийти</a></p>
+            <p><a href="{{url_for('logout')}}">Вийти</a></p>
         </div>
 
 

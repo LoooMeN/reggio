@@ -16,7 +16,6 @@ class User(db.Model, UserMixin):
     viber = db.Column(db.String(255))
     avatar = db.Column(db.String(255))
 
-
 class Child(db.Model):
     __tablename__ = 'child'
     id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -25,15 +24,6 @@ class Child(db.Model):
     name = db.Column(db.String(120))
     surname = db.Column(db.String(120))
     parents = db.Column(db.String(120))
-
-
-class Teacher(db.Model):
-    __tablename__ = 'teacher'
-    id = db.Column(db.Integer, primary_key=True, unique=True)
-    username = db.Column(db.String(80), nullable=False)
-    avatar = db.Column(db.String(255))
-    name = db.Column(db.String(120))
-    surname = db.Column(db.String(120))
 
 class Parent(db.Model):
     __tablename__ = 'parent'
@@ -44,6 +34,13 @@ class Parent(db.Model):
     surname = db.Column(db.String(120))
     children = db.Column(db.String(120))
 
+class Teacher(db.Model):
+    __tablename__ = 'teacher'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    username = db.Column(db.String(80), nullable=False)
+    avatar = db.Column(db.String(255))
+    name = db.Column(db.String(120))
+    surname = db.Column(db.String(120))
 
 class IndividualClass(db.Model):
     __tablename__ = 'individualClass'

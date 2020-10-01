@@ -75,8 +75,8 @@ def logout():
 def resetDB():
     db.drop_all()
     db.create_all()
-    admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='adminName',
-                 surname='adminSurname', password=generate_password_hash('123'),
+    admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='Кіт',
+                 surname='Василь', password=generate_password_hash('123'),
                  avatar=os.path.join('static', 'images', 'avatars', 'defaultUserImage.png'))
     db.session.add(admin)
 

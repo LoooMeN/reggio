@@ -1,0 +1,78 @@
+{%extends 'main.html'%}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+<script src="{{url_for('static', filename='js/users.js')}}"></script>
+{%endblock%}
+
+{% block body %}
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <h1>Користувачі</h1>
+            <div class="searchWrapper">
+                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук...">
+            </div>
+        </div>
+        <div class="tableWrapper">
+            <table search=true>
+                <tr>
+                    <th></th>
+                    <th>Піб</th>
+                    <th>{{form.email.label}}</th>
+                    <th>{{form.userType.label}}</th>
+                    <th>{{form.phone.label}}</th>
+                    <th>{{form.viber.label}}</th>
+                    <th></th>
+                </tr>
+                <tr class="spacer"></tr>
+            {% for user in users %}
+                {% if user.userType != 'superAdmin'%}
+                    <tr class="zebra" searchable=true id={{user.id}}>
+                        <td class='image'><img src='{{user.avatar}}'></td>
+                        <td searchable=true class='name text'>{{user.name}} {{user.surname}}</td>
+                        <td searchable=true class='email text'>{{user.email}}</td>
+                        <td searchable=true class='select'>{{user.userType}}</td>
+                        <td searchable=true class='phone text'>{{user.phone}}</td>
+                        <td class='viber text link'><a href="{{user.viber}}">Link</a></td>
+                        <td>
+                            <img class="editIcon" onclick="editUser(this)" src="{{url_for('static', filename='images/icons/editIcon.svg')}}">
+                            <a class="deleteIcon" href="{{url_for('deleteUser')}}?id={{user.id}}">
+                                <img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="spacer"></tr>
+                {%endif%}
+            {%endfor%}
+            </table>
+        </div>
+    </div>
+    {%if form%}
+    <div class="sideItem">
+        <div class="formWrapper">
+            <form method='POST' enctype="multipart/form-data">
+                <h2>Додати користувача</h2>
+                {{ form.hidden_tag() }}
+                <table>
+                    <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>
+                    <tr><td>{{form.password.label}}</td><td>{{form.password}}</td></tr>
+                    <tr><td>{{form.email.label}}</td><td>{{form.email}}</td></tr>
+                    <tr><td>{{form.name.label}}</td><td>{{form.name}}</td></tr>
+                    <tr><td>{{form.surname.label}}</td><td>{{form.surname}}</td></tr>
+                    <tr><td>{{form.phone.label}}</td><td>{{form.phone}}</td></tr>
+                    <tr><td>{{form.viber.label}}</td><td>{{form.viber}}</td></tr>
+                    <tr><td>{{form.userType.label}}</td><td>{{form.userType}}</td></tr>
+                    <tr><td>{{form.avatar.label}}</td><td>{{form.avatar}}</td></tr>
+                </table>
+                {{form.submit}}
+            </form>
+        </div>
+    </div>
+    {%endif%}
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("updateUser")}}'+query;
+        }
+    </script>
+{% endblock %}

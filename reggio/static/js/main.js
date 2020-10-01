@@ -21,15 +21,16 @@ function handleCollapsedMenuItems() {
 
 function handleCollapseMenu() {
     let trigger = document.querySelector('#collapseTrigger');
-    let showMenu = document.querySelector('#showMenu');
     let menu = document.querySelector('.menuBox');
 
     trigger.addEventListener('click', () => {
-        menu.classList.add('collapsedMenu')
-    })
-
-    showMenu.addEventListener('click', () => {
-        menu.classList.remove('collapsedMenu')
+        if (menu.classList.contains('collapsedMenu')) {
+            trigger.classList.remove('triggered')
+            menu.classList.remove('collapsedMenu')
+        } else {
+            trigger.classList.add('triggered')
+            menu.classList.add('collapsedMenu')
+        }
     })
 }
 
