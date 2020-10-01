@@ -3,7 +3,7 @@ import os
 from flask import flash
 from flask_login import current_user
 import sass
-from reggio.models import Child, Teacher
+from reggio.models import Child, Teacher, Parent
 
 
 def getChildren():
@@ -21,6 +21,14 @@ def getTeachers():
     for teacher in teachers:
         name = "%s %s" % (teacher.surname, teacher.name)
         choices.append((teacher.username, name))
+    return choices
+
+def getParents():
+    parents = Parent.query.all()
+    choices = []
+    for parent in parents:
+        name = "%s %s" % (parent.surname, parent.name)
+        choices.append((parent.username, name))
     return choices
 
 
