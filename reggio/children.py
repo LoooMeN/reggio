@@ -6,6 +6,34 @@ from reggio.models import Child, User, Parent
 from reggio.users import updateSubtables
 from reggio.utils import *
 
+
+def convertParents(name_username, to):
+    if to == "name":
+        if name_username is None:
+            return ''
+        parents = name_username.split(';')
+        parentsName = []
+        for parent in parents:
+            parentUsr = Parent.query.filter_by(username=parent).first()
+            if parentUsr is not None:
+                parentName = parentUsr.surname + " " + parentUsr.name
+                parentsName.append(parentName)
+        parentsName = ';'.join(parentsName)
+        return parentsName
+    else:
+        parentName = name_username.split(';')
+        parentsUsername = []
+        parents = Parent.query.all()
+        for parent in parents:
+            if parent.surname + " " + parent.name in parentName:
+                parentsUsername.append(parent.username)
+        parentsUsername = ';'.join(parentsUsername)
+        return parentsUsername
+
+
+app.jinja_env.globals.update(convertParents=convertParents)
+
+
 def validateParent(parentList):
     parentList = parentList.split(';')
     validList = []
@@ -35,7 +63,9 @@ def bindParent():
         return redirect(url_for('main'))
     userID = request.args.get('id')
     user = Child.query.filter_by(id=userID).first()
-    parents = validateParent(request.args.get('parents'))
+    print(request.args.get('parents'))
+    convert = convertParents(request.args.get('parents'), "username")
+    parents = validateParent(convert)
     user.parents = ';'.join(parents)
     for parent in parents:
         parent = Parent.query.filter_by(username=parent).first()
