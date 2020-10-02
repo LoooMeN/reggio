@@ -21,7 +21,7 @@ function sendRequest() {
     let newParent = inputField.value
     inputField.parentNode.removeChild(inputField)
     if(parent.innerHTML !== "None" || parent.innerHTML !== '')
-        query += '&parents='+parent.innerHTML + ";" + newParent;
+        query += '&parents='+parent.innerHTML + ';' + newParent;
     else
         query += '&parents='+ newParent;
     relocateUser(query);

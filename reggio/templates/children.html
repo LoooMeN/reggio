@@ -32,10 +32,10 @@
             <td searchable=true class='surname text'>{{child.surname}}</td>
             <datalist id="parentList">
                 {% for parent in parents %}
-                    <option value="{{parent[0]}}">{{parent[1]}}</option>
+                    <option value="{{parent[1]}}">{{parent[0]}}</option>
                 {% endfor %}
             </datalist>
-            <td searchable=true class='parents text'>{{child.parents}}</td>
+            <td searchable=true class='parents text'>{{ convertParents(child.parents, 'name') }}</td>
             <td onclick="bindParent(this)">BindParent</td>
         </tr>
         {%endfor%}
