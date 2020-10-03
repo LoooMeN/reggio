@@ -87,10 +87,11 @@ class CreateUser(FlaskForm):
                                ('psychologist', u'Психолог')])
     password = PasswordField('Пароль', [
         DataRequired()])
-    avatar = FileField('Зоображення', [
+    avatar = FileField('', [
         imageSizeValidator(min=190, max=500, directory=os.path.join('static', 'images', 'avatars')),
-        FileAllowed(['jpg', 'png', 'jpeg'], u'Только картинки типов: jpg, png, jpeg!')
-    ])
+        FileAllowed(['jpg', 'png', 'jpeg'], u'Только картинки типов: jpg, png, jpeg!')],
+        render_kw={'onchange': "previewFile()", 'class': "addAvatarHidden"},
+    )
     submit = SubmitField('Створити')
 
 

@@ -66,7 +66,8 @@ def updateUser():
     userID = request.args.get('id')
     user = User.query.filter_by(id=userID).first()
     user.name = request.args.get('name')
-    user.viber = request.args.get('viber')
+    if request.args.get('viber') != 'None':
+        user.viber = request.args.get('viber')
     user.surname = request.args.get('surname')
     user.phone = request.args.get('phone')
     user.email = request.args.get('email')

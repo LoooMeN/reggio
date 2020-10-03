@@ -20,21 +20,32 @@ import reggio.profile
 import reggio.parent
 
 
+def compileSCSS():
+    folderSCSS = os.path.join(app.root_path, 'static', 'scss')
+    folderCSS = os.path.join(app.root_path, 'static', 'css')
+    sass.compile(dirname=(folderSCSS, folderCSS),
+                 output_style='compressed')
+    return "stylesCompiled"
+
+app.jinja_env.globals.update(compileSCSS=compileSCSS)
+
+
 @app.route('/test')
 def test():
-    nowdate = datetime.today()
-    d = nowdate - timedelta(days=14)
-    flash(d < nowdate)
     return render_template(
         'main.html',
         title='Секас',
-        menu=defineMenu())
+        menu=defineMenu(),
+        scss=compileSCSS()
+    )
 
-@app.route('/') # dashboard if admin else logo prompt
+
+@app.route('/')  # dashboard if admin else logo prompt
 def main():
     if current_user.is_authenticated:
         return render_template('child.html', title='Головна', menu=defineMenu())
     return redirect(url_for('login'))
+
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
@@ -50,9 +61,8 @@ def login():
         return redirect(url_for('main'))
     return render_template(
         'login.html',
-        signinForm=signinForm,
-        title='Авторизація',
-        menu=defineMenu())
+        signinForm=signinForm)
+
 
 @app.route('/logout')
 def logout():
@@ -60,11 +70,14 @@ def logout():
         logout_user()
     return redirect(url_for('login'))
 
+
 @app.route('/resetdb')
 def resetDB():
     db.drop_all()
     db.create_all()
-    admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='adminName', surname='adminSurname', password=generate_password_hash('123'), avatar=os.path.join('static', 'images', 'avatars', 'defaultUserImage.png'))
+    admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='Кіт',
+                 surname='Василь', password=generate_password_hash('123'),
+                 avatar=os.path.join('static', 'images', 'avatars', 'defaultUserImage.png'))
     db.session.add(admin)
 
     children = []
@@ -126,12 +139,13 @@ def resetDB():
     for childItem in children:
         teacher = teachers[randrange(5)]
         teacherUsername = teacher.username
-        teacherName = teacher.surname+' '+teacher.name
+        teacherName = teacher.surname + ' ' + teacher.name
         studentUsername = childItem.username
         studentName = childItem.surname + ' ' + childItem.name
         timeSpent = randrange(15, 45)
-        creationDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
-        lessonDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
+        creationDate = str(randrange(2010, 2021)) + '-' + str(randrange(1, 13)) + '-' + str(
+            randrange(1, 28)) + ' 00:00:0'
+        lessonDate = str(randrange(2010, 2021)) + '-' + str(randrange(1, 13)) + '-' + str(randrange(1, 28)) + ' 00:00:0'
         grade = randrange(12)
         topic = 'flexi'
         individuals.append(IndividualClass(

@@ -4,36 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <title>{{title}}</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     {%block headerIncludes%}{%endblock%}
 </head>
 <body>
     {% include 'flash.html' %}
-    <div style='display: flex; margin: 0;'>
-        <div class='errorBox shadow'>
-            <div>
-                {% if current_user.is_authenticated %}
-                    <img style='width: 200px; border-radius: 100px;' src="/{{ current_user.avatar }}">
-                    <p>{{ current_user.name }}</p>
-                    <p>{{ current_user.surname }}</p>
-                {% endif %}
+    <div class='menuBox'>
+        <div class="menuTopSection">
+            <div class="collapseTrigger" id='collapseTrigger'>
+                <img src="{{url_for('static', filename='images/icons/hideMenu.svg')}}">
             </div>
-            {% for menuItem in menu %}
-                {% if menuItem[1] is mapping %}
-                    <div>
-                        <h3>{{menuItem[0]}}</h3>
-                        {% for name, link in menuItem[1].items() %}
-                            <p><a style="color: black; text-decoration: none;" href="{{url_for(link)}}">{{name}}</a></p>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p><a style="color: black; text-decoration: none;" href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
-                {% endif %}
-            {% endfor %}
+            <a href="{{url_for('profile')}}">
+                <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
+            </a>
+            <p>{{ current_user.name }} {{ current_user.surname }}</p>
         </div>
-        <div>{%block body%}{%endblock%}</div>
+
+        <div class="menuItemsWrapper">
+        {% for menuItem in menu %}
+        <div>
+            {% if menuItem[1] is mapping %}
+            <div class="menuItem">
+                <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                    <p>{{menuItem[0]}}</p>
+                    <div class="dropdownArrow">
+                        <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}" alt="">
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <a href="{{url_for(menuItem[1])}}">
+                <div class="menuItem">
+                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                    <p>{{menuItem[0]}}</p>
+                </div>
+            </a>
+            {% endif %}
+            {% if menuItem[1] is mapping %}
+            <div class="subMenu collapsed">
+                {% for name, link in menuItem[1].items() %}
+                <a href="{{url_for(link)}}">
+                    <div class="subMenuItem">
+                        <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/subMenuArrow.svg')}}" alt="">
+                        <p>{{name}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        </div>
+
+
+        <div class="menuBotSection">
+            <p><a href="{{url_for('logout')}}">Вийти</a></p>
+        </div>
+
+
     </div>
+    <div class="contentMainBody">{%block body%}{%endblock%}</div>
 </body>
 </html>

@@ -1,69 +1,79 @@
 {%extends 'main.html'%}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+<script src="{{url_for('static', filename='js/users.js')}}"></script>
+{%endblock%}
+
 {% block body %}
-    <script src="{{url_for('static', filename='js/users.js')}}"></script>
-    <style>
-        img {
-            width: 50px;
-        }
-
-        td {
-            border: 1px solid black;
-            padding: 0 20px;
-        }
-
-        tr:first-child td {
-            border: none;
-        }
-    </style>
-
-    <h1>Користувачі</h1>
-    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-
-    <table search=true>
-        <tr>
-            <td>{{form.username.label}}</td>
-            <td>{{form.email.label}}</td>
-            <td>{{form.userType.label}}</td>
-            <td>{{form.name.label}}</td>
-            <td>{{form.surname.label}}</td>
-            <td>{{form.phone.label}}</td>
-            <td>{{form.viber.label}}</td>
-            <td>{{form.avatar.label}}</td>
-        </tr>
-    {% for user in users %}
-        {% if user.userType != 'superAdmin'%}
-            <tr searchable=true id={{user.id}}>
-                <td searchable=true class='username'>{{user.username}}</td>
-                <td searchable=true class='email text'>{{user.email}}</td>
-                <td searchable=true class='select'>{{user.userType}}</td>
-                <td searchable=true class='name text'>{{user.name}}</td>
-                <td searchable=true class='surname text'>{{user.surname}}</td>
-                <td searchable=true class='phone text'>{{user.phone}}</td>
-                <td class='viber text link'><a href="{{user.viber}}">link</a></td>
-                <td class='image'><img src='{{user.avatar}}'></td>
-                <td onclick="editUser(this)">Редагувати</td>
-                <td><a href="{{url_for('deleteUser')}}?id={{user.id}}">Видалити</a></td>
-            </tr>
-        {%endif%}
-    {%endfor%}
-    </table>
-    <br><br><br><br>
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <h1>Користувачі</h1>
+            <div class="searchWrapper">
+                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+            </div>
+        </div>
+        <div class="tableWrapper" search=true>
+            <div class="firstRow Row">
+                <div><p></p></div>
+                <div><p>Піб</p></div>
+                <div><p>Тип</p></div>
+                <div><p>Телефон</p></div>
+                <div><p>Емейл</p></div>
+                <div><p>Вайбер</p></div>
+                <div><p></p></div>
+            </div>
+            {% for user in users %}{% if user.userType != 'superAdmin'%}
+            <div class="Row" searchable=true id={{user.id}}>
+                <div class='image'><img src='{{user.avatar}}'></div>
+                <div searchable=true class='name text'>{{user.name}} {{user.surname}}</div>
+                <div searchable=true class='select'>{{user.userType}}</div>
+                <div searchable=true class='phone text'>{{user.phone}}</div>
+                <div searchable=true class='email text'>{{user.email}}</div>
+                <div class='viber text link'>
+                {% if not user.viber%}
+                    None
+                {% else %}
+                    <a target="_blank" href="{{user.viber}}">Link</a>
+                {% endif %}
+                </div>
+                <div class="actions">
+                    <img class="editIcon" onclick="editUser(this)" src="{{url_for('static', filename='images/icons/editIcon.svg')}}">
+                    <a class="deleteIcon" href="{{url_for('deleteUser')}}?id={{user.id}}">
+                        <img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}">
+                    </a>
+                </div>
+            </div>
+            {%endif%}{%endfor%}
+            </table>
+        </div>
+    </div>
     {%if form%}
-    <form method='POST' enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <table>
-            <tr><td>{{form.username.label}}</td><td>{{form.username}}</td></tr>
-            <tr><td>{{form.password.label}}</td><td>{{form.password}}</td></tr>
-            <tr><td>{{form.email.label}}</td><td>{{form.email}}</td></tr>
-            <tr><td>{{form.name.label}}</td><td>{{form.name}}</td></tr>
-            <tr><td>{{form.surname.label}}</td><td>{{form.surname}}</td></tr>
-            <tr><td>{{form.phone.label}}</td><td>{{form.phone}}</td></tr>
-            <tr><td>{{form.viber.label}}</td><td>{{form.viber}}</td></tr>
-            <tr><td>{{form.userType.label}}</td><td>{{form.userType}}</td></tr>
-            <tr><td>{{form.avatar.label}}</td><td>{{form.avatar}}</td></tr>
-        </table>
-        {{form.submit}}
-    </form>
+    <div class="sideItemWrapper">
+        <div class="sideItem">
+            <div class="sideItemTitle">
+                <h3>Додати нового користувача</h3>
+                <label for="avatar" class="addAvatar"><p>+</p></label>
+                <img class="avatarPreview" src="{{url_for('static', filename='images/avatars/defaultUserImage.png')}}" alt="avatar preview">
+            </div>
+            <div class="formWrapper">
+                <form method='POST' enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    {{form.avatar}}
+                    <div>{{form.username.label}}{{form.username}}</div>
+                    <div>{{form.password.label}}{{form.password}}</div>
+                    <div>{{form.email.label}}{{form.email}}</div>
+                    <div>{{form.name.label}}{{form.name}}</div>
+                    <div>{{form.surname.label}}{{form.surname}}</div>
+                    <div>{{form.phone.label}}{{form.phone}}</div>
+                    <div>{{form.viber.label}}{{form.viber}}</div>
+                    <div>{{form.userType.label}}{{form.userType}}</div>
+                    {{form.submit}}
+                </form>
+            </div>
+        </div>
+    </div>
     {%endif%}
     <script>
         function relocateUser(query) {
