@@ -1,0 +1,73 @@
+@import "variables.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+}
+
+body {    
+    background: linear-gradient(90.22deg, #C07026, #9E3A7B);
+
+    .main{
+        border: 1px solid black;
+        position: relative;
+    }
+
+    .authorization{
+        background-color: blanchedalmond;
+        height: 300px;
+        width: 450px;
+        margin: 10% 35%;
+        position: absolute;
+    }
+
+    .bgImage{
+        width: 100%;
+        height: 30%;
+        background: url("http://dl4.joxi.net/drive/2020/10/04/0033/1542/2213382/82/33c95ad8a7.jpg");
+
+        h2{
+         position: absolute;
+         margin: 12% 0 0 28%;
+        }
+    }
+    .other{
+        position: relative;
+        border: 1px solid black;
+        height: 70%;
+
+        .huyna{ 
+            .login{
+                label{
+                    position: absolute;
+                    margin: 10% 0 0 15%;
+                }
+                input{
+                    position: absolute;
+                    margin: 10% 0 0 45%;
+                    background: linear-gradient(90.22deg, #C07026, #9E3A7B);
+                    
+                }
+            }
+            .password 
+                label{
+                position: absolute;
+                margin: 20% 0 0 15%;
+            }
+                input{
+                position: absolute;
+                margin: 20% 0 0 45%;
+            }
+            #submit {
+                border-radius: 10px;
+                width: 80%;
+                height: 30px;
+                margin: 30% 0 0 10%;
+                background: linear-gradient(90.22deg, #C07026, #9E3A7B);
+            }
+        }
+        
+    }
+    
+}

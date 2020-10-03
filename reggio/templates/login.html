@@ -3,16 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
     <title>Login</title>
 </head>
 <body>
     {% include 'flash.html' %}
-    <h2>Авторизація</h2>
-    <form method='POST'>
-        {{ signinForm.hidden_tag() }}
-        <div>{{signinForm.username.label}}{{signinForm.username}}</div>
-        <div>{{signinForm.password.label}}{{signinForm.password}}</div>
-        {{signinForm.submit}}
-    </form>    
+    <div class="main">
+
+        <div class="authorization">
+            <div class="bgImage">
+                <h2>Ласкаво просимо!</h2>
+            </div>
+            <div class="other">
+
+        
+                <div class="huyna">
+                    <form method='POST'>
+                        {{ signinForm.hidden_tag() }}
+                        <div class="login">{{signinForm.username.label}}{{signinForm.username}}</div>
+                        <div class="password">{{signinForm.password.label}}{{signinForm.password}}</div>
+                        {{signinForm.submit}}
+                    </form>  
+                </div> 
+            </div> 
+        </div>
+    </div>
 </body>
 </html>
