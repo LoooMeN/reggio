@@ -7,32 +7,30 @@ from reggio.users import updateSubtables
 from reggio.utils import *
 
 
-def convertParents(name_username, to):
-    if to == "name":
-        if name_username is None:
-            return ''
-        parents = name_username.split(';')
-        parentsName = []
-        for parent in parents:
-            parentUsr = Parent.query.filter_by(username=parent).first()
-            if parentUsr is not None:
-                parentName = parentUsr.surname + " " + parentUsr.name
-                parentsName.append(parentName)
-        parentsName = ';'.join(parentsName)
-        return parentsName
-    else:
-        parentName = name_username.split(';')
-        parentsUsername = []
-        parents = Parent.query.all()
-        for parent in parents:
-            if parent.surname + " " + parent.name in parentName:
-                parentsUsername.append(parent.username)
-        parentsUsername = ';'.join(parentsUsername)
-        return parentsUsername
+# def convertParents(name_username, to):
+#     if to == "name":
+#         if name_username is None:
+#             return ''
+#         parents = name_username.split(';')
+#         parentsName = []
+#         for parent in parents:
+#             parentUsr = Parent.query.filter_by(username=parent).first()
+#             if parentUsr is not None:
+#                 parentName = parentUsr.surname + " " + parentUsr.name
+#                 parentsName.append(parentName)
+#         parentsName = ';'.join(parentsName)
+#         return parentsName
+#     else:
+#         parentName = name_username.split(';')
+#         parentsUsername = []
+#         parents = Parent.query.all()
+#         for parent in parents:
+#             if parent.surname + " " + parent.name in parentName:
+#                 parentsUsername.append(parent.username)
+#         parentsUsername = ';'.join(parentsUsername)
+#         return parentsUsername
 
-
-app.jinja_env.globals.update(convertParents=convertParents)
-
+# app.jinja_env.globals.update(convertParents=convertParents)
 
 def validateParent(parentList):
     parentList = parentList.split(';')
@@ -62,19 +60,18 @@ def bindParent():
     if not checkPageAvailability([]):
         return redirect(url_for('main'))
     userID = request.args.get('id')
-    user = Child.query.filter_by(id=userID).first()
-    print(request.args.get('parents'))
-    convert = convertParents(request.args.get('parents'), "username")
-    parents = validateParent(convert)
-    user.parents = ';'.join(parents)
+    child = Child.query.filter_by(id=userID).first()
+    parents = validateParent(request.args.get('parents'))
+    child.parents = ';'.join(parents)
+    print(parents)
     for parent in parents:
         parent = Parent.query.filter_by(username=parent).first()
         if parent.children is None:
-            parent.children = user.username
+            parent.children = child.username
         else:
             children = parent.children.split(';')
-            if user.username not in children:
-                parent.children += ';' + user.username
+            if child.username not in children:
+                parent.children += ';' + child.username
     try:
         db.session.commit()
     except:
