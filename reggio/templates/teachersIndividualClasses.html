@@ -1,67 +1,66 @@
 {%extends 'main.html'%}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/teachersIndividualClasses.css') }}">
+{%endblock%}
+
 {% block body %}
-    <h1>Ваші індивідуалки</h1>
-
-    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-        <style>
-            img {
-                width: 50px;
-            }
-    
-            td {
-                border: 1px solid black;
-                padding: 0 20px;
-            }
-    
-            tr:first-child td {
-                border: none;
-            }
-
-            table {
-                margin: 40px 0;
-            }
-        </style>
-    
-        <table search=true>
-            <tr>
-                <td>{{form.studentUsername.label}}</td>
-                <td>{{form.timeSpent.label}}</td>
-                <td>{{form.lessonDate.label}}</td>
-                <td>{{form.grade.label}}</td>
-                <td>{{form.topic.label}}</td>
-                <td>{{form.comment.label}}</td>
-                <td>Дата створення</td>
-            </tr>
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <h1>Ваші індивідуалки</h1>
+            <div class="searchWrapper">
+                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+            </div>
+        </div>
+        <div class="tableWrapper" search=true>
+            <div class="firstRow Row">	
+                <div><p>Учень(иця)</p></div>
+                <div><p>час (хв)</p></div>
+                <div><p>Оцінка</p></div>
+                <div><p>Тема уроку</p></div>
+                <div><p>Комментар до уроку</p></div>
+                <div><p>Дата уроку</p></div>
+                <div><p>Дата створення</p></div>
+            </div>
             {% for individual in individuals %}
-                <tr searchable=true>
-                    <td searchable=true >{{individual.studentName}}</td>
-                    <td searchable=true >{{individual.timeSpent}}</td>
-                    <td searchable=true >{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
-                    <td searchable=true >{{individual.grade}}</td>
-                    <td searchable=true >{{individual.topic}}</td>
-                    <td searchable=true >{{individual.comment}}</td>
-                    <td searchable=true >{{individual.creationDate.strftime('%d . %m . %Y')}}</td>
-                </tr>
+                <div class="Row" searchable=true>
+                    <div searchable=true >{{individual.studentName}}</div>
+                    <div searchable=true >{{individual.timeSpent}}</div>
+                    <div searchable=true >{{individual.grade}}</div>
+                    <div searchable=true >{{individual.topic}}</div>
+                    <div searchable=true >{{individual.comment}}</div>
+                    <div searchable=true >{{individual.creationDate.strftime('%d . %m . %Y')}}</div>
+                    <div searchable=true >{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
+                </div>
             {%endfor%}
-        </table>
+            </div>
+        </div>
 
         {%if form%}
-        <form method='POST'>
-            {{ form.hidden_tag() }}
-        <table>
-            <datalist id="childrenList">
-                {% for child in children %}
-                    <option value="{{child[0]}}">{{child[1]}}</option>
-                {% endfor %}
-            </datalist>
-            <tr><td>{{form.studentUsername.label}}</td><td>{{form.studentUsername}}</td></tr>
-            <tr><td>{{form.timeSpent.label}}</td><td>{{form.timeSpent}}</td></tr>
-            <tr><td>{{form.lessonDate.label}}</td><td>{{form.lessonDate}}</td></tr>
-            <tr><td>{{form.grade.label}}</td><td>{{form.grade}}</td></tr>
-            <tr><td>{{form.topic.label}}</td><td>{{form.topic}}</td></tr>
-            <tr><td>{{form.comment.label}}</td><td>{{form.comment}}</td></tr>
-        </table>
-        {{form.submit}}
-    </form>
+        <div class="sideItemWrapper">
+            <div class="sideItem">
+                <div class="sideItemTitle">
+                    <h3>Додати нового користувача</h3>
+                </div>
+                <div class="formWrapper">
+                    <form method='POST'>
+                        {{ form.hidden_tag() }}
+                        <datalist id="childrenList">
+                            {% for child in children %}
+                                <option value="{{child[0]}}">{{child[1]}}</option>
+                            {% endfor %}
+                        </datalist>
+                        <div>{{form.studentUsername.label}}{{form.studentUsername}}</div>
+                        <div>{{form.timeSpent.label}}{{form.timeSpent}}</div>
+                        <div>{{form.lessonDate.label}}{{form.lessonDate}}</div>
+                        <div>{{form.grade.label}}{{form.grade}}</div>
+                        <div>{{form.topic.label}}{{form.topic}}</div>
+                        <div>{{form.comment.label}}{{form.comment}}</div>
+                        {{form.submit}}
+                    </form>
+                </div>
+            </div>
+        </div>
     {%endif%}
 {% endblock %}
