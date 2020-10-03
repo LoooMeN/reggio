@@ -1,28 +1,27 @@
 function bindParent(element) {
-    let children = element.parentNode.childNodes;
-    let userID = element.parentNode.id;
-    element.innerText = 'bind';
-    let txt = element.innerHTML
-    console.log(txt)
-    children.forEach(element => {
-        if (element.nodeType == 1) {
-            if (element.classList.contains('parents')) {
-                element.innerHTML +='<input autocomplete="off" id="newParent" list="parentList" type="text">';
-            }
-        }
-    });
+    let parentNode = element.parentNode.parentNode;
+    let userID = parentNode.id;
+    parentNode.querySelector('.parents').innerHTML += '<input autocomplete="off" id="newParent" list="parentList" type="text">';
+    let parentNames = parentNode.querySelectorAll('.parent')
+    
+    console.log(parentNames)
+    parentNames.forEach(element => {
+        element.innerHTML += "<img src='static/images/icons/cross.svg' onclick='removeParent(this)'>"
+    })
     element.onclick = sendRequest;
 }
 
 function sendRequest() {
-    let query = '?id='+String(this.parentNode.id);
-    let parent = this.parentNode.querySelector('.parents')
-    let inputField = parent.querySelector("#newParent")
-    let newParent = inputField.value
-    inputField.parentNode.removeChild(inputField)
-    if(parent.innerHTML !== "None" || parent.innerHTML !== '')
-        query += '&parents='+parent.innerHTML + ';' + newParent;
-    else
-        query += '&parents='+ newParent;
+    let query = '?id='+String(this.parentNode.parentNode.id);
+
+    let parents = this.parentNode.parentNode.querySelector('.parents');
+    let newParent = parents.querySelector("#newParent").value;
+    let children = parents.querySelectorAll('p');
+
+    prevParents = '';
+    children.forEach(element => {
+        prevParents += element.innerHTML + ';'
+    });
+    query += '&parents='+ prevParents + newParent;
     relocateUser(query);
 }
