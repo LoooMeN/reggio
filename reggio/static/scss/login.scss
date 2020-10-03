@@ -22,8 +22,7 @@ body {
         position: absolute;
         filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
     }
-
-    .bgImage{
+    .authorizationTop{
         width: 100%;
         height: 30%;
         background: url("http://dl4.joxi.net/drive/2020/10/04/0033/1542/2213382/82/33c95ad8a7.jpg");
@@ -33,12 +32,12 @@ body {
          margin: 12% 0 0 28%;
         }
     }
-    .other{
+    .authorizationBottom{
         position: relative;
         height: 70%;
         border: 1px solid black;
 
-        .huyna{ 
+        .labelsInputs{ 
             .login{
                 label{
                     position: absolute;
@@ -61,11 +60,11 @@ body {
                 margin: 20% 0 0 45%;
             }
             #submit {
-                border-radius: 10px;
                 width: 80%;
                 height: 30px;
                 margin: 30% 0 0 10%;
                 background: linear-gradient(90.22deg, #C07026, #9E3A7B);
+                filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
             }
         }
         

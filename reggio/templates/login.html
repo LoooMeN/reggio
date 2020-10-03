@@ -9,15 +9,14 @@
 <body>
     {% include 'flash.html' %}
     <div class="main">
-
         <div class="authorization">
-            <div class="bgImage">
+            
+            <div class="authorizationTop">
                 <h2>Ласкаво просимо!</h2>
             </div>
-            <div class="other">
 
-        
-                <div class="huyna">
+            <div class="authorizationBottom">
+                <div class="labelsInputs">
                     <form method='POST'>
                         {{ signinForm.hidden_tag() }}
                         <div class="login">{{signinForm.username.label}}{{signinForm.username}}</div>
