@@ -1,6 +1,94 @@
 @import "variables.scss";
 
 .contentMainBody {
+    .sideItemWrapper {
+        min-height: calc(100vh - 150px);
+
+        .sideItem {
+            margin: 0 20px;
+            background-color: white;
+            width: 350px;
+            margin-top: 100px;
+            filter: drop-shadow(7.61473px 7.61473px 6.66289px rgba(0, 0, 0, 0.2));  
+
+            .sideItemTitle {
+                width: 100%;
+                height: 100px;
+                background-color: #FEFEFE;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+
+                h3 {
+                    width: 70%;
+                    text-align: center;
+                    font-size: 21px;
+                    font-weight: normal;
+                }
+            }
+
+            .formWrapper {
+                background-color: $base-color;
+                color: $menu-text-color;
+                padding: 26px;
+                font-size: 15px;
+                overflow-y: auto;
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+
+                form {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    width: 100%;
+
+                    .addAvatarHidden {
+                        display: none;
+                        margin-bottom: 0;
+                    }
+
+                    div {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 22px;
+                        color: #DFE1DE;
+
+                        input, select, textarea {
+                            background: #EBEBEB;
+                            width: 212px;
+                            outline: none;
+                            border: none;
+                            padding-left: 5px;
+                            box-sizing: border-box;
+                            height: 27px;
+                        }
+
+                        textarea {
+                            height: 60px;
+                        }
+                    }
+
+                    #submit {
+                        width: 297px;
+                        height: 43px;
+                        outline: none;
+                        border: none;
+                        color: $base-color;
+                        font-size: 16px;
+                        line-height: 19px;
+                        font-weight: 500;
+                        background: linear-gradient(270deg, #8E32D7 -44.28%, #E08C0F 150.29%, rgba(50, 215, 161, 0.734375) 150.31%);
+                        box-shadow: 0px -1px 4px rgba(244, 144, 53, 0.21);
+                    }
+                }
+            }
+        }
+    }
+
     .mainItem {
         width: calc(100% - 485px);
         min-width: 800px;
@@ -56,7 +144,7 @@
             overflow-y: auto;
             display: grid;
             align-items: start;
-            grid-template-columns: 1fr 5fr 5fr 1fr;
+            grid-template-columns: 3fr 1.5fr 1fr 2fr 3fr 2fr 2fr;
             grid-template-rows: 55px repeat(auto-fill, 48px);
             filter: drop-shadow(6px 6px 8px rgba(0, 0, 0, 0.2));
             
@@ -69,7 +157,7 @@
             .Row {
                 display: contents;
 
-                & > div {
+                div {
                     display: flex;
                     align-items: center;
                     background-color: #FFFFFF;
@@ -78,31 +166,6 @@
                     min-height: 46px;
                     color: black;
                     padding: 0 10px;
-
-                    .parent {
-                        background-color: $base-color;
-                        border-radius: 100px;
-                        padding: 5px 10px;
-                        margin-right: 5px;
-                        color: white;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        img {
-                            margin-left: 5px;
-                            width: 10px;
-                            height: 15px;
-                            padding-left: 5px;
-                            cursor: pointer;
-                            border-left: 1px solid white;
-                        }
-                    }
-                }
-
-                .parents {
-                    display: flex;
-                    flex-wrap: wrap;
                 }
 
                 .image {

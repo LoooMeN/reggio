@@ -31,11 +31,11 @@
                 <div searchable=true class='parents text'>
                     {% if child.parents %}
                         {% for parent in child.parents.split(';') %}
-                            <div class="parent" onclick='removeParent(this)'>{{parent}}</div>
+                            <div class="parent"><p>{{parent}}</p></div>
                         {%endfor%}
                     {% endif %}
                 </div>
-                <div onclick="bindParent(this)">BindParent</div>
+                <div><img style='cursor: pointer;' class="editIcon" onclick="bindParent(this)" src="{{url_for('static', filename='images/icons/editIcon.svg')}}"></div>
             </div>
             {%endfor%}
         </div>
@@ -46,7 +46,7 @@
         }
 
         function removeParent(element) {
-            element.remove()
+            element.parentNode.remove()
         }
     </script>
 {% endblock %}

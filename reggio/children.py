@@ -63,7 +63,6 @@ def bindParent():
     child = Child.query.filter_by(id=userID).first()
     parents = validateParent(request.args.get('parents'))
     child.parents = ';'.join(parents)
-    print(parents)
     for parent in parents:
         parent = Parent.query.filter_by(username=parent).first()
         if parent.children is None:
