@@ -46,6 +46,7 @@ def defineMenu():
             (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
             (u"Уроки", {u"Индивидуалки": "adminIndividualClasses", }, 'peopleIcon'),
             (u"Батьки", {u"Список": "parent"}, 'peopleIcon'),
+            (u"Налаштування", {u"Кольори": "color"}, 'peopleIcon'),
             ("resetDB", "resetDB", 'peopleIcon')
         ])
     elif current_user.userType == 'teacher':

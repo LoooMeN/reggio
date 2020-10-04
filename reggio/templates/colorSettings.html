@@ -1,0 +1,62 @@
+{%extends 'main.html'%}
+{%block headerIncludes%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/children.css') }}">
+    <script src="{{url_for('static', filename='js/settings.js')}}"></script>
+        <style>
+        img {
+            width: 50px;
+        }
+
+        td {
+            border: 1px solid black;
+            padding: 0 20px;
+        }
+
+    </style>
+{%endblock%}
+{% block body %}
+    <div>
+        <table search=true>
+            <tr>
+                <td>Змінна</td>
+                <td>Значення</td>
+            </tr>
+        </table>
+        <table search=true>
+            {% for color in colors %}
+                {% if 'color' in color['variable']%}
+                    <tr searchable=true>
+                        <td searchable=true class='variable text'>{{color['variable']}}</td>
+                        <td searchable=true class='value text'><input type="color" id="value" name="color" value="{{color['value']}}"></td>
+                    </tr>
+                {% endif %}
+            {%endfor%}
+        </table>
+        <table search=true>
+            {% for color in colors %}
+                {% if 'size' in color['variable']%}
+                    <tr searchable=true>
+                        <td searchable=true class='variable text'>{{color['variable']}}</td>
+                        <td searchable=true class='value text' style="display: inline-flex"><input style="width: 50px" type="number" id="value" name="value" value="{{color['value']}}"><p>px</p></td>
+                    </tr>
+                {% endif %}
+            {%endfor%}
+        </table>
+        <table search=true>
+            {% for color in colors %}
+                {% if 'image' in color['variable']%}
+                    <tr searchable=true>
+                        <td searchable=true class='variable text'>{{color['variable']}}</td>
+                        <td searchable=true class='value text'><input type="text" id="value" name="value" value="{{color['value']}}"></td>
+                    </tr>
+                {% endif %}
+            {%endfor%}
+        </table>
+        <button onclick="getValue(this)">Зберегти</button>
+    </div>
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("saveSettings")}}'+query;
+        }
+    </script>
+{% endblock %}
