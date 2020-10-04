@@ -9,27 +9,40 @@ from reggio.utils import *
 def color():
     if not checkPageAvailability([]):
         return redirect(url_for('main'))
-    colors = getColorSettings()
+    styleSettings = getStyleSettings()
     return render_template('colorSettings.html',
                            title='Налаштування',
                            menu=defineMenu(),
-                           colors=colors)
+                           styleSettings=styleSettings)
 
 
 @app.route('/saveSettings')
-def saveSettings():
+def changeStyleSettings():
     if not checkPageAvailability([]):
         return redirect(url_for('main'))
-    valueStr = request.args.get('values')
-    print(valueStr)
+    scssFile = os.path.join(app.root_path, 'static', 'scss', 'variables.scss')
+    backupFile = os.path.join(app.root_path, 'static', 'scss', 'backup.scss')
+    if request.args.get('id') == 'save':
+        styleSettings = request.args.get('values').replace(';', ';\n')
+        with open(scssFile, 'w') as f:
+            f.write(styleSettings)
+            f.close()
+    if request.args.get('id') == 'reset':
+        f = open(backupFile, 'r')
+        backupStyles = f.read()
+        f.close()
+        f = open(scssFile, 'w')
+        f.write(backupStyles)
+        f.close()
+
     return redirect(url_for('color'))
 
 
-def getColorSettings():
+def getStyleSettings():
     scssFile = os.path.join(app.root_path, 'static', 'scss', 'variables.scss')
     varList = []
     varDictList = []
-    with open(scssFile) as f:
+    with open(scssFile, 'r') as f:
         data = f.read()
         varList = data.split('\n')
         for var in varList:

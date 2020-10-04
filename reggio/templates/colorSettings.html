@@ -23,40 +23,41 @@
             </tr>
         </table>
         <table search=true>
-            {% for color in colors %}
-                {% if 'color' in color['variable']%}
+            {% for styleSetting in styleSettings %}
+                {% if 'color' in styleSetting['variable']%}
                     <tr searchable=true>
-                        <td searchable=true class='variable text'>{{color['variable']}}</td>
-                        <td searchable=true class='value text'><input type="color" id="value" name="color" value="{{color['value']}}"></td>
+                        <td searchable=true class='variable text'>{{styleSetting['variable']}}</td>
+                        <td searchable=true class='value text'><input type="color" id="value" name="{{styleSetting['variable']}}" value="{{styleSetting['value']}}"></td>
                     </tr>
                 {% endif %}
             {%endfor%}
         </table>
         <table search=true>
-            {% for color in colors %}
-                {% if 'size' in color['variable']%}
+            {% for styleSetting in styleSettings %}
+                {% if 'size' in styleSetting['variable']%}
                     <tr searchable=true>
-                        <td searchable=true class='variable text'>{{color['variable']}}</td>
-                        <td searchable=true class='value text' style="display: inline-flex"><input style="width: 50px" type="number" id="value" name="value" value="{{color['value']}}"><p>px</p></td>
+                        <td searchable=true class='variable text'>{{styleSetting['variable']}}</td>
+                        <td searchable=true class='value input' style="display: inline-flex"><input style="width: 50px" type="number" id="value" name="{{styleSetting['variable']}}" min="0" value="{{styleSetting['value']}}"><p>px</p></td>
                     </tr>
                 {% endif %}
             {%endfor%}
         </table>
         <table search=true>
-            {% for color in colors %}
-                {% if 'image' in color['variable']%}
+            {% for styleSetting in styleSettings %}
+                {% if 'image' in styleSetting['variable']%}
                     <tr searchable=true>
-                        <td searchable=true class='variable text'>{{color['variable']}}</td>
-                        <td searchable=true class='value text'><input type="text" id="value" name="value" value="{{color['value']}}"></td>
+                        <td searchable=true class='variable text'>{{styleSetting['variable']}}</td>
+                        <td searchable=true class='value text'><input type="text" id="value" name="{{styleSetting['variable']}}" value="{{styleSetting['value']}}"></td>
                     </tr>
                 {% endif %}
             {%endfor%}
         </table>
-        <button onclick="getValue(this)">Зберегти</button>
+        <button onclick="saveStyleSettings(this)">Зберегти</button>
+        <button onclick="relocateUser('?id=reset')">Скинути</button>
     </div>
     <script>
         function relocateUser(query) {
-            window.location.href = '{{url_for("saveSettings")}}'+query;
+            window.location.href = '{{url_for("changeStyleSettings")}}'+query;
         }
     </script>
 {% endblock %}
