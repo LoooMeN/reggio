@@ -16,7 +16,7 @@ def replaceListItem(array, frm, to):
 
 
 def convertUsername(frm, to):
-    if frm is not None:
+    if frm is not None and frm != '':
         List = frm.split(';')
         if to == "name":
             for frm in List:
@@ -41,7 +41,7 @@ def convertUsername(frm, to):
             return ';'.join(List)
         else:
             return List[0]
-    return "Error"
+    return "None"
 
 
 app.jinja_env.globals.update(convertUsername=convertUsername)
