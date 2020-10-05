@@ -25,13 +25,13 @@
                 <div searchable=true class='name text'>{{child.name}} {{child.surname}}</div>
                 <datalist id="parentList">
                     {% for parent in parents %}
-                        <option value="{{parent[0]}}">{{parent[1]}}</option>
+                        <option value="{{parent[1]}}">{{parent[0]}}</option>
                     {% endfor %}
                 </datalist>
                 <div searchable=true class='parents text'>
                     {% if child.parents %}
                         {% for parent in child.parents.split(';') %}
-                            <div class="parent"><p>{{parent}}</p></div>
+                            <div class="parent"><p>{{convertUsername(parent, 'name')}}</p></div>
                         {%endfor%}
                     {% endif %}
                 </div>

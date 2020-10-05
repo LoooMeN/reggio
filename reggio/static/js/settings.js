@@ -1,6 +1,5 @@
 
 function saveStyleSettings(element) {
-    let div = element.parentNode;
     let selectInput = document.querySelectorAll('#value');
     let query = '?id=save';
     query += '&values=';
@@ -12,6 +11,5 @@ function saveStyleSettings(element) {
             query += element.name + " " + element.value + ";";
     })
 
-    console.log(query);
     relocateUser(query);
 }
