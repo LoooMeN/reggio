@@ -53,7 +53,6 @@ function sendRequest() {
                 query += '&phone='+element.innerText;
             }
             if (element.classList.contains('password')) {
-                
                 query += '&password='+element.innerText;
             }
             if (element.classList.contains('name')) {
