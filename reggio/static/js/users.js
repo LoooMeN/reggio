@@ -54,7 +54,8 @@ function sendRequest() {
             }
             if (element.classList.contains('password')) {
                 
-                query += '&password='+element.innerText;
+                query += '&password=' + document.getElementById('password').value
+                console.log(element.innerText)
             }
             if (element.classList.contains('name')) {
                 let text = element.innerText.split(' ')
