@@ -31,9 +31,13 @@ def filterIndividuals():
     if request.form.get('teacherUsername'):
         individualClasses = [n for n in individualClasses if n.teacherUsername == request.form.get('teacherUsername')]
     if request.form.get('timeBefore'):
-        individualClasses = [n for n in individualClasses if n.creationDate <= datetime.strptime(request.form.get('timeBefore') + ' 00:00:00', '%Y-%m-%d %H:%M:%S')]
+        individualClasses = [n for n in individualClasses if
+                             n.creationDate <= datetime.strptime(request.form.get('timeBefore') + ' 00:00:00',
+                                                                 '%Y-%m-%d %H:%M:%S')]
     if request.form.get('timeAfter'):
-        individualClasses = [n for n in individualClasses if n.creationDate >= datetime.strptime(request.form.get('timeAfter') + ' 00:00:00', '%Y-%m-%d %H:%M:%S')]
+        individualClasses = [n for n in individualClasses if
+                             n.creationDate >= datetime.strptime(request.form.get('timeAfter') + ' 00:00:00',
+                                                                 '%Y-%m-%d %H:%M:%S')]
     return individualClasses
 
 
@@ -89,14 +93,14 @@ def createXLSX():
     IndividualClassesIDs = request.args.get('ids')
     IndividualClassesIDs = IndividualClassesIDs.split(';')
     table = {"Створено": [],
-            "Вчитель": [],
-            "Учень": [],
-            "Часу витрачено": [],
-            "Оцінка": [],
-            "Тема": [],
-            "Коментар": [],
-            "Дата уроку": []
-            }
+             "Вчитель": [],
+             "Учень": [],
+             "Часу витрачено": [],
+             "Оцінка": [],
+             "Тема": [],
+             "Коментар": [],
+             "Дата уроку": []
+             }
     for IndividualClassID in IndividualClassesIDs:
         selectedToDownload = IndividualClass.query.filter_by(id=IndividualClassID).first()
         table["Створено"].append(selectedToDownload.creationDate)
@@ -109,6 +113,7 @@ def createXLSX():
         table["Дата уроку"].append(selectedToDownload.lessonDate)
     return table
 
+
 @app.route('/admin/deleteXLSX', methods=["GET"])
 def deleteXLSX():
     filename = request.args.get('filename')
@@ -120,6 +125,7 @@ def deleteXLSX():
             time.sleep(10)
     return 'File deleted'
 
+
 @app.route('/admin/downloadXLSX', methods=["GET"])
 def downloadXLSX():
     filename = request.args.get('filename')
@@ -127,7 +133,7 @@ def downloadXLSX():
     if request.args.get('preferredFilename'):
         preferredFilename = request.args.get('preferredFilename')
     filename = os.path.join(app.root_path, 'static', 'temp', filename)
-    return send_file(filename, as_attachment=True, attachment_filename=preferredFilename+'.xlsx')
+    return send_file(filename, as_attachment=True, attachment_filename=preferredFilename + '.xlsx')
 
 
 @app.route('/admin/createIndividualClassXLSX', methods=["GET"])
@@ -140,4 +146,3 @@ def createIndividualClassXLSX():
     DataFrame.to_excel(writer, sheet_name='Individual')
     writer.save()
     return "individual.xlsx"
-    

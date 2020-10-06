@@ -2,8 +2,49 @@
 import os
 from flask import flash
 from flask_login import current_user
+from reggio import app
+from reggio.models import Child, Teacher, Parent, User
 import sass
-from reggio.models import Child, Teacher, Parent
+
+
+def replaceListItem(array, frm, to):
+    if array and frm and to:
+        for index, value in enumerate(array):
+            if value == frm:
+                array[index] = to
+    return array
+
+
+def convertUsername(frm, to):
+    if frm is not None and frm != '':
+        List = frm.split(';')
+        if to == "name":
+            for frm in List:
+                user = User.query.filter_by(username=frm).first()
+                if user is not None:
+                    fullName = user.surname + " " + user.name
+                    List = replaceListItem(List, frm, fullName)
+                else:
+                    List.remove(frm)
+        if to == "username":
+            users = User.query.all()
+            for item in List:
+                item.replace('&nbsp;', '')
+            for user in users:
+                fullName = user.surname + " " + user.name
+                if fullName in List:
+                    List = replaceListItem(List, fullName, user.username)
+            for x in List:
+                if " " in x:
+                    List.remove(x)
+        if len(List) > 1:
+            return ';'.join(List)
+        else:
+            return List[0]
+    return "None"
+
+
+app.jinja_env.globals.update(convertUsername=convertUsername)
 
 
 def getChildren():
@@ -22,6 +63,7 @@ def getTeachers():
         name = "%s %s" % (teacher.surname, teacher.name)
         choices.append((teacher.username, name))
     return choices
+
 
 def getParents():
     parents = Parent.query.all()
@@ -46,6 +88,7 @@ def defineMenu():
             (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
             (u"Уроки", {u"Индивидуалки": "adminIndividualClasses", }, 'peopleIcon'),
             (u"Батьки", {u"Список": "parent"}, 'peopleIcon'),
+            (u"Налаштування", {u"Кольори": "color"}, 'peopleIcon'),
             ("resetDB", "resetDB", 'peopleIcon')
         ])
     elif current_user.userType == 'teacher':
@@ -57,6 +100,7 @@ def defineMenu():
     else:
         pass
     return menu
+
 
 def checkPageAvailability(accesGranted):
     if current_user.is_authenticated:

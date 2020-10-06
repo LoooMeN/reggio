@@ -12,6 +12,7 @@ from reggio import app, db
 from reggio.models import User, Child, Teacher, IndividualClass
 from reggio.forms import SignInForm, CreateUser
 from reggio.utils import *
+import reggio.settings
 import reggio.users
 import reggio.children
 import reggio.teachers
@@ -26,6 +27,7 @@ def compileSCSS():
     sass.compile(dirname=(folderSCSS, folderCSS),
                  output_style='compressed')
     return "stylesCompiled"
+
 
 app.jinja_env.globals.update(compileSCSS=compileSCSS)
 
@@ -111,7 +113,7 @@ def resetDB():
         counter += 1
 
     counter = 1
-    while counter < 6:
+    while counter < 16:
         username = 'teacher' + str(counter)
         email = 'teacher' + str(counter) + '@gmail.com'
         userType = 'teacher'

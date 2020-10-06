@@ -52,9 +52,12 @@ function sendRequest() {
             if (element.classList.contains('phone')) {
                 query += '&phone='+element.innerText;
             }
+            if (element.classList.contains('password')) {
+                
+                query += '&password='+element.innerText;
+            }
             if (element.classList.contains('name')) {
                 let text = element.innerText.split(' ')
-                console.log(text)
                 query += '&name='+text[0];
                 query += '&surname='+text[1];
             }

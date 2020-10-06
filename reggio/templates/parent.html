@@ -21,7 +21,7 @@
             {% for parent in parents %}
             <div class="Row" searchable=true id={{parent.id}}>
                 <div class='image'><img src='/{{parent.avatar}}'></div>
-                <div searchable=true class='name text'>{{parent.name}} {{parent.surname}}</div>
+                <div searchable=true class='name text'>{{parent.name}} {{parent.surname}}        {{convertUsername(parent.children, 'name')}}</div>
             </div>
             {%endfor%}
         </div>

@@ -20,8 +20,10 @@ function sendRequest() {
 
     prevParents = '';
     children.forEach(element => {
-        prevParents += element.innerHTML + ';'
+        prevParents += element.innerHTML + ';';
+        console.log(prevParents);
     });
     query += '&parents='+ prevParents + newParent;
+    console.log(query)
     relocateUser(query);
 }
