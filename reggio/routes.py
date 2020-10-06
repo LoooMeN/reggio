@@ -42,10 +42,10 @@ def test():
     )
 
 
-@app.route('/')  # dashboard if admin else logo prompt
+@app.route('/')
 def main():
     if current_user.is_authenticated:
-        return render_template('child.html', title='Головна', menu=defineMenu())
+        return render_template('dashboard.html', title='Головна', menu=defineMenu())
     return redirect(url_for('login'))
 
 

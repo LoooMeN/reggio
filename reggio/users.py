@@ -112,7 +112,7 @@ def users():
         username = request.form.get('username')
         email = request.form.get('email')
         if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-            flash('Користувач відсутній')
+            flash('Такий користувач вже зареєстрований')
         else:
             addUser(addUserForm)
             return redirect(url_for('users'))
