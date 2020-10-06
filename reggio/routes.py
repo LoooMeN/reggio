@@ -87,7 +87,7 @@ def resetDB():
     teachers = []
     individuals = []
     counter = 1
-    while counter < 16:
+    while counter < 300:
         username = 'child' + str(counter)
         email = 'child' + str(counter) + '@gmail.com'
         userType = 'child'
@@ -113,7 +113,7 @@ def resetDB():
         counter += 1
 
     counter = 1
-    while counter < 6:
+    while counter < 300:
         username = 'teacher' + str(counter)
         email = 'teacher' + str(counter) + '@gmail.com'
         userType = 'teacher'
