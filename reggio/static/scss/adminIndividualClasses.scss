@@ -116,8 +116,8 @@
     }
 
     .mainItem {
-        width: calc(100% - 485px);
-        min-width: 800px;
+        width: calc(100% - 50px);
+        min-width: 900px;
 
         .titleWrapper {
             margin: 35px 0;
@@ -141,7 +141,7 @@
                 background-color: $base-color;
                 padding: 0 20px;
                 padding-left: 10px;
-                padding-right: 2px;
+                padding-right: 4px;
                 outline: none;
                 display: flex;
                 justify-content: flex-start;
@@ -165,12 +165,12 @@
         }
 
         .tableWrapper {
-            height: calc(100vh - 215px);
+            max-height: calc(100vh - 315px);
             width: 100%;
             overflow-y: auto;
             display: grid;
             align-items: start;
-            grid-template-columns: 1fr 3fr 1fr 1fr 2fr 3fr 3fr 2fr;
+            grid-template-columns: 1fr 3fr 3fr 3fr 1.5fr 1fr 2fr 3fr 3fr 1fr;
             grid-template-rows: 55px repeat(auto-fill, 48px);
             filter: drop-shadow(6px 6px 8px rgba(0, 0, 0, 0.2));
             

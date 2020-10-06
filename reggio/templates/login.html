@@ -8,8 +8,8 @@
     <title>Login</title>
 </head>
 <body>
+    {% include 'flash.html' %}
     <div class="authorization">
-        {% include 'flash.html' %}
         <h2>Ласкаво просимо!</h2>
         <form method='POST'>
             {{ signinForm.hidden_tag() }}
@@ -23,4 +23,20 @@
         </form>  
     </div>
 </body>
+
+<script>
+    let errorsBox = document.querySelector('#errorsBox');
+    let closeErrors = document.querySelector('#closeErrors')
+
+    if (errorsBox.querySelector('.error')) {
+        errorsBox.style.display = 'flex';
+        closeErrors.addEventListener('click', () => {
+            errorsBox.style.right = '-380px';
+            setTimeout(() => {
+                errorsBox.remove();
+            }, 800);
+        })
+    }
+</script>
+
 </html>

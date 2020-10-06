@@ -57,14 +57,11 @@ body {
         margin: 0 20px;
     }
 
-    .closeErrors {
-
-    }
-
     .errorHolder {
         display: flex;
         flex-direction: column;
         margin: 20px 0;
+        width: 80%; 
 
         h2 {
             font-family: Roboto;
@@ -317,4 +314,24 @@ body {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+
+    .mainItem {
+        .tableWrapper {
+            .Row {
+                div {
+                    font-weight: normal;
+                    font-size: 15.4401px;
+                    line-height: 18px;
+                }
+            }
+
+            .firstRow {
+                div {
+                    font-weight: normal;
+                    font-size: 16.4694px;
+                    line-height: 19px;
+                }
+            }
+        }
+    }
 }

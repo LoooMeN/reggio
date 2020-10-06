@@ -18,7 +18,7 @@ function previewFile() {
 function editUser(element) {
     let children = element.parentNode.parentNode.childNodes;
     let userID = element.parentNode.parentNode.id;
-    element.innerText = 'save';
+    element.src= '/static/images/icons/confirm.svg';
     children.forEach(element => {
         if (element.nodeType == 1) {
             if (element.classList.contains('text')) {
@@ -30,6 +30,9 @@ function editUser(element) {
                 } else {
                     element.innerText = element.childNodes[0].href;
                 }
+            }
+            if (element.classList.contains('password')) {
+                element.innerHTML = '<input type="password" id="password">';
             }
             if (element.classList.contains('select')) {
                 let currentOption = element.innerText;
@@ -53,13 +56,7 @@ function sendRequest() {
                 query += '&phone='+element.innerText;
             }
             if (element.classList.contains('password')) {
-<<<<<<< HEAD
-                query += '&password='+element.innerText;
-=======
-                
                 query += '&password=' + document.getElementById('password').value
-                console.log(element.innerText)
->>>>>>> 0b5548833e8f60efc894cafb4005af5e6cc17833
             }
             if (element.classList.contains('name')) {
                 let text = element.innerText.split(' ')
