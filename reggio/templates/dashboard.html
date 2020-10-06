@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{%endblock%}
+
+{% block body %}
+    <h2>Вітаю, {{ current_user.name }} {{ current_user.surname }}!</h2>
+{% endblock %}

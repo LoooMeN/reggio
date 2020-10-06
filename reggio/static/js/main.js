@@ -34,7 +34,23 @@ function handleCollapseMenu() {
     })
 }
 
+function handleErrors() {
+    let errorsBox = document.querySelector('#errorsBox');
+    let closeErrors = document.querySelector('#closeErrors')
+
+    if (errorsBox.querySelector('.error')) {
+        errorsBox.style.display = 'flex';
+        closeErrors.addEventListener('click', () => {
+            errorsBox.style.right = '-380px';
+            setTimeout(() => {
+                errorsBox.remove();
+            }, 800);
+        })
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     handleCollapsedMenuItems();
     handleCollapseMenu();
+    handleErrors();
 })
