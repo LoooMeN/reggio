@@ -23,10 +23,10 @@ def profile():
     if hasIndividual(current_user.userType):
         if current_user.userType == "child":
             individuals = IndividualClass.query.filter_by(studentUsername=current_user.username).filter(
-                IndividualClass.creationDate > datetime.today() - timedelta(days=14))
+                IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
         else:
             individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
-                IndividualClass.creationDate > datetime.today() - timedelta(days=14))
+                IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
         return render_template(
             'profile.html',
             user=current_user,

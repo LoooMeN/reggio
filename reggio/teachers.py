@@ -1,6 +1,6 @@
 # coding: utf-8
 from flask import render_template, url_for, redirect, request
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from reggio import app, db
 from reggio.models import Teacher, Child, IndividualClass
@@ -40,8 +40,11 @@ def teachersIndividualClasses():
         else:
             flash(u'Такої дитини немає у системі, будь ласка оберіть зі списку.')
         return redirect(url_for('teachersIndividualClasses'))
-    individuals = IndividualClass.query.all()
-    individuals.sort(key=lambda r: r.lessonDate, reverse=True)
+    individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
+        IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+    if individuals is None:
+        individuals = False
+    print(individuals)
     return render_template('teachersIndividualClasses.html',
                            title='Індивідуалки',
                            menu=defineMenu(),

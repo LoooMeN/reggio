@@ -13,6 +13,7 @@
                 <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
             </div>
         </div>
+        {% if individuals %}
         <div class="tableWrapper" search=true>
             <div class="firstRow Row">	
                 <div><p>Учень(иця)</p></div>
@@ -35,6 +36,11 @@
                 </div>
             {%endfor%}
             </div>
+            {% else %}
+                <div>
+                    <h1>У вас немає індивідуалок!</h1>
+                </div>
+            {% endif %}
         </div>
 
         {%if form%}
