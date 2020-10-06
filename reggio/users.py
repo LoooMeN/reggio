@@ -33,6 +33,7 @@ def addSubTable(user):
 
     if entity != '':
         entity.username = user.username
+        entity.password = user.password
         entity.avatar = user.avatar
         entity.name = user.name
         entity.surname = user.surname
@@ -70,6 +71,8 @@ def updateUser():
         user.viber = request.args.get('viber')
     user.surname = request.args.get('surname')
     user.phone = request.args.get('phone')
+    user.password = request.args.get('password')
+    print(request.args.get('password'))
     user.email = request.args.get('email')
     user.userType = request.args.get('userType')
     prevType = request.args.get('prevType')
