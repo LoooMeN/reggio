@@ -55,7 +55,7 @@ def imageSizeValidator(min=-1, max=-1, directory='static'):
 
 
 class SignInForm(FlaskForm):
-    username = StringField('Юзернейм', [
+    email = StringField('Пошта', [
         DataRequired()], render_kw={'autocomplete': "off"})
     password = PasswordField('Пароль', [
         DataRequired()], render_kw={'autocomplete': "off"})

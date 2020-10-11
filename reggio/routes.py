@@ -53,7 +53,7 @@ def main():
 def login():
     signinForm = SignInForm(crsf_enabled=False)
     if signinForm.validate_on_submit():
-        user = User.query.filter_by(username=request.form.get('username')).first()
+        user = User.query.filter_by(email=request.form.get('email')).first()
         if user and check_password_hash(user.password, request.form.get('password')):
             login_user(user)
             return redirect(url_for('main'))
