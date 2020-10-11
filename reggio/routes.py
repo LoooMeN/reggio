@@ -42,11 +42,57 @@ def test():
     )
 
 
+def hasIndividual(userType):
+    legitimateUsersForIndividuals = ["child", "teacher", "admin", "superAdmin", "tutor"]
+    if userType in legitimateUsersForIndividuals:
+        return True
+    else:
+        return False
+
+
 @app.route('/')
 def main():
     if current_user.is_authenticated:
-        return render_template('dashboard.html', title='Головна', menu=defineMenu())
+        if not current_user.is_authenticated:
+            return redirect(url_for('main'))
+        if hasIndividual(current_user.userType):
+            if current_user.userType == "child":
+                individuals = IndividualClass.query.filter_by(studentUsername=current_user.username).filter(
+                    IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            else:
+                individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
+                    IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            return render_template(
+                'profile.html',
+                user=current_user,
+                individuals=individuals,
+                title='Профіль',
+                menu=defineMenu())
+        return render_template(
+            'profile.html',
+            user=current_user,
+            title='Профіль',
+            menu=defineMenu())
     return redirect(url_for('login'))
+
+
+@app.route('/Update')
+def updateProfile():
+    if not current_user.is_authenticated:
+        return redirect(url_for('main'))
+    user = User.query.filter_by(id=current_user.id).first()
+    user.name = request.args.get('name')
+    user.viber = request.args.get('viber')
+    user.surname = request.args.get('surname')
+    user.phone = request.args.get('phone')
+    user.email = request.args.get('email')
+    prevType = request.args.get('prevType')
+    updateSubtables(prevType, user)
+    try:
+        db.session.commit()
+    except:
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту..')
+    return redirect(url_for('profile'))
 
 
 @app.route('/login', methods=('GET', 'POST'))

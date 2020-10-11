@@ -18,7 +18,7 @@
             <div class="collapseTrigger" id='collapseTrigger'>
                 <img src="{{url_for('static', filename='images/icons/hideMenu.svg')}}">
             </div>
-            <a href="{{url_for('profile')}}">
+            <a href="{{url_for('main')}}">
                 <img style='width: 80px; border-radius: 100px;' src="/{{ current_user.avatar }}">
             </a>
             <p>{{ current_user.name }} {{ current_user.surname }}</p>
