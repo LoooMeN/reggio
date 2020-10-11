@@ -1,86 +1,48 @@
 {% extends 'main.html' %}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{%endblock%}
+
 {% block body %}
-    <script src="{{url_for('static', filename='js/users.js')}}"></script>
-    <style>
-        img {
-            width: 50px;
-        }
-
-        td {
-            border: 1px solid black;
-            padding: 0 20px;
-        }
-
-        tr:first-child td {
-            border: none;
-        }
-    </style>
-    <h1>Мій Профіль</h1>
-{#    <table>#}
-{#        <tr>#}
-{#            <td>Ім'я</td>#}
-{#            <td>Прізвище</td>#}
-{#            <td>Пошта</td>#}
-{#            <td>Телефон</td>#}
-{#            <td>Вайбер</td>#}
-{#            <td>Аватар</td>#}
-{#        </tr>#}
-{#        <tr>#}
-{#            <td class='name text' >{{user.name}}</td>#}
-{#            <td class='surname text'>{{user.surname}}</td>#}
-{#            <td class='email text'>{{user.email}}</td>#}
-{#            <td class='phone text '>{{user.phone}}</td>#}
-{#            <td class='viber text link'><a href="{{user.viber}}">Посилання</a></td>#}
-{#            <td class='image'><img src='/{{user.avatar}}'></td>#}
-{#            <td onclick="editUser(this)">Редагувати</td>#}
-{#        </tr>#}
-{#    </table>#}
-    {% if not individuals[0] %}
-        <h3>У вас не було індивідуалок останні 2 тижня</h3>
-    {% else %}
-        <h3>Ваші індивідуалки за останні 2 тижня</h3>
-        <table>
-        {% if user.userType == 'child' %}
-                <tr>
-                    <td>Вчитель</td>
-                    <td>Тема</td>
-                    <td>Оцінка</td>
-                    <td>Коментар</td>
-                    <td>Час</td>
-                    <td>Дата уроку</td>
-                </tr>
-                {% for individual in individuals %}
-                    <tr>
-                        <td>{{individual.teacherName}}</td>
-                        <td>{{individual.topic}}</td>
-                        <td>{{individual.grade}}</td>
-                        <td>{{individual.comment}}</td>
-                        <td>{{individual.timeSpent}}</td>
-                        <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
-                    </tr>
-                {%endfor%}
+    <div class="mainItem">
+        <div class="titleWrapper">
+            {% if not individuals[0] %}
+                <h1>У вас не було індивідуалок останні 2 тижня</h1>
             {% else %}
-                <tr>
-                    <td>Учень</td>
-                    <td>Тема</td>
-                    <td>Оцінка</td>
-                    <td>Коментар</td>
-                    <td>Час</td>
-                    <td>Дата уроку</td>
-                </tr>
-                {% for individual in individuals %}
-                    <tr>
-                        <td>{{individual.studentName}}</td>
-                        <td>{{individual.topic}}</td>
-                        <td>{{individual.grade}}</td>
-                        <td>{{individual.comment}}</td>
-                        <td>{{individual.timeSpent}}</td>
-                        <td>{{individual.lessonDate.strftime('%d . %m . %Y')}}</td>
-                    </tr>
-                {%endfor%}
+                <h1>Ваші індивідуалки за останні 2 тижня</h1>
+            {% endif %}
+        </div>
+        {% if individuals[0] %}
+        <div class="tableWrapper" search=true>
+            <div class="firstRow Row">
+                {% if user.userType == 'child' %}
+                    <div><p>Вчитель</p></div>
+                {% else %}
+                    <div><p>Учень</p></div>
+                {% endif %}
+                <div><p>Тема</p></div>
+                <div><p>Оцінка</p></div>
+                <div><p>Коментар</p></div>
+                <div><p>Час</p></div>
+                <div><p>Дата уроку</p></div>
+            </div>
+            {% for individual in individuals %}
+            <div class="Row" searchable=true>
+                {% if user.userType == 'child' %}
+                    <div searchable=true>{{individual.teacherName}}</div>
+                {% else %}
+                    <div searchable=true>{{individual.studentName}}</div>
+                {% endif %}
+                <div searchable=true>{{individual.topic}}</div>
+                <div searchable=true>{{individual.grade}}</div>
+                <div searchable=true>{{individual.comment}}</div>
+                <div searchable=true>{{individual.timeSpent}}</div>
+                <div searchable=true>{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
+            </div>
+            {%endfor%}
+        </div>
         {% endif %}
-        </table>
-    {% endif %}
     <script>
         function relocateUser(query) {
             window.location.href = '{{url_for("updateProfile")}}'+query;

@@ -49,8 +49,54 @@ function handleErrors() {
     }
 }
 
+function handleCollapseTablet() {
+    let trigger = document.querySelector('#collapseTrigger');
+    let menu = document.querySelector('.menuBox');
+    let openModalTrigger = document.querySelector('#tabletTrigger');
+    let modalBg = document.querySelector('#modalBackground');
+    let modal = document.querySelector('#sideItemModal');
+    let closeModalTrigger = document.querySelector('#closeModal');
+
+    if (window.screen.width <= 1500) {
+        trigger.classList.add('triggered')
+        menu.classList.add('collapsedMenu')
+        if (!modal) {
+            openModalTrigger.style.display = 'none';
+        } else {
+            openModalTrigger.addEventListener('click', () => {
+                modalBg.style.display = 'block';
+                modal.style.right = 'initial';
+            });
+            closeModalTrigger.addEventListener('click', () => {
+                modalBg.style.display = 'none';
+                modal.style.right = '-500px';
+            })
+        }
+    }
+}
+
+function handleCollapseProfile() {
+    let profileTrigger = document.querySelector('#triggerProfile');
+    let profileBox = document.querySelector('#profileBox');
+    let closeProfile = document.querySelector('#closeProfile');
+    let trigger = document.querySelector('#collapseTrigger');
+
+    if (profileTrigger) {
+        profileTrigger.addEventListener('click', () => {
+            profileBox.classList.remove('collapsedMenu');
+            trigger.style.top = '-100px';
+        });
+        closeProfile.addEventListener('click', () => {
+            profileBox.classList.add('collapsedMenu');
+            trigger.style.top = '31px';
+        })
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     handleCollapsedMenuItems();
     handleCollapseMenu();
     handleErrors();
+    handleCollapseTablet();
+    handleCollapseProfile();
 })

@@ -51,12 +51,13 @@
         </div>
     </div>
     {%if form%}
-    <div class="sideItemWrapper">
+    <div class="sideItemWrapper" id='sideItemModal'>
         <div class="sideItem">
             <div class="sideItemTitle">
                 <h3>Додати нового користувача</h3>
                 <label for="avatar" class="addAvatar"><p>+</p></label>
                 <img class="avatarPreview" src="{{url_for('static', filename='images/avatars/defaultUserImage.png')}}" alt="avatar preview">
+                <img id='closeModal' src="{{url_for('static', filename='images/icons/plus.svg')}}" alt="avatar preview">
             </div>
             <div class="formWrapper">
                 <form method='POST' enctype="multipart/form-data">

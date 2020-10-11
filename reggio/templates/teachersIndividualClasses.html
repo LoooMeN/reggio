@@ -44,10 +44,11 @@
         </div>
 
         {%if form%}
-        <div class="sideItemWrapper">
+        <div class="sideItemWrapper" id='sideItemModal'>
             <div class="sideItem">
                 <div class="sideItemTitle">
                     <h3>Додати нового користувача</h3>
+                    <img id='closeModal' src="{{url_for('static', filename='images/icons/plus.svg')}}" alt="avatar preview">
                 </div>
                 <div class="formWrapper">
                     <form method='POST'>
