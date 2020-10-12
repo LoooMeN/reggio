@@ -3,7 +3,6 @@ function previewFile() {
     var file    = document.querySelector('input[type=file]').files[0];
     var reader  = new FileReader();
   
-    console.log('sex')
     reader.onloadend = function () {
       preview.src = reader.result;
     }

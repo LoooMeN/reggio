@@ -9,8 +9,8 @@
     <title>{{title}}</title>
     <link rel="shortcut icon" type="image/jpg" href="/static/images/icons/favicon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    {%block headerIncludes%}{%endblock%}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {%block headerIncludes%}{%endblock%}
 </head>
 <body>
     <div id="modalBackground" draggable="false"></div>
@@ -74,15 +74,38 @@
     <div id='profileBox' class="profileBox collapsedMenu">
         <img id='closeProfile' class='close' src="{{url_for('static', filename='images/icons/closeProfile.svg')}}">
         <h2>Редагувати особисті дані</h2>
-        <img class='profileAvatar' src="/{{ current_user.avatar }}">
-        <div class="profileData">
-            <div><p>Ім'я</p><p>{{current_user.name}}</p></div>
-            <div><p>Призвіще</p><p>{{current_user.surname}}</p></div>
-            <div><p>Емейл</p><p>{{current_user.email}}</p></div>
-            <div><p>Теелфон</p><p>{{current_user.phone}}</p></div>
-            <div><p>Viber</p><p>{{current_user.viber}}</p></div>
+        <div class="profileAvatar">
+            <img id="currentUserAvatar" src="/{{ current_user.avatar }}">
+            <label id="whiteBox" for="changeAvatar" class="whiteBox">
+                <img src="{{url_for('static', filename='images/icons/photoIcon.svg')}}">
+            </label>
         </div>
-        <div class="saveButton">Зберегти зміни</div>
+        <form enctype="multipart/form-data">
+            <input onchange="previewFileChangeAvatar()" type="file" name="changeAvatar" id="changeAvatar" src="" alt="">
+        </form>
+        <div class="profileData">
+            <div>
+                <p>Ім'я</p>
+                <input value="{{current_user.name}}">
+            </div>
+            <div>
+                <p>Призвіще</p>
+                <input value="{{current_user.surname}}">
+            </div>
+            <div>
+                <p>Емейл</p>
+                <input value="{{current_user.email}}">
+            </div>
+            <div>
+                <p>Телефон</p>
+                <input value="{{current_user.phone}}">
+            </div>
+            <div>
+                <p>Viber</p>
+                <input value="{{current_user.viber}}">
+            </div>
+        </div>
+        <div id="saveButton" class="saveButton">Зберегти зміни</div>
     </div>
     <div class="contentMainBody">
         <div id="tabletTrigger" draggable="true">
