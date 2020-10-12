@@ -27,9 +27,11 @@ function handleCollapseMenu() {
         if (menu.classList.contains('collapsedMenu')) {
             trigger.classList.remove('triggered')
             menu.classList.remove('collapsedMenu')
+            trigger.style.top = '31px'
         } else {
             trigger.classList.add('triggered')
             menu.classList.add('collapsedMenu')
+            trigger.style.top = '0px'
         }
     })
 }
@@ -80,6 +82,7 @@ function handleCollapseProfile() {
     let profileBox = document.querySelector('#profileBox');
     let closeProfile = document.querySelector('#closeProfile');
     let trigger = document.querySelector('#collapseTrigger');
+    let saveButton = document.querySelector('#saveButton');
 
     if (profileTrigger) {
         profileTrigger.addEventListener('click', () => {
@@ -89,7 +92,10 @@ function handleCollapseProfile() {
         closeProfile.addEventListener('click', () => {
             profileBox.classList.add('collapsedMenu');
             trigger.style.top = '31px';
-        })
+        });
+        saveButton.addEventListener('click', () => {
+            console.log('SEX')
+        });
     }
 }
 
@@ -100,3 +106,19 @@ document.addEventListener('DOMContentLoaded', () => {
     handleCollapseTablet();
     handleCollapseProfile();
 })
+
+function previewFileChangeAvatar() {
+    var preview = document.querySelector('#currentUserAvatar');
+    var file    = document.querySelector('#changeAvatar').files[0];
+    var reader  = new FileReader();
+  
+    reader.onloadend = function () {
+      preview.src = reader.result;
+    }
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = "";
+    }
+}
