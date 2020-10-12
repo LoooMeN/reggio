@@ -83,6 +83,28 @@ def updateUser():
     return redirect(url_for('users'))
 
 
+@app.route('/updateProfile')
+def updateUserProfile():
+    if not checkPageAvailability([]):
+        return redirect(url_for('main'))
+    userID = request.args.get('id')
+    user = User.query.filter_by(id=userID).first()
+    user.name = request.args.get('name')
+    if request.args.get('viber') != 'None':
+        user.viber = request.args.get('viber')
+    user.surname = request.args.get('surname')
+    user.phone = request.args.get('phone')
+    user.email = request.args.get('email')
+    user.userType = user.userType
+    prevType = user.userType
+    updateSubtables(prevType, user)
+    try:
+        db.session.commit()
+    except:
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту.')
+    return redirect(url_for('users'))
+
+
 def addUser(addUserForm):
     avatar = os.path.join('static', 'images', 'avatars', 'defaultUserImage.png')
     if addUserForm.avatar.data:

@@ -87,7 +87,7 @@ def updateProfile():
     user.phone = request.args.get('phone')
     user.email = request.args.get('email')
     prevType = request.args.get('prevType')
-    updateSubtables(prevType, user)
+    reggio.updateSubtables(prevType, user)
     try:
         db.session.commit()
     except:

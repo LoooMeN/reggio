@@ -14,33 +14,34 @@
             {% endif %}
         </div>
         {% if individuals[0] %}
-        <div class="tableWrapper" search=true>
-            <div class="firstRow Row">
-                {% if user.userType == 'child' %}
-                    <div><p>Вчитель</p></div>
-                {% else %}
-                    <div><p>Учень</p></div>
-                {% endif %}
-                <div><p>Тема</p></div>
-                <div><p>Оцінка</p></div>
-                <div><p>Коментар</p></div>
-                <div><p>Час</p></div>
-                <div><p>Дата уроку</p></div>
+            <div class="tableWrapper" search=true>
+                <div class="firstRow Row">
+                    {% if user.userType == 'child' %}
+                        <div><p>Вчитель</p></div>
+                    {% else %}
+                        <div><p>Учень</p></div>
+                    {% endif %}
+                    <div><p>Тема</p></div>
+                    <div><p>Оцінка</p></div>
+                    <div><p>Коментар</p></div>
+                    <div><p>Час</p></div>
+                    <div><p>Дата уроку</p></div>
+                </div>
+                {% for individual in individuals %}
+                <div class="Row" searchable=true>
+                    {% if user.userType == 'child' %}
+                        <div searchable=true>{{individual.teacherName}}</div>
+                    {% else %}
+                        <div searchable=true>{{individual.studentName}}</div>
+                    {% endif %}
+                    <div searchable=true>{{individual.topic}}</div>
+                    <div searchable=true>{{individual.grade}}</div>
+                    <div searchable=true>{{individual.comment}}</div>
+                    <div searchable=true>{{individual.timeSpent}}</div>
+                    <div searchable=true>{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
+                </div>
+                {%endfor%}
             </div>
-            {% for individual in individuals %}
-            <div class="Row" searchable=true>
-                {% if user.userType == 'child' %}
-                    <div searchable=true>{{individual.teacherName}}</div>
-                {% else %}
-                    <div searchable=true>{{individual.studentName}}</div>
-                {% endif %}
-                <div searchable=true>{{individual.topic}}</div>
-                <div searchable=true>{{individual.grade}}</div>
-                <div searchable=true>{{individual.comment}}</div>
-                <div searchable=true>{{individual.timeSpent}}</div>
-                <div searchable=true>{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
-            </div>
-            {%endfor%}
         </div>
         {% endif %}
     <script>

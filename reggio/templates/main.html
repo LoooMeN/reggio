@@ -84,28 +84,29 @@
             <input onchange="previewFileChangeAvatar()" type="file" name="changeAvatar" id="changeAvatar" src="" alt="">
         </form>
         <div class="profileData">
+            <input name="profileId" style="display: none" value="{{current_user.id}}">
             <div>
                 <p>Ім'я</p>
-                <input value="{{current_user.name}}">
+                <input name="profileName" value="{{current_user.name}}">
             </div>
             <div>
                 <p>Призвіще</p>
-                <input value="{{current_user.surname}}">
+                <input name="profileSurname" value="{{current_user.surname}}">
             </div>
             <div>
                 <p>Емейл</p>
-                <input value="{{current_user.email}}">
+                <input name="profileEmail" value="{{current_user.email}}">
             </div>
             <div>
                 <p>Телефон</p>
-                <input value="{{current_user.phone}}">
+                <input name="profilePhone" value="{{current_user.phone}}">
             </div>
             <div>
                 <p>Viber</p>
-                <input value="{{current_user.viber}}">
+                <input name="profileViber" value="{{current_user.viber}}">
             </div>
         </div>
-        <div id="saveButton" class="saveButton">Зберегти зміни</div>
+        <div id="saveButton" class="saveButton" onclick=submitProfileChanges()>Зберегти зміни</div>
     </div>
     <div class="contentMainBody">
         <div id="tabletTrigger" draggable="true">
@@ -113,5 +114,10 @@
         </div>
         {%block body%}{%endblock%}
     </div>
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("updateUserProfile")}}'+query;
+        }
+    </script>
 </body>
 </html>

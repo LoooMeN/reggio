@@ -93,9 +93,6 @@ function handleCollapseProfile() {
             profileBox.classList.add('collapsedMenu');
             trigger.style.top = '31px';
         });
-        saveButton.addEventListener('click', () => {
-            console.log('SEX')
-        });
     }
 }
 
@@ -108,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function previewFileChangeAvatar() {
-    var preview = document.querySelector('#currentUserAvatar');
-    var file    = document.querySelector('#changeAvatar').files[0];
-    var reader  = new FileReader();
-  
+    let preview = document.querySelector('#currentUserAvatar');
+    let file    = document.querySelector('#changeAvatar').files[0];
+    let reader = new FileReader();
+
     reader.onloadend = function () {
       preview.src = reader.result;
     }
@@ -121,4 +118,19 @@ function previewFileChangeAvatar() {
     } else {
       preview.src = "";
     }
+}
+
+function submitProfileChanges(){
+    let query = '?id=' + document.querySelector('input[name="profileId"]').value ;
+    let name = document.querySelector('input[name="profileName"]').value
+    let surname = document.querySelector('input[name="profileSurname"]').value
+    let email = document.querySelector('input[name="profileEmail"]').value
+    let phone = document.querySelector('input[name="profilePhone"]').value
+    let viber = document.querySelector('input[name="profileViber"]').value
+    query += '&name=' + name +
+             '&surname=' + surname +
+             '&email=' + email +
+             '&phone=' + phone +
+             '&viber=' + viber;
+    relocateUser(query);
 }
