@@ -1,0 +1,12 @@
+@import "variables.scss";
+
+.contentMainBody {
+    .mainItem {
+        width: calc(100% - 485px);
+        min-width: 800px;
+
+        .tableWrapper {
+            grid-template-columns: 1fr 9fr;
+        }
+    }
+}

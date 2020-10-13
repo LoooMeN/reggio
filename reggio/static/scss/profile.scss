@@ -1,0 +1,126 @@
+@import "variables.scss";
+
+.contentMainBody {
+    .sideItemWrapper {
+        min-height: calc(100vh - 150px);
+
+        .sideItem {
+            margin: 0 20px;
+            background-color: white;
+            width: 350px;
+            margin-top: 100px;
+            filter: drop-shadow(7.61473px 7.61473px 6.66289px rgba(0, 0, 0, 0.2));  
+
+            .sideItemTitle {
+                width: 100%;
+                height: 150px;
+                background-color: #FEFEFE;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+
+                h3 {
+                    width: 70%;
+                    text-align: center;
+                    font-size: 21px;
+                    font-weight: normal;
+                    position: absolute;
+                    top: 26px;
+                }
+
+                .avatarPreview {
+                    border: 3px solid $base-color;
+                    width: 110px;
+                    height: 110px;
+                    border-radius: 100px;
+                    position: absolute;
+                    bottom: -55px;
+                    background-color: $base-color;
+                    left: calc(50% - 55px);
+                }
+                
+                .addAvatar {
+                    width: 30px;
+                    height: 30px;
+                    background-color: #EDE7E7;
+                    border-radius: 100px;
+                    font-size: 28px;
+                    position: absolute;
+                    bottom: -50px;
+                    left: calc(50% + 25px);
+                    z-index: 10;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 3px solid $base-color;
+                }
+            }
+
+            .formWrapper {
+                background-color: $base-color;
+                color: $menu-text-color;
+                padding: 26px;
+                padding-top: 80px;
+                font-size: 15px;
+                overflow-y: auto;
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+
+                form {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    width: 100%;
+
+                    .addAvatarHidden {
+                        display: none;
+                        margin-bottom: 0;
+                    }
+
+                    div {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 22px;
+                        color: #DFE1DE;
+
+                        input, select {
+                            background: #EBEBEB;
+                            width: 212px;
+                            outline: none;
+                            border: none;
+                            padding-left: 5px;
+                            box-sizing: border-box;
+                            height: 27px;
+                        }
+                    }
+
+                    #submit {
+                        width: 297px;
+                        height: 43px;
+                        outline: none;
+                        border: none;
+                        color: $base-color;
+                        font-size: 16px;
+                        line-height: 19px;
+                        font-weight: 500;
+                        background: linear-gradient(270deg, #8E32D7 -44.28%, #E08C0F 150.29%, rgba(50, 215, 161, 0.734375) 150.31%);
+                        box-shadow: 0px -1px 4px rgba(244, 144, 53, 0.21);
+                    }
+                }
+            }
+        }
+    }
+
+    .mainItem {
+        width: calc(100% - 485px);
+        min-width: 1000px;
+
+        .tableWrapper {
+            grid-template-columns: 2fr 2fr 1fr 3fr 1fr 2fr;
+        }
+    }
+}

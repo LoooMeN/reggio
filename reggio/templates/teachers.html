@@ -1,33 +1,28 @@
 {%extends 'main.html'%}
+
+{%block headerIncludes%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/teachers.css') }}">
+{%endblock%}
+
 {% block body %}
-    <style>
-        img {
-            width: 50px;
-        }
-
-        td {
-            border: 1px solid black;
-            padding: 0 20px;
-        }
-
-        tr:first-child td {
-            border: none;
-        }
-    </style>
-    <h1>Учителя</h1>
-    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-    <table search=true>
-        <tr>
-            <td></td>
-            <td>Имя</td>
-            <td>Фамилия</td>
-        </tr>
+<div class="mainItem">
+    <div class="titleWrapper">
+        <h1>Вчителі</h1>
+        <div class="searchWrapper">
+            <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+            <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+        </div>
+    </div>
+    <div class="tableWrapper" search=true>
+        <div class="firstRow Row">
+            <div><p></p></div>
+            <div><p>Піб</p></div>
+        </div>
         {% for teacher in teachers %}
-        <tr searchable=true id={{teacher.id}}>
-            <td class='image'><img src='{{teacher.avatar}}'></td>
-            <td searchable=true class='name text'>{{teacher.name}}</td>
-            <td searchable=true class='surname text'>{{teacher.surname}}</td>
-        </tr>
+        <div class="Row" searchable=true id={{teacher.id}}>
+            <div class='image'><img src='{{teacher.avatar}}'></div>
+            <div searchable=true class='name text'>{{teacher.name}} {{teacher.surname}}</div>
+        </div>
         {%endfor%}
-    </table>
+    </div>
 {% endblock %}

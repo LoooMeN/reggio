@@ -66,9 +66,12 @@ def updateUser():
     userID = request.args.get('id')
     user = User.query.filter_by(id=userID).first()
     user.name = request.args.get('name')
-    user.viber = request.args.get('viber')
+    if request.args.get('viber') != 'None':
+        user.viber = request.args.get('viber')
     user.surname = request.args.get('surname')
     user.phone = request.args.get('phone')
+    user.password = generate_password_hash(request.args.get('password'))
+    print(request.args.get('password'))
     user.email = request.args.get('email')
     user.userType = request.args.get('userType')
     prevType = request.args.get('prevType')
@@ -76,7 +79,29 @@ def updateUser():
     try:
         db.session.commit()
     except:
-        flash(u'Ошибка записи в базу данных. Возможно вы ввели дубль емейла или юзернейма.')
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту.')
+    return redirect(url_for('users'))
+
+
+@app.route('/updateProfile')
+def updateUserProfile():
+    if not checkPageAvailability([]):
+        return redirect(url_for('main'))
+    userID = request.args.get('id')
+    user = User.query.filter_by(id=userID).first()
+    user.name = request.args.get('name')
+    if request.args.get('viber') != 'None':
+        user.viber = request.args.get('viber')
+    user.surname = request.args.get('surname')
+    user.phone = request.args.get('phone')
+    user.email = request.args.get('email')
+    user.userType = user.userType
+    prevType = user.userType
+    updateSubtables(prevType, user)
+    try:
+        db.session.commit()
+    except:
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту.')
     return redirect(url_for('users'))
 
 
@@ -109,7 +134,7 @@ def users():
         username = request.form.get('username')
         email = request.form.get('email')
         if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
-            flash('User exists')
+            flash('Такий користувач вже зареєстрований')
         else:
             addUser(addUserForm)
             return redirect(url_for('users'))
@@ -117,7 +142,7 @@ def users():
     return render_template('users.html',
                            users=users,
                            form=addUserForm,
-                           title='Users',
+                           title='Користувачі',
                            menu=defineMenu())
 
 

@@ -12,6 +12,7 @@ from reggio import app, db
 from reggio.models import User, Child, Teacher, IndividualClass
 from reggio.forms import SignInForm, CreateUser
 from reggio.utils import *
+import reggio.settings
 import reggio.users
 import reggio.children
 import reggio.teachers
@@ -20,39 +21,96 @@ import reggio.profile
 import reggio.parent
 
 
+def compileSCSS():
+    folderSCSS = os.path.join(app.root_path, 'static', 'scss')
+    folderCSS = os.path.join(app.root_path, 'static', 'css')
+    sass.compile(dirname=(folderSCSS, folderCSS),
+                 output_style='compressed')
+    return "stylesCompiled"
+
+
+app.jinja_env.globals.update(compileSCSS=compileSCSS)
+
+
 @app.route('/test')
 def test():
-    nowdate = datetime.today()
-    d = nowdate - timedelta(days=14)
-    flash(d < nowdate)
     return render_template(
         'main.html',
-        title='TEST',
-        menu=defineMenu())
+        title='Секас',
+        menu=defineMenu(),
+        scss=compileSCSS()
+    )
 
-@app.route('/') # dashboard if admin else logo prompt
+
+def hasIndividual(userType):
+    legitimateUsersForIndividuals = ["child", "teacher", "admin", "superAdmin", "tutor"]
+    if userType in legitimateUsersForIndividuals:
+        return True
+    else:
+        return False
+
+
+@app.route('/')
 def main():
     if current_user.is_authenticated:
-        return render_template('child.html', title='Main', menu=defineMenu())
+        if not current_user.is_authenticated:
+            return redirect(url_for('main'))
+        if hasIndividual(current_user.userType):
+            if current_user.userType == "child":
+                individuals = IndividualClass.query.filter_by(studentUsername=current_user.username).filter(
+                    IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            else:
+                individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
+                    IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            return render_template(
+                'profile.html',
+                user=current_user,
+                individuals=individuals,
+                title='Профіль',
+                menu=defineMenu())
+        return render_template(
+            'profile.html',
+            user=current_user,
+            title='Профіль',
+            menu=defineMenu())
     return redirect(url_for('login'))
+
+
+@app.route('/Update')
+def updateProfile():
+    if not current_user.is_authenticated:
+        return redirect(url_for('main'))
+    user = User.query.filter_by(id=current_user.id).first()
+    user.name = request.args.get('name')
+    user.viber = request.args.get('viber')
+    user.surname = request.args.get('surname')
+    user.phone = request.args.get('phone')
+    user.email = request.args.get('email')
+    prevType = request.args.get('prevType')
+    reggio.updateSubtables(prevType, user)
+    try:
+        db.session.commit()
+    except:
+        flash(u'Помилка запису в базу данних. Можливо ви ввели вже існуючий юзернейм чи пошту..')
+    return redirect(url_for('profile'))
+
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
     signinForm = SignInForm(crsf_enabled=False)
     if signinForm.validate_on_submit():
-        user = User.query.filter_by(username=request.form.get('username')).first()
+        user = User.query.filter_by(email=request.form.get('email')).first()
         if user and check_password_hash(user.password, request.form.get('password')):
             login_user(user)
             return redirect(url_for('main'))
         else:
-            flash('Incorrect credentials, homie')
+            flash('Невірні дані')
     elif current_user.is_authenticated:
         return redirect(url_for('main'))
     return render_template(
         'login.html',
-        signinForm=signinForm,
-        title='Login',
-        menu=defineMenu())
+        signinForm=signinForm)
+
 
 @app.route('/logout')
 def logout():
@@ -60,11 +118,14 @@ def logout():
         logout_user()
     return redirect(url_for('login'))
 
+
 @app.route('/resetdb')
 def resetDB():
     db.drop_all()
     db.create_all()
-    admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='adminName', surname='adminSurname', password=generate_password_hash('123'), avatar=os.path.join('static', 'images', 'avatars', 'defaultUserImage.png'))
+    admin = User(username='admin', email='looomen@hotmail.com', userType='superAdmin', name='Кіт',
+                 surname='Василь', password=generate_password_hash('123'),
+                 avatar=os.path.join('static', 'images', 'avatars', 'defaultUserImage.png'))
     db.session.add(admin)
 
     children = []
@@ -98,7 +159,7 @@ def resetDB():
         counter += 1
 
     counter = 1
-    while counter < 6:
+    while counter < 16:
         username = 'teacher' + str(counter)
         email = 'teacher' + str(counter) + '@gmail.com'
         userType = 'teacher'
@@ -126,12 +187,13 @@ def resetDB():
     for childItem in children:
         teacher = teachers[randrange(5)]
         teacherUsername = teacher.username
-        teacherName = teacher.surname+' '+teacher.name
+        teacherName = teacher.surname + ' ' + teacher.name
         studentUsername = childItem.username
         studentName = childItem.surname + ' ' + childItem.name
         timeSpent = randrange(15, 45)
-        creationDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
-        lessonDate = str(randrange(2010, 2021))+'-'+str(randrange(1, 13))+'-'+str(randrange(1, 28))+' 00:00:0'
+        creationDate = str(randrange(2010, 2021)) + '-' + str(randrange(1, 13)) + '-' + str(
+            randrange(1, 28)) + ' 00:00:0'
+        lessonDate = str(randrange(2010, 2021)) + '-' + str(randrange(1, 13)) + '-' + str(randrange(1, 28)) + ' 00:00:0'
         grade = randrange(12)
         topic = 'flexi'
         individuals.append(IndividualClass(

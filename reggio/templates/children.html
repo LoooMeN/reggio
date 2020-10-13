@@ -1,33 +1,52 @@
 {%extends 'main.html'%}
+{%block headerIncludes%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/children.css') }}">
+    <script src="{{url_for('static', filename='js/children.js')}}"></script>
+{%endblock%}
 {% block body %}
-    <style>
-        img {
-            width: 50px;
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <h1>Учні</h1>
+            <div class="searchWrapper">
+                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+            </div>
+        </div>
+        <div class="tableWrapper" search=true>
+            <div class="firstRow Row">
+                <div><p></p></div>
+                <div><p>Піб</p></div>
+                <div><p>Батьки</p></div>
+                <div><p></p></div>
+            </div>
+            {% for child in children %}
+            <div class="Row" searchable=true id={{child.id}}>
+                <div class='image'><img src='{{child.avatar}}'></div>
+                <div searchable=true class='name text'>{{child.name}} {{child.surname}}</div>
+                <datalist id="parentList">
+                    {% for parent in parents %}
+                        <option value="{{parent[1]}}">{{parent[0]}}</option>
+                    {% endfor %}
+                </datalist>
+                <div searchable=true class='parents text'>
+                    {% if child.parents %}
+                        {% for parent in child.parents.split(';') %}
+                            <div class="parent"><p>{{convertUsername(parent, 'name')}}</p></div>
+                        {%endfor%}
+                    {% endif %}
+                </div>
+                <div><img style='cursor: pointer;' class="editIcon" onclick="bindParent(this)" src="{{url_for('static', filename='images/icons/editIcon.svg')}}"></div>
+            </div>
+            {%endfor%}
+        </div>
+    </div>
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("bindParent")}}'+query;
         }
 
-        td {
-            border: 1px solid black;
-            padding: 0 20px;
+        function removeParent(element) {
+            element.parentNode.remove()
         }
-
-        tr:first-child td {
-            border: none;
-        }
-    </style>
-    <h1>Дети</h1>
-    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-    <table search=true>
-        <tr>
-            <td></td>
-            <td>Имя</td>
-            <td>Фамилия</td>
-        </tr>
-        {% for child in children %}
-        <tr searchable=true id={{child.id}}>
-            <td class='image'><img src='{{child.avatar}}'></td>
-            <td searchable=true class='name text'>{{child.name}}</td>
-            <td searchable=true class='surname text'>{{child.surname}}</td>
-        </tr>
-        {%endfor%}
-    </table>
+    </script>
 {% endblock %}

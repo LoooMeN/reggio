@@ -4,36 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="{{ url_for('static', filename='js/utility.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <title>{{title}}</title>
+    <link rel="shortcut icon" type="image/jpg" href="/static/images/icons/favicon.png"/>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     {%block headerIncludes%}{%endblock%}
 </head>
 <body>
+    <div id="modalBackground" draggable="false"></div>
     {% include 'flash.html' %}
-    <div style='display: flex; margin: 0;'>
-        <div class='errorBox shadow'>
-            <div>
-                {% if current_user.is_authenticated %}
-                    <img style='width: 200px; border-radius: 100px;' src="/{{ current_user.avatar }}">
-                    <p>{{ current_user.name }}</p>
-                    <p>{{ current_user.surname }}</p>
-                {% endif %}
+    <div class='menuBox'>
+        <div class="menuTopSection">
+            <div class="collapseTrigger" id='collapseTrigger'>
+                <img src="{{url_for('static', filename='images/icons/hideMenu.svg')}}">
             </div>
-            {% for menuItem in menu %}
-                {% if menuItem[1] is mapping %}
-                    <div>
-                        <h3>{{menuItem[0]}}</h3>
-                        {% for name, link in menuItem[1].items() %}
-                            <p><a style="color: black; text-decoration: none;" href="{{url_for(link)}}">{{name}}</a></p>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p><a style="color: black; text-decoration: none;" href="{{url_for(menuItem[1])}}">{{menuItem[0]}}</a></p>
-                {% endif %}
-            {% endfor %}
+            <div class='imageAvatar'>
+                <img src="/{{ current_user.avatar }}">
+                <img id='triggerProfile' src="{{ url_for('static', filename='images/icons/editPencil.svg')}}" alt="" class="edit">
+            </div>
+            <p>{{ current_user.name }} {{ current_user.surname }}</p>
         </div>
-        <div>{%block body%}{%endblock%}</div>
+
+        <div class="menuItemsWrapper">
+        {% for menuItem in menu %}
+        <div>
+            {% if menuItem[1] is mapping %}
+            <div class="menuItem">
+                <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                    <p>{{menuItem[0]}}</p>
+                    <div class="dropdownArrow">
+                        <img src="{{url_for('static', filename='images/icons/dropdownArrow.svg')}}" alt="">
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <a href="{{url_for(menuItem[1])}}">
+                <div class="menuItem">
+                    <img class="menuItemIcon" src="{{url_for('static', filename='images/icons/'+menuItem[2]+'.svg')}}" alt="">
+                    <p>{{menuItem[0]}}</p>
+                </div>
+            </a>
+            {% endif %}
+            {% if menuItem[1] is mapping %}
+            <div class="subMenu collapsed">
+                {% for name, link in menuItem[1].items() %}
+                <a href="{{url_for(link)}}">
+                    <div class="subMenuItem">
+                        <img class="subMenuArrow" src="{{url_for('static', filename='images/icons/subMenuArrow.svg')}}" alt="">
+                        <p>{{name}}</p>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        </div>
+
+
+        <div class="menuBotSection">
+            <p><a href="{{url_for('logout')}}">Вийти</a></p>
+        </div>
+
+
     </div>
+    <div id='profileBox' class="profileBox collapsedMenu">
+        <img id='closeProfile' class='close' src="{{url_for('static', filename='images/icons/closeProfile.svg')}}">
+        <h2>Редагувати особисті дані</h2>
+        <div class="profileAvatar">
+            <img id="currentUserAvatar" src="/{{ current_user.avatar }}">
+            <label id="whiteBox" for="changeAvatar" class="whiteBox">
+                <img src="{{url_for('static', filename='images/icons/photoIcon.svg')}}">
+            </label>
+        </div>
+        <form enctype="multipart/form-data">
+            <input onchange="previewFileChangeAvatar()" type="file" name="changeAvatar" id="changeAvatar" src="" alt="">
+        </form>
+        <div class="profileData">
+            <input name="profileId" style="display: none" value="{{current_user.id}}">
+            <div>
+                <p>Ім'я</p>
+                <input name="profileName" value="{{current_user.name}}">
+            </div>
+            <div>
+                <p>Призвіще</p>
+                <input name="profileSurname" value="{{current_user.surname}}">
+            </div>
+            <div>
+                <p>Емейл</p>
+                <input name="profileEmail" value="{{current_user.email}}">
+            </div>
+            <div>
+                <p>Телефон</p>
+                <input name="profilePhone" value="{{current_user.phone}}">
+            </div>
+            <div>
+                <p>Viber</p>
+                <input name="profileViber" value="{{current_user.viber}}">
+            </div>
+        </div>
+        <div id="saveButton" class="saveButton" onclick=submitProfileChanges()>Зберегти зміни</div>
+    </div>
+    <div class="contentMainBody">
+        <div id="tabletTrigger" draggable="true">
+            <img src="{{url_for('static', filename='images/icons/plus.svg')}}">
+        </div>
+        {%block body%}{%endblock%}
+    </div>
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("updateUserProfile")}}'+query;
+        }
+    </script>
 </body>
 </html>

@@ -1,74 +1,70 @@
 {%extends 'main.html'%}
 
 {% block headerIncludes %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminIndividualClasses.css') }}">
     <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-    <h1>Индивидуалки</h1>
-    <style>
-        img {
-            width: 50px;
-        }
-
-        td {
-            border: 1px solid black;
-            padding: 0 20px;
-        }
-
-        tr:first-child td {
-            border: none;
-        }
-    </style>
-    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Search for names..">
-    <div id='filter'>
-        <form method="POST">
-            {{ form.hidden_tag() }}
-            <datalist id="childrenList">
-                {% for child in childrenList %}
-                    <option value="{{child[0]}}">{{child[1]}}</option>
-                {% endfor %}
-            </datalist>
-            {{form.studentUsername.label}}{{form.studentUsername}}
-            <datalist id="teachersList">
-                {% for teacher in teacherList %}
-                    <option value="{{teacher[0]}}">{{teacher[1]}}</option>
-                {% endfor %}
-            </datalist>
-            {{form.teacherUsername.label}}{{form.teacherUsername}}
-            {{form.timeBefore.label}}{{form.timeBefore}}
-            {{form.timeAfter.label}}{{form.timeAfter}}
-            {{form.submit}}
-        </form>
-        <a href="{{url_for('adminIndividualClasses')}}"><button>Сброс</button></a>
-    </div>
-    <table search=true>
-        <tr>
-            <td><input type="checkbox" id="checkAll"></td>
-            <td>Створено</td>
-            <td>Вчитель</td>
-            <td>Студент</td>
-            <td>Часу витрачено</td>
-            <td>Оцінка</td>
-            <td>Тема</td>
-            <td>Коментар</td>
-            <td>Дата уроку</td>
-        </tr>
-        {% for individualClass in individualClasses %}
-            <tr searchable=true>
-                <td><input type="checkbox" classid={{individualClass.id}} class='rowSelect'></td>
-                <td searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</td>
-                <td searchable=true>{{individualClass.teacherName}}</td>
-                <td searchable=true>{{individualClass.studentName}}</td>
-                <td searchable=true>{{individualClass.timeSpent}}</td>
-                <td searchable=true>{{individualClass.grade}}</td>
-                <td searchable=true>{{individualClass.topic}}</td>
-                <td searchable=true>{{individualClass.comment}}</td>
-                <td searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</td>
-                <td><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}">delete</a></td>
-            </tr>
-        {%endfor%}
-    </table>
-    <button onclick='deleteMany()'>Delete Selected</button>
-    <button>Download Selected</button>
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <h1>Індивідуалки</h1>
+            <div class="searchWrapper">
+                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+            </div>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <datalist id="childrenList">
+                    {% for child in childrenList %}
+                        <option value="{{child[0]}}">{{child[1]}}</option>
+                    {% endfor %}
+                </datalist>
+                {{form.studentUsername.label}}{{form.studentUsername}}
+                <datalist id="teachersList">
+                    {% for teacher in teacherList %}
+                        <option value="{{teacher[0]}}">{{teacher[1]}}</option>
+                    {% endfor %}
+                </datalist>
+                {{form.teacherUsername.label}}{{form.teacherUsername}}
+                {{form.timeBefore.label}}{{form.timeBefore}}
+                {{form.timeAfter.label}}{{form.timeAfter}}
+                {{form.submit}}
+            </form>
+        </div>
+        <div class="tableWrapper" search=true>
+            <div class="firstRow Row">
+                <div><input type="checkbox" id="checkAll"></div>
+                <div><p>Створено</p></div>
+                <div><p>Вчитель</p></div>
+                <div><p>Студент</p></div>
+                <div><p>Час (хв)</p></div>
+                <div><p>Оцінка</p></div>
+                <div><p>Тема</p></div>
+                <div><p>Коментар</p></div>
+                <div><p>Дата уроку</p></div>
+                <div></div>
+            </div>
+            {% for individualClass in individualClasses %}
+                <div class="Row" searchable=true>
+                    <div><input type="checkbox" classid={{individualClass.id}} class='rowSelect'></div>
+                    <div searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</div>
+                    <div searchable=true>{{individualClass.teacherName}}</div>
+                    <div searchable=true>{{individualClass.studentName}}</div>
+                    <div searchable=true>{{individualClass.timeSpent}}</div>
+                    <div searchable=true>{{individualClass.grade}}</div>
+                    <div searchable=true>{{individualClass.topic}}</div>
+                    <div searchable=true>{{individualClass.comment}}</div>
+                    <div searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</div>
+                    <div class="actions"><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}"><img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}"></a></div>
+                </div>
+            {%endfor%}
+        </div>
+        <div>
+            <a href="{{url_for('adminIndividualClasses')}}"><button>Зкинути</button></a>
+            <button onclick='deleteMany()'>Видалити вибране</button>
+            <label for="preferredFilename">Ім'я для файла</label>
+            <input type="text" name="preferredFilename" id="preferredFilename">
+            <button id="downloadButton" onclick="downloadMany()">Завантажити вибране</button>
+        </div>
 {% endblock %}

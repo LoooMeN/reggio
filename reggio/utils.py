@@ -1,8 +1,51 @@
 # coding: utf-8
+import os
 from flask import flash
 from flask_login import current_user
+from reggio import app
+from reggio.models import Child, Teacher, Parent, User
+import sass
 
-from reggio.models import Child, Teacher
+
+def replaceListItem(array, frm, to):
+    if array and frm and to:
+        for index, value in enumerate(array):
+            if value == frm:
+                array[index] = to
+    return array
+
+
+def convertUsername(frm, to):
+    if frm is not None and frm != '':
+        List = frm.split(';')
+        if to == "name":
+            for frm in List:
+                user = User.query.filter_by(username=frm).first()
+                if user is not None:
+                    fullName = user.surname + " " + user.name
+                    List = replaceListItem(List, frm, fullName)
+                else:
+                    List.remove(frm)
+        if to == "username":
+            users = User.query.all()
+            for item in List:
+                item.replace('&nbsp;', '')
+            for user in users:
+                fullName = user.surname + " " + user.name
+                if fullName in List:
+                    List = replaceListItem(List, fullName, user.username)
+            for x in List:
+                if " " in x:
+                    List.remove(x)
+        if len(List) > 1:
+            return ';'.join(List)
+        else:
+            return List[0]
+    return "None"
+
+
+app.jinja_env.globals.update(convertUsername=convertUsername)
+
 
 def getChildren():
     children = Child.query.all()
@@ -12,6 +55,7 @@ def getChildren():
         choices.append((child.username, name))
     return choices
 
+
 def getTeachers():
     teachers = Teacher.query.all()
     choices = []
@@ -20,37 +64,41 @@ def getTeachers():
         choices.append((teacher.username, name))
     return choices
 
+
+def getParents():
+    parents = Parent.query.all()
+    choices = []
+    for parent in parents:
+        name = "%s %s" % (parent.surname, parent.name)
+        choices.append((parent.username, name))
+    return choices
+
+
 def defineMenu():
-    if current_user.is_authenticated:
-        menu = [(u"Главная", "main")]
-        if current_user.userType == 'admin':
-            menu.extend([
-                (u"Пользователи", "users"),
-                (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"})
-            ])
-        elif current_user.userType == 'superAdmin':
-            menu.extend([
-                (u"Пользователи", "users"),
-                (u"Дети", "children"),
-                (u"Учителя", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}),
-                (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}),
-                (u"Батьки", {u"Список": "parent"}),
-                ("resetDB", "resetDB")
-            ])
-        elif current_user.userType == 'teacher':
-            menu.extend([
-                (u"Учителя", {u"Индивидуалки": "teachersIndividualClasses"}),
-            ])
-        elif current_user.userType == 'parent':
-            menu.append((u"Батьки", {u"Список": "parent"}))
-        else:
-            pass
-        menu.append((u'Профиль', 'profile'))
-        menu.append((u'Выйти', 'logout'))
+    menu = [(u"Головна", "main", 'peopleIcon')]
+    if current_user.userType == 'admin':
+        menu.extend([
+            (u"Користувачі", "users", 'peopleIcon'),
+            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}, 'peopleIcon')
+        ])
+    elif current_user.userType == 'superAdmin':
+        menu.extend([
+            (u"Користувачі", "users", 'peopleIcon'),
+            (u"Учні", "children", 'peopleIcon'),
+            (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
+            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses", }, 'peopleIcon'),
+            (u"Батьки", {u"Список": "parent"}, 'peopleIcon'),
+            # (u"Налаштування", {u"Кольори": "color"}, 'peopleIcon'),
+            # ("resetDB", "resetDB", 'peopleIcon')
+        ])
+    elif current_user.userType == 'teacher':
+        menu.extend([
+            (u"Вчителі", {u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
+        ])
+    elif current_user.userType == 'parent':
+        menu.append((u"Батьки", {u"Список": "parent"}, 'peopleIcon'))
     else:
-        menu = [
-            (u'Войти', 'login')
-        ]
+        pass
     return menu
 
 
@@ -59,5 +107,5 @@ def checkPageAvailability(accesGranted):
         guestType = current_user.userType
         if guestType == 'superAdmin' or guestType in accesGranted:
             return True
-    flash('No permission')
+    flash('Немає прав')
     return False

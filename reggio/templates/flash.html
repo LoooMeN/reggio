@@ -1,31 +1,25 @@
-<style>
+<div class="errorsBox" id="errorsBox">
+    <script>
+        console.log('{{ compileSCSS() }}')
+    </script>
 
-    .errorsBox {
-        width: 300px;
-        min-height: 200px;
-        border: 1px solid black;
-        position: absolute;
-        bottom: 2px;
-        right: 2px;
-        padding: 20px;
-    }
-
-</style>
-
-<div class="errorsBox">
-    <h2>Ошибки:</h2>
-    <ul>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-                {% for message in messages %}
-                    <li style='color: red'>{{ message }}</li>
+    <img src="{{url_for('static', filename='images/icons/warning.svg')}}">
+    <img id="closeErrors" src="{{url_for('static', filename='images/icons/redCross.svg')}}">
+    <div class="errorHolder">
+        <h2>Помилки:</h2>
+        <ul>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        {% for message in messages %}
+                            <li class="error">{{ message }}</li>
+                        {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% if form and form.errors %}
+                {% for field, errors in form.errors.items() %}
+                    <li class="error">{{ form[field].label }}: {{ ', '.join(errors) }}</li>
                 {% endfor %}
-        {% endif %}
-    {% endwith %}
-    {% if form and form.errors %}
-        {% for field, errors in form.errors.items() %}
-            <li style='color: red'>{{ form[field].label }}: {{ ', '.join(errors) }}</li>
-        {% endfor %}
-    {% endif %}
-    </ul>
+            {% endif %}
+        </ul>
+    </div>
 </div>
