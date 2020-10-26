@@ -108,14 +108,14 @@
         </div>
         <div id="saveButton" class="saveButton" onclick=submitProfileChanges()>Зберегти зміни</div>
     </div>
+    <div id="tabletTrigger" draggable="true">
+        <img src="{{url_for('static', filename='images/icons/plus.svg')}}">
+    </div>
     <div class="contentMainBody">
-        <div id="tabletTrigger" draggable="true">
-            <img src="{{url_for('static', filename='images/icons/plus.svg')}}">
-        </div>
         {%block body%}{%endblock%}
     </div>
     <script>
-        function relocateUser(query) {
+        function relocateProfile(query) {
             window.location.href = '{{url_for("updateUserProfile")}}'+query;
         }
     </script>

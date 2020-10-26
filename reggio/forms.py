@@ -107,9 +107,9 @@ class CreateTeacherIndividual(FlaskForm):
 
 
 class GetIndividual(FlaskForm):
-    timeBefore = DateField(u'До', [Optional()], render_kw={"type": "date"})
+    timeBefore = DateField(u'До', [Optional()], render_kw={"type": "date", "placeholder": u"До"})
     timeAfter = DateField(u'Після', [Optional()], render_kw={"type": "date"})
-    teacherUsername = StringField(u'Вчитель', [Optional(), existanceValidator('teacher')], render_kw={"list": "teachersList", "autocomplete": "off"})
+    teacherUsername = StringField(u'Вчитель', [Optional(), existanceValidator('teacher')], render_kw={"list": "teachersList","placeholder": "Вчитель", "autocomplete": "off"})
     studentUsername = StringField(u'Учень(иця)', [Optional(), existanceValidator('child')],
-                                  render_kw={"list": "childrenList", "autocomplete": "off"})
+                                  render_kw={"list": "childrenList", "autocomplete": "off", "placeholder": "Учень(иця)"})
     submit = SubmitField(u'Застосувати')

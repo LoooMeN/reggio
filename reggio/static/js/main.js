@@ -132,5 +132,5 @@ function submitProfileChanges(){
              '&email=' + email +
              '&phone=' + phone +
              '&viber=' + viber;
-    relocateUser(query);
+    relocateProfile(query);
 }

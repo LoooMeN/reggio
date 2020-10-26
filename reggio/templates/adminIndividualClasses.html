@@ -9,28 +9,35 @@
     <div class="mainItem">
         <div class="titleWrapper">
             <h1>Індивідуалки</h1>
-            <div class="searchWrapper">
-                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
-                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+            <div class="filtersWrapper">
+                <div class="searchWrapper">
+                    <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+                </div>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <img src="{{url_for('static', filename='images/icons/filter.svg')}}">
+                    <datalist id="childrenList">
+                        {% for child in childrenList %}
+                            <option value="{{child[0]}}">{{child[1]}}</option>
+                        {% endfor %}
+                    </datalist>
+                    <datalist id="teachersList">
+                        {% for teacher in teacherList %}
+                            <option value="{{teacher[0]}}">{{teacher[1]}}</option>
+                        {% endfor %}
+                    </datalist>
+                    {{form.studentUsername}}
+                    {{form.teacherUsername}}
+                    <div>
+                        {{form.timeBefore.label}}{{form.timeBefore}}
+                    </div>
+                    <div>
+                        {{form.timeAfter.label}}{{form.timeAfter}}
+                    </div>
+                    {{form.submit}}
+                </form>
             </div>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                <datalist id="childrenList">
-                    {% for child in childrenList %}
-                        <option value="{{child[0]}}">{{child[1]}}</option>
-                    {% endfor %}
-                </datalist>
-                {{form.studentUsername.label}}{{form.studentUsername}}
-                <datalist id="teachersList">
-                    {% for teacher in teacherList %}
-                        <option value="{{teacher[0]}}">{{teacher[1]}}</option>
-                    {% endfor %}
-                </datalist>
-                {{form.teacherUsername.label}}{{form.teacherUsername}}
-                {{form.timeBefore.label}}{{form.timeBefore}}
-                {{form.timeAfter.label}}{{form.timeAfter}}
-                {{form.submit}}
-            </form>
         </div>
         <div class="tableWrapper" search=true>
             <div class="firstRow Row">
@@ -60,11 +67,13 @@
                 </div>
             {%endfor%}
         </div>
-        <div>
-            <a href="{{url_for('adminIndividualClasses')}}"><button>Зкинути</button></a>
+        <div class="bottomButtons">
             <button onclick='deleteMany()'>Видалити вибране</button>
-            <label for="preferredFilename">Ім'я для файла</label>
-            <input type="text" name="preferredFilename" id="preferredFilename">
+            <a href="{{url_for('adminIndividualClasses')}}"><button>Зкинути</button></a>
+            <div>
+                <label for="preferredFilename">Ім'я для файла</label>
+                <input type="text" name="preferredFilename" id="preferredFilename">
+            </div>
             <button id="downloadButton" onclick="downloadMany()">Завантажити вибране</button>
         </div>
 {% endblock %}

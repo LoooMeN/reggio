@@ -28,7 +28,7 @@
                         <option value="{{parent[1]}}">{{parent[0]}}</option>
                     {% endfor %}
                 </datalist>
-                <div searchable=true class='parents text'>
+                <div searchable=true class='relatives text'>
                     {% if child.parents %}
                         {% for parent in child.parents.split(';') %}
                             <div class="parent"><p>{{convertUsername(parent, 'name')}}</p></div>
