@@ -5,9 +5,17 @@
 <script src="{{url_for('static', filename='js/users.js')}}"></script>
 {%endblock%}
 
+{% block menuHeader %}
+<div class="searchWrapper">
+    <img src="{{url_for('static', filename='images/icons/mobileSearch.svg')}}">
+    <p>Пошук</p>
+    <!-- <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук"> -->
+</div>
+{% endblock %}
+
 {% block body %}
     <div class="mainItem">
-        <div class="titleWrapper">
+        <div class="desktop titleWrapper">
             <h1>Користувачі</h1>
             <div class="searchWrapper">
                 <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">

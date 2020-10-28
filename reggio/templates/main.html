@@ -15,6 +15,14 @@
 <body>
     <div id="modalBackground" draggable="false"></div>
     {% include 'flash.html' %}
+    <div class='mobileSpacer'></div>
+    <div class="mobileHeader">
+        <div class="mobileCollapseTrigger">
+            <img id='mobileCollapseTrigger' src="{{url_for('static', filename='images/icons/hideMenu.svg')}}">
+            <h1>{{title}}</h1>
+        </div>
+        {% block menuHeader %}{% endblock %}
+    </div>
     <div class='menuBox'>
         <div class="menuTopSection">
             <div class="collapseTrigger" id='collapseTrigger'>
