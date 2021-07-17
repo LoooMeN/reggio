@@ -63,17 +63,17 @@
                     <div searchable=true>{{individualClass.topic}}</div>
                     <div searchable=true>{{individualClass.comment}}</div>
                     <div searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</div>
-                    <div class="actions"><a href="{{url_for('deleteIndividualClass')}}?id={{individualClass.id}}"><img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}"></a></div>
+                    <div class="actions"><a href="{{url_for('deleteIndividualClasses')}}?ids={{individualClass.id}}&reload=1"><img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}"></a></div>
                 </div>
             {%endfor%}
         </div>
         <div class="bottomButtons">
-            <button onclick='deleteMany()'>Видалити вибране</button>
-            <a href="{{url_for('adminIndividualClasses')}}"><button>Зкинути</button></a>
+            <button onclick='deleteIndividuals()'>Видалити вибране</button>
+            <button onclick='decheckCheckState()'>Зкинути</button>
             <div>
                 <label for="preferredFilename">Ім'я для файла</label>
                 <input type="text" name="preferredFilename" id="preferredFilename">
             </div>
-            <button id="downloadButton" onclick="downloadMany()">Завантажити вибране</button>
+            <button id="downloadButton" onclick="downloadIndividuals()">Завантажити вибране</button>
         </div>
 {% endblock %}

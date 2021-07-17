@@ -19,21 +19,11 @@ function handleCollapsedMenuItems() {
     })
 }
 
-function handleCollapseMenu() {
-    let trigger = document.querySelector('#collapseTrigger');
+function triggerMenu() {
     let menu = document.querySelector('.menuBox');
 
-    trigger.addEventListener('click', () => {
-        if (menu.classList.contains('collapsedMenu')) {
-            trigger.classList.remove('triggered')
-            menu.classList.remove('collapsedMenu')
-            trigger.style.top = '31px'
-        } else {
-            trigger.classList.add('triggered')
-            menu.classList.add('collapsedMenu')
-            trigger.style.top = '0px'
-        }
-    })
+    console.log(menu.classList.contains('collapsedMenu'))
+    menu.classList.contains('collapsedMenu') ? menu.classList.remove('collapsedMenu') : menu.classList.add('collapsedMenu')
 }
 
 function handleErrors() {
@@ -82,10 +72,9 @@ function handleCollapseProfile() {
 
 document.addEventListener('DOMContentLoaded', () => {
     handleCollapsedMenuItems();
-    handleCollapseMenu();
     handleErrors();
     handleCollapseTablet();
-    handleCollapseProfile();
+    // handleCollapseProfile();
 })
 
 function previewFileChangeAvatar() {

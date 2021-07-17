@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+from re import I
 import time
 import pathlib
 from datetime import datetime
@@ -14,7 +15,6 @@ from reggio.utils import *
 
 from reggio.forms import GetIndividual
 import pandas as pd
-import xlsxwriter
 
 from datetime import datetime, timedelta
 
@@ -55,6 +55,10 @@ def adminIndividualClasses():
     individualClasses.sort(key=lambda r: r.creationDate, reverse=True)
     teacherList = getTeachers()
     childrenList = getChildren()
+    error = request.args.get('error')
+    if (error == "1"):
+        flash("Не обрано поле")
+    cleanTemp()
     return render_template(
         'adminIndividualClasses.html',
         teacherList=teacherList,
@@ -65,33 +69,22 @@ def adminIndividualClasses():
         menu=defineMenu())
 
 
-@app.route('/admin/deleteIndividualClass', methods=["GET"])
-def deleteIndividualClass():
-    if not checkPageAvailability(['admin']):
-        return redirect(url_for('main'))
-    IndividualClassesID = request.args.get('id')
-    IndividualClasses = IndividualClass.query.filter_by(id=IndividualClassesID).first()
-    db.session.delete(IndividualClasses)
-    db.session.commit()
-    return redirect(url_for('adminIndividualClasses'))
-
-
 @app.route('/admin/deleteIndividualClasses', methods=["GET"])
 def deleteIndividualClasses():
-    if not checkPageAvailability(['admin']):
-        return redirect(url_for('main'))
     IndividualClassesIDs = request.args.get('ids')
-    IndividualClassesIDs = IndividualClassesIDs.split(';')
-    for IndividualClassID in IndividualClassesIDs:
-        selectedToDel = IndividualClass.query.filter_by(id=IndividualClassID).first()
-        db.session.delete(selectedToDel)
-    db.session.commit()
-    return redirect(url_for('adminIndividualClasses'))
+    if (IndividualClassesIDs):
+        IndividualClassesIDs = IndividualClassesIDs.split(';')
+        for IndividualClassID in IndividualClassesIDs:
+            selectedToDel = IndividualClass.query.filter_by(id=IndividualClassID).first()
+            db.session.delete(selectedToDel)
+        db.session.commit()
+        if (request.args.get('reload')):
+            return redirect(url_for('adminIndividualClasses'))
+        return "0"
+    return "1"
 
 
-def createXLSX():
-    IndividualClassesIDs = request.args.get('ids')
-    IndividualClassesIDs = IndividualClassesIDs.split(';')
+def createXLSX(IndividualClassesIDs):
     table = {"Створено": [],
              "Вчитель": [],
              "Учень": [],
@@ -113,36 +106,34 @@ def createXLSX():
         table["Дата уроку"].append(selectedToDownload.lessonDate)
     return table
 
-
-@app.route('/admin/deleteXLSX', methods=["GET"])
-def deleteXLSX():
-    filename = request.args.get('filename')
-    filename = os.path.join(app.root_path, 'static', 'temp', filename)
-    while os.path.exists(filename):
-        try:
-            os.remove(filename)
-        except:
-            time.sleep(10)
-    return 'File deleted'
+def cleanTemp():
+    tempDirPath = os.path.join(app.root_path, 'static', 'temp')
+    tempFiles = os.listdir(tempDirPath)
+    for file in tempFiles:
+        file = os.path.join(app.root_path, 'static', 'temp', file)
+        os.remove(file)
+        return 1
 
 
 @app.route('/admin/downloadXLSX', methods=["GET"])
 def downloadXLSX():
-    filename = request.args.get('filename')
-    preferredFilename = "Individual"
-    if request.args.get('preferredFilename'):
-        preferredFilename = request.args.get('preferredFilename')
-    filename = os.path.join(app.root_path, 'static', 'temp', filename)
-    return send_file(filename, as_attachment=True, attachment_filename=preferredFilename + '.xlsx')
+    filename = os.path.join(app.root_path, 'static', 'temp', request.args.get('filename'))
+    return send_file(filename, as_attachment=True, attachment_filename=request.args.get('filename'))
 
 
 @app.route('/admin/createIndividualClassXLSX', methods=["GET"])
 def createIndividualClassXLSX():
-    if not checkPageAvailability(['admin']):
-        return redirect(url_for('main'))
-    DataFrame = pd.DataFrame(createXLSX())
-    filepath = os.path.join(app.root_path, 'static', 'temp', "individual.xlsx")
-    writer = pd.ExcelWriter(filepath, engine='xlsxwriter')
-    DataFrame.to_excel(writer, sheet_name='Individual')
-    writer.save()
-    return "individual.xlsx"
+    IndividualClassesIDs = request.args.get('ids').split(";")
+    PreferredFilename = request.args.get('prefferedFilename')
+
+    if not PreferredFilename:
+        PreferredFilename = "individual.xlsx"
+    else:
+        PreferredFilename += ".xlsx"
+
+    if (IndividualClassesIDs[0]):
+        df1 = pd.DataFrame(createXLSX(IndividualClassesIDs))
+        filepath = os.path.join(app.root_path, 'static', 'temp', PreferredFilename)
+        df1.to_excel(filepath, sheet_name='Individual')
+        return PreferredFilename
+    return "1"

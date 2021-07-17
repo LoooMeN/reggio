@@ -1,4 +1,4 @@
-function changeCheckState() {
+function invertCheckState() {
     let checkboxes = document.querySelectorAll('.rowSelect')
 
     checkboxes.forEach(checkbox => {
@@ -6,8 +6,20 @@ function changeCheckState() {
     })
 }
 
-function deleteMany() {
+function decheckCheckState() {
     let checkboxes = document.querySelectorAll('.rowSelect')
+    let checkAll = document.querySelector('#checkAll');
+
+    checkAll.checked = false
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false
+    })
+}
+
+
+function deleteIndividuals() {
+    let checkboxes = document.querySelectorAll('.rowSelect')
+
 
     let toDel = []
     checkboxes.forEach(checkbox => {
@@ -15,46 +27,38 @@ function deleteMany() {
             toDel.push(checkbox.getAttribute('classid').toString())
         }
     })
-    if (toDel.length <= 0) {
-        alert('Ви не обрали жодну індивідуалку');
-        return
-    }
-
+    console.log(toDel)
     axios.get('/admin/deleteIndividualClasses?ids='+toDel.join(';'))
     .then(response => {
-        document.location.reload();
+        window.location = response.data == "0" ? "/admin/individualClasses" : "/admin/individualClasses?error=1"
     })
 }
 
-function downloadMany() {
-    let checkboxes = document.querySelectorAll('.rowSelect')
+function downloadIndividuals() {
     let preferredFilename = document.querySelector('#preferredFilename').value
-    let downloadScreen = '<div id="downloadScreen"><p>Формування таблиці</p></div>';
-    let body = document.querySelector("body");
-    body.innerHTML += downloadScreen;
     let toDownload = []
-    checkboxes.forEach(checkbox => {
+
+    document.querySelectorAll('.rowSelect').forEach(checkbox => {
         if (checkbox.checked) {
             toDownload.push(checkbox.getAttribute('classid').toString())
         }
     })
-    if (toDownload.length <= 0) {
-        alert('Ви не обрали жодну індивідуалку');
-        return
-    }
 
-    axios.get('/admin/createIndividualClassXLSX?ids='+toDownload.join(';'))
+    console.log(toDownload)
+    axios.get('/admin/createIndividualClassXLSX?ids='+toDownload.join(';')+"&prefferedFilename="+preferredFilename)
     .then(response => {
-        window.open('/admin/downloadXLSX?preferredFilename='+preferredFilename+'&filename='+response.data)
-        axios.get('/admin/deleteXLSX?filename='+response.data)
-        console.log(body)
-        body.removeChild(document.getElementById('downloadScreen'));
-
+        if (response.data == "1") {
+            window.location = "/admin/individualClasses?error=1"
+        }
+        else {
+            window.open('/admin/downloadXLSX?filename='+response.data)
+            window.location = "/admin/individualClasses"
+        }
     })
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     let checkAll = document.querySelector('#checkAll');
 
-    checkAll.addEventListener('click', changeCheckState)
+    checkAll.addEventListener('click', invertCheckState)
 })

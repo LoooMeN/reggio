@@ -24,6 +24,24 @@ body {
     background-size: contain;
 }
 
+#openMenu {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: red;
+}
+
+#closeMenu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: red;
+}
+
 #modalBackground {
     display: none;
     width: 100vw;
@@ -96,238 +114,6 @@ body {
 
 .uppercase {
     text-transform: uppercase;
-}
-
-.mobileHeader {
-    display: none;
-}
-
-.menuBox {
-    margin-right: 30px;
-    box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
-    min-width: 250px;
-    background-color: $base-color;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    min-height: 750px;
-    position: relative;
-    transition: all 0.3s;
-    align-items: center;
-    left: 0;
-
-    color: $menu-text-color;
-
-    img {
-        color: $menu-text-color;
-    }
-
-    a {
-        color: $menu-text-color;
-        text-decoration: none;
-    }
-
-    .menuTopSection, .menuBotSection {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        align-items: center;
-        justify-content: center;
-        border-image-source: linear-gradient(to left, #A12FA1, #D2830C);
-        border-image-slice: 1;
-        border-width: 5px;
-    
-        p {
-            font-weight: 300;
-            font-size: 16px;
-            line-height: 19px;
-        }
-    }
-
-    .menuTopSection {
-        position: relative;
-        border-bottom: 5px solid;
-        height: 180px;
-    
-        .imageAvatar {
-            margin-bottom: 16px;
-            position: relative;
-
-            img {
-                border-radius: 100px;
-                width: 80px;
-                z-index: 100;
-            }
-
-            .edit {
-                width: 30px;
-                height: 30px;
-                position: absolute;
-                bottom: 0px;
-                cursor: pointer;
-                right: 0px;
-            }
-        }
-
-        p {
-            width: 200px;
-            text-align: center;
-            line-height: 100%;
-            color: #DFE1DE;
-        }
-
-        .collapseTrigger {
-            position: absolute;
-            top: 31px;
-            right: -25px;
-            width: 25px;
-            height: 44px;
-            background-color: $base-color;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: height 0.2s, top 0.2s;
-
-            img {
-                width: 12px;
-                height: 22px;
-                transform: rotate(0deg);
-                transition: transform 0.2s;
-                margin: 0;
-            }
-        }
-
-        .triggered {
-            height: 100vh;
-            top: 0;
-            img {
-                transform: rotate(180deg);
-            }
-        }
-    }
-
-    .menuBotSection {
-        height: 90px;
-        border-top: 5px solid;
-    }
-
-    .menuItemsWrapper {
-        width: 100%;
-        margin: 20px 0;
-        height: calc(100vh - 310px);
-    }
-
-    .menuItem {
-        overflow: hidden;
-        position: relative;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        min-height: 44px;
-        cursor: pointer;
-        width: 100%;
-        box-sizing: border-box;
-    
-        p {
-            font-family: Roboto;
-            font-style: normal;
-            font-weight: normal;
-            font-size: 17px;
-            line-height: 20px;
-        }
-    
-        .menuItemIcon {
-            width: 18px;
-            height: 18px;
-            margin-right: 15px;
-            margin-left: 30px;
-        }
-    
-        &:hover {
-            background-color: $separation-color;
-            border-left: 4px solid;
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-            border-image-source: linear-gradient(to bottom, #A12FA1, #D2830C);
-            border-image-slice: 1;
-            border-width: 5px;
-        }
-    
-        .dropdownArrow {
-            transition: transform 0.2s;
-            img {
-                width: 15px;
-                height: 8px;
-            }
-        
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 20px;
-        }
-    }
-    
-    .menuItemHovered {
-        background-color: $separation-color;
-        border-left: 4px solid $outline-color;
-        border-image-source: linear-gradient(to bottom, #A12FA1, #D2830C);
-        border-image-slice: 1;
-        border-width: 5px;
-
-        .dropdownArrow {
-            transform: rotateZ(180deg);
-        }
-    }
-    
-    .collapsed {
-        height: 0;
-        overflow: hidden;
-    }
-    
-    .subMenu {
-        .subMenuItem {
-            display: flex;
-            align-items: center;
-            background: rgba(65, 64, 65, 0.6);
-            height: 27px;
-        
-            p {
-                font-size: 15px;
-            }
-        
-            .subMenuArrow {
-                margin-left: 36px;
-                margin-right: 20px;
-                width: 9px;
-                height: 10px;
-            }
-    
-            &:hover {
-                background: rgba(65, 64, 65, 0.6);
-                border-left: 4px solid rgba(65, 64, 65, 0.6);
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-            }
-        }
-    }
-}
-
-.showMenu {
-    background-color: $base-color;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100vh;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-        width: 20px;
-        height: 20px;
-    }
 }
 
 .profileBox {
@@ -447,11 +233,6 @@ body {
         background: linear-gradient(90deg, #E88B2A 0%, #A42687 100%);
         cursor: pointer;
     }
-}
-
-.collapsedMenu {
-    left: -250px;
-    margin-right: -210px;
 }
 
 .contentMainBody {
@@ -616,10 +397,6 @@ body {
     justify-content: space-between;
 }
 
-.mobileSpacer {
-    display: none;
-}
-
 #tabletTrigger {
     height: 100%;
     border: 1px solid black;
@@ -652,7 +429,6 @@ body {
 
 
 @media screen and (max-width: 1500px) {
-
     .contentMainBody {
         .mainItem {
             width: 100%;
@@ -664,101 +440,8 @@ body {
 
 @media screen and (max-width: 1100px) {
 
-    .mobileSpacer {
-        height: 95px;
-        width: 100%;
-        display: block;
-    }
-
-    .desktop {
-        display: none !important;
-    }
-
-    body {
-        background-color: #000000;
-        display: block;
-    }
-
-    .mobileHeader {
-        z-index: 10000;
-        display: block;
-        position: fixed;
-        width: 100%;
-        height: 80px;
-        background-color: #000000;
-        left: 0px;
-        top: 0px;
-        border-bottom: 5px solid white;
-        border-image-source: linear-gradient(to left, #A12FA1, #D2830C);
-        border-image-slice: 1;
-
-        .mobileCollapseTrigger {
-            margin-top: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            #mobileCollapseTrigger {
-                position: fixed;
-                left: 20px;
-                width: 7px;
-                transform: rotate(-90deg);
-            }
-
-            h1 {
-                font-weight: 300;
-                font-size: 13px;
-                line-height: 15px;
-                text-transform: uppercase;
-                color: #DFE1DE;
-            }
-        }
-
-        .searchWrapper {
-            width: 95%;
-            height: 30px;
-            display: flex;
-            background: #242424;
-            margin: auto;
-            margin-top: 10px;
-            justify-content: center;
-            align-items: center;
-
-            p {
-                font-size: 10px;
-                line-height: 12px;
-                color: #929292;
-            }
-
-            img {
-                width: 10px;
-                height: 10px;
-                margin-right: 8px;
-            }
-        }
-    }
-
-    .profileBox {
-        display: none;    
-    }
-
-    .menuBox {
-        display: none;
-        .menuTopSection {
-            #collapseTrigger {
-                display: none;
-            }
-        }
-    }
-
-    .contentMainBody {
-        .mainItem {
-            .tableWrapper {
-                display: block;
-            }
-        }
-    }
 }
+
 
 @media screen and (max-height: 750px) {
     body {
