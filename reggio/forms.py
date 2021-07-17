@@ -80,7 +80,7 @@ class CreateUser(FlaskForm):
                                ('tutor', u'Репетитор'),
                                ('zavhoz', u'Завхоз'),
                                ('chef', u'Кухар'),
-                               ('accountant', u'Бахгалтер'),
+                               ('accountant', u'Бухгалтер'),
                                ('financist', u'Фінансист'),
                                ('lawyer', u'Юрист'),
                                ('medic', u'Медик'),

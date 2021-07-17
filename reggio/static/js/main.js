@@ -54,26 +54,10 @@ function handleErrors() {
 function handleCollapseTablet() {
     let trigger = document.querySelector('#collapseTrigger');
     let menu = document.querySelector('.menuBox');
-    let openModalTrigger = document.querySelector('#tabletTrigger');
-    let modalBg = document.querySelector('#modalBackground');
-    let modal = document.querySelector('#sideItemModal');
-    let closeModalTrigger = document.querySelector('#closeModal');
 
     if (window.screen.width <= 1500) {
         trigger.classList.add('triggered')
         menu.classList.add('collapsedMenu')
-        if (!modal) {
-            openModalTrigger.style.display = 'none';
-        } else {
-            openModalTrigger.addEventListener('click', () => {
-                modalBg.style.display = 'block';
-                modal.style.right = 'initial';
-            });
-            closeModalTrigger.addEventListener('click', () => {
-                modalBg.style.display = 'none';
-                modal.style.right = '-500px';
-            })
-        }
     }
 }
 

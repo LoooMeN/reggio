@@ -116,9 +116,6 @@
         </div>
         <div id="saveButton" class="saveButton" onclick=submitProfileChanges()>Зберегти зміни</div>
     </div>
-    <div id="tabletTrigger" draggable="true">
-        <img src="{{url_for('static', filename='images/icons/plus.svg')}}">
-    </div>
     <div class="contentMainBody">
         {%block body%}{%endblock%}
     </div>
@@ -127,5 +124,6 @@
             window.location.href = '{{url_for("updateUserProfile")}}'+query;
         }
     </script>
+    {%block endbody%}{%endblock%}
 </body>
 </html>

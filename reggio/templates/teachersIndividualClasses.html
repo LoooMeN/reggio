@@ -7,7 +7,12 @@
 {% block body %}
     <div class="mainItem">
         <div class="titleWrapper">
-            <h1>Ваші індивідуалки</h1>
+            <div class="titleFirstRow">
+                <h1>Ваші індивідуалки</h1>
+                <div id="tabletTrigger" draggable="true">
+                    <p>Додати</p>
+                </div>
+            </div>
             <div class="searchWrapper">
                 <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
                 <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
@@ -47,7 +52,7 @@
         <div class="sideItemWrapper" id='sideItemModal'>
             <div class="sideItem">
                 <div class="sideItemTitle">
-                    <h3>Додати нового користувача</h3>
+                    <h3>Додати індивідуальне зайняття</h3>
                     <img id='closeModal' src="{{url_for('static', filename='images/icons/plus.svg')}}" alt="avatar preview">
                 </div>
                 <div class="formWrapper">
@@ -71,3 +76,9 @@
         </div>
     {%endif%}
 {% endblock %}
+
+{% block endbody %}
+    <script>
+        modalHandler();
+    </script>
+{%endblock%}

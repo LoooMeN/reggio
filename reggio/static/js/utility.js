@@ -20,3 +20,23 @@ function searchInput() {
         }
     });
 }
+
+function modalHandler() {
+    let openModalTrigger = document.querySelector('#tabletTrigger');
+    let modalBg = document.querySelector('#modalBackground');
+    let modal = document.querySelector('#sideItemModal');
+    let closeModalTrigger = document.querySelector('#closeModal');
+
+    if (!modal) {
+        openModalTrigger.style.display = 'none';
+    } else {
+        openModalTrigger.addEventListener('click', () => {
+            modalBg.style.display = 'block';
+            modal.style.display = 'block';
+        });
+        closeModalTrigger.addEventListener('click', () => {
+            modalBg.style.display = 'none';
+            modal.style.display = 'none';
+        })
+    }
+}

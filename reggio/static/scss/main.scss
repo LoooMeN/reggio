@@ -20,7 +20,6 @@ body {
     position: relative;
     overflow: hidden;
     background-color: $body-base-color;
-    background-image: url('/static/images/icons/test.svg');
     background-repeat: no-repeat;
     background-size: contain;
 }
@@ -482,7 +481,6 @@ body {
 
             .searchWrapper {
                 width: 100%;
-                max-width: 1000px;
                 height: 44px;
                 box-sizing: border-box;
                 background-color: $base-color;
@@ -611,22 +609,11 @@ body {
             }
         }
     }
+}
 
-    .sideItemWrapper {
-        .sideItem {
-            .sideItemTitle {
-                #closeModal {
-                    transform: rotate(45deg);
-                    width: 20px;
-                    height: 20px;
-                    top: 10px;
-                    right: 10px;
-                    position: absolute;
-                    display: none;
-                }
-            }
-        }
-    }
+.titleFirstRow {
+    display: flex;
+    justify-content: space-between;
 }
 
 .mobileSpacer {
@@ -634,48 +621,43 @@ body {
 }
 
 #tabletTrigger {
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px 20px;
+
+    &:hover {
+        color: red;
+        border-color: red;
+    }
+}
+
+#sideItemModal {
     display: none;
+}
+
+.sideItemWrapper {
+    position: absolute;
+    z-index: 2000;
+}
+
+#closeModal {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    transform: rotate(45deg);
+    width: 30px;
+    height: 30px;
 }
 
 
 @media screen and (max-width: 1500px) {
-    #tabletTrigger {
-        width: 100px;
-        height: 100px;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        cursor: pointer;
-        display: none;
-        border-radius: 100px;
-        background: linear-gradient(90deg, #E88B2A 0%, #A42687 100%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
 
     .contentMainBody {
         .mainItem {
             width: 100%;
             min-width: 0;
             margin-right: 20px;
-        }
-
-        .sideItemWrapper {
-            position: absolute;
-            transition: right 0.5s;
-            right: -500px;
-            z-index: 1002;
-
-            .sideItem {
-                .sideItemTitle {
-                    #closeModal {
-                        cursor: pointer;
-                        display: block;
-                    }
-                }
-            }
         }
     }
 }
@@ -690,16 +672,6 @@ body {
 
     .desktop {
         display: none !important;
-    }
-
-    #tabletTrigger {
-        width: 60px;
-        height: 60px;
-
-        img {
-            width: 26px;
-            height: 26px;
-        }
     }
 
     body {

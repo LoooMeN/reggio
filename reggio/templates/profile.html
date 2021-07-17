@@ -7,10 +7,10 @@
 {% block body %}
     <div class="mainItem">
         <div class="titleWrapper">
-            {% if not individuals[0] %}
-                <h1>У вас не було індивідуалок останні 2 тижня</h1>
-            {% else %}
+            {% if individuals[0] %}
                 <h1>Ваші індивідуалки за останні 2 тижня</h1>
+            {% else %}
+                <h1>У вас не було індивідуалок останні 2 тижня</h1>
             {% endif %}
         </div>
         {% if individuals[0] %}

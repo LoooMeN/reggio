@@ -16,7 +16,12 @@
 {% block body %}
     <div class="mainItem">
         <div class="desktop titleWrapper">
-            <h1>Користувачі</h1>
+            <div class="titleFirstRow">
+                <h1>Користувачі</h1>
+                <div id="tabletTrigger" draggable="true">
+                    <p>Додати</p>
+                </div>
+            </div>
             <div class="searchWrapper">
                 <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
                 <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
@@ -85,9 +90,12 @@
         </div>
     </div>
     {%endif%}
+{% endblock %}
+{% block endbody %}
     <script>
+        modalHandler();
         function relocateUser(query) {
             window.location.href = '{{url_for("updateUser")}}'+query;
         }
     </script>
-{% endblock %}
+{%endblock%}

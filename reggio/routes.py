@@ -1,4 +1,5 @@
 # coding: utf-8
+from operator import contains
 import os
 from random import randrange
 from datetime import datetime, timedelta
@@ -43,7 +44,7 @@ def test():
 
 
 def hasIndividual(userType):
-    legitimateUsersForIndividuals = ["child", "teacher", "admin", "superAdmin", "tutor"]
+    legitimateUsersForIndividuals = ["child", "teacher", "admin", "superAdmin", "tutor", "parent"]
     if userType in legitimateUsersForIndividuals:
         return True
     else:
@@ -53,15 +54,25 @@ def hasIndividual(userType):
 @app.route('/')
 def main():
     if current_user.is_authenticated:
-        if not current_user.is_authenticated:
-            return redirect(url_for('main'))
         if hasIndividual(current_user.userType):
             if current_user.userType == "child":
                 individuals = IndividualClass.query.filter_by(studentUsername=current_user.username).filter(
                     IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
-            else:
+            elif current_user.userType == "teacher":
                 individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
                     IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            elif current_user.userType == "parent":
+                parent = Parent.query.filter_by(username=current_user.username).first().username
+                children = Child.query.filter(Child.parents.contains(parent)).all()
+                individuals = []
+                for child in children:
+                    individuals += IndividualClass.query.filter_by(studentUsername=child.username).filter(
+                        IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            elif current_user.userType == "superAdmin":
+                individuals = IndividualClass.query.filter_by(teacherUsername=current_user.username).filter(
+                    IndividualClass.creationDate > datetime.today() - timedelta(days=14)).all()
+            else:
+                individuals = None
             return render_template(
                 'profile.html',
                 user=current_user,
