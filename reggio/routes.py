@@ -74,13 +74,13 @@ def main():
             else:
                 individuals = None
             return render_template(
-                'profile.html',
+                'dashboard.html',
                 user=current_user,
                 individuals=individuals,
                 title='Профіль',
                 menu=defineMenu())
         return render_template(
-            'profile.html',
+            'dashboard.html',
             user=current_user,
             title='Профіль',
             menu=defineMenu())

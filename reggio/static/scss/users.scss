@@ -116,9 +116,6 @@
     }
 
     .mainItem {
-        width: calc(100% - 485px);
-        min-width: 1000px;
-
         .tableWrapper {
             grid-template-columns: 1fr 3fr 1fr 1fr 2fr 3fr 3fr 2fr;
         }

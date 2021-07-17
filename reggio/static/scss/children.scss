@@ -2,23 +2,6 @@
 
 .contentMainBody {
     .mainItem {
-        width: calc(100% - 485px);
-        min-width: 800px;
-
-        .titleWrapper {
-            margin: 35px 0;
-
-            h1 {
-                font-family: Roboto;
-                font-style: normal;
-                font-weight: 300;
-                font-size: 30px;
-                line-height: 35px;
-                color: #000000;
-                text-transform: uppercase;
-                margin-bottom: 30px;
-            }
-        }
 
         .tableWrapper {
             height: calc(100vh - 215px);

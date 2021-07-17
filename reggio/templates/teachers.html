@@ -7,7 +7,9 @@
 {% block body %}
 <div class="mainItem">
     <div class="titleWrapper">
-        <h1>Вчителі</h1>
+        <div class="titleFirstRow">
+            <h1>Вчителі</h1>
+        </div>
         <div class="searchWrapper">
             <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
             <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">

@@ -14,15 +14,21 @@
     {%block headerIncludes%}{%endblock%}
 </head>
 <body>
-    <button id="openMenu" onclick="triggerMenu()"></button>
+    <button id="openMenu" onclick="triggerMenu()">
+        <img id='closeProfile' class='close' src="{{url_for('static', filename='images/icons/menu.svg')}}">
+    </button>
     <div id="modalBackground" draggable="false"></div>
     {% include 'flash.html' %}
     <div class='menuBox'>
         <div class="menuTopSection">
-            <button id="closeMenu" onclick="triggerMenu()"></button>
+            <button id="closeMenu" onclick="triggerMenu()">
+                <img class='close' src="{{url_for('static', filename='images/icons/closeProfile.svg')}}">
+            </button>
             <div class='imageAvatar'>
                 <img src="/{{ current_user.avatar }}">
-                <img id='triggerProfile' src="{{ url_for('static', filename='images/icons/editPencil.svg')}}" alt="" class="edit">
+                <button onclick="triggerProfile()" id='triggerProfile'>
+                    <img src="{{ url_for('static', filename='images/icons/editPencil.svg')}}" alt="" class="edit">
+                </button>
             </div>
             <p>{{ current_user.name }} {{ current_user.surname }}</p>
         </div>
@@ -66,8 +72,10 @@
             <p><a href="{{url_for('logout')}}">Вийти</a></p>
         </div>
     </div>
-    <!-- <div id='profileBox' class="profileBox collapsedMenu">
-        <img id='closeProfile' class='close' src="{{url_for('static', filename='images/icons/closeProfile.svg')}}">
+    <div id='profileBox' class="profileBox collapsedMenu">
+        <button id='closeProfile'>
+            <img onclick="triggerProfile()" class='close' src="{{url_for('static', filename='images/icons/closeProfile.svg')}}">
+        </button>
         <h2>Редагувати особисті дані</h2>
         <div class="profileAvatar">
             <img id="currentUserAvatar" src="/{{ current_user.avatar }}">
@@ -100,9 +108,9 @@
                 <p>Viber</p>
                 <input name="profileViber" value="{{current_user.viber}}">
             </div>
+            <div id="saveButton" class="saveButton" onclick=submitProfileChanges()>Зберегти зміни</div>
         </div>
-        <div id="saveButton" class="saveButton" onclick=submitProfileChanges()>Зберегти зміни</div>
-    </div> -->
+    </div>
     <div class="contentMainBody">
         {%block body%}{%endblock%}
     </div>

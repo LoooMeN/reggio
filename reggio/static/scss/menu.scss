@@ -1,20 +1,43 @@
 @import "variables.scss";
 
-.collapsedMenu {
-    left: -250px;
-    margin-right: -210px;
+#openMenu {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    z-index: 1;
+    cursor: pointer;
+    background-color: rgba($color: #000000, $alpha: 0);
+    border: none;
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+#closeMenu {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background-color: rgba($color: #000000, $alpha: 0);
+    border: none;
 }
 
 .menuBox {
-    margin-right: 30px;
+    z-index: 2;
     box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
-    min-width: 250px;
+    width: 250px;
     background-color: $base-color;
-    display: flex;
+    display: inline-block;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    min-height: 750px;
+    max-height: 100vh;
+    box-sizing: border-box;
     position: relative;
     transition: all 0.3s;
     align-items: center;
@@ -52,7 +75,9 @@
     .menuTopSection {
         position: relative;
         border-bottom: 5px solid;
+        max-height: 180px;
         height: 180px;
+        box-sizing: border-box;
     
         .imageAvatar {
             margin-bottom: 16px;
@@ -64,13 +89,21 @@
                 z-index: 100;
             }
 
-            .edit {
+            #triggerProfile {
                 width: 30px;
                 height: 30px;
                 position: absolute;
                 bottom: 0px;
                 cursor: pointer;
                 right: 0px;
+                background-color: rgba($color: #000000, $alpha: 0.0);
+                border: none;
+                box-sizing: none;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                }
             }
         }
 
@@ -83,15 +116,23 @@
     }
 
     .menuBotSection {
+        box-sizing: border-box;
         height: 90px;
+        max-height: 90px;
         border-top: 5px solid;
     }
 
     .menuItemsWrapper {
+        overflow-y: scroll;
         width: 100%;
-        margin: 20px 0;
-        height: calc(100vh - 310px);
+        height: calc(100vh - 180px - 90px);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
+
+    .menuItemsWrapper::-webkit-scrollbar {
+        display: none;
+      }
 
     .menuItem {
         overflow: hidden;
@@ -188,26 +229,152 @@
     }
 }
 
-.showMenu {
-    background-color: $base-color;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    height: 100vh;
-    width: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.profileBox::-webkit-scrollbar {
+    display: none;
+}
 
-    img {
-        width: 20px;
-        height: 20px;
+.profileBox {
+    margin-right: 30px;
+    box-shadow: 2px 3px 3px rgba(96, 39, 42, 0.53);
+    width: 250px;
+    background-color: $base-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    max-height: 100vh;
+    position: absolute;
+    transition: all 0.3s;
+    align-items: center;
+    left: 0;
+    box-sizing: border-box;
+    color: $menu-text-color;
+    z-index: 3;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-y: scroll;
+
+    form {
+        display: none;    
+    }
+
+    h2 {
+        margin-top: 23px;
+        font-weight: normal;
+        font-size: 13px;
+        line-height: 15px;
+    }
+
+    .profileAvatar {
+        margin-top: 22px;
+        width: 100px;
+        height: 100px;
+        position: relative;
+        object-fit: contain;
+
+        img {
+            width: 100%;
+        }
+
+        .whiteBox {
+            position: absolute;
+            display: flex;
+            background-color: rgba($color: #C4C4C4, $alpha: 0.7);
+            justify-content: center;
+            align-items: center;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            z-index: 101;
+            cursor: pointer;
+
+            img {
+                width: 20px;
+            }
+        }
+    }
+
+    #closeProfile {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 12px;
+        height: 12px;
+        cursor: pointer;
+        background-color: rgba($color: #000000, $alpha: 0.0);
+        border: none;
+        box-sizing: none;
+    }
+
+    .profileData {
+        margin-top: 20px;
+        width: 210px;
+
+        div {
+            p:first-child {
+                font-weight: 300;
+                font-size: 12px;
+                line-height: 14px;
+                margin-bottom: 5px;
+            }
+
+            input {
+                outline: none;
+                background: #303030;
+                font-weight: normal;
+                font-size: 13px;
+                line-height: 15px;
+                color: #DFE1DE;
+                border: none;
+                padding: 10px 10px;
+                box-sizing: border-box;
+                width: 100%;
+                border-radius: 3px;
+                margin-bottom: 10px;
+            }
+
+            margin-bottom: 20px;
+        }
+
+        div:not(:last-child) {
+            border-bottom: 1px solid;
+            border-image-source: linear-gradient(to left, #A12FA1, #D2830C);
+            border-image-slice: 1;
+            border-width: 2px;
+        }
+    }
+
+    .saveButton {
+        // padding: 0 20px;
+        width: 100%;
+        height: 37px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000000;
+        background: linear-gradient(90deg, #E88B2A 0%, #A42687 100%);
+        cursor: pointer;
     }
 }
 
+.collapsedMenu {
+    left: -250px;
+    margin-right: -250px;
+}
+
+
+
 @media screen and (max-width: 1100px) {
     .menuBox {
-
+        box-shadow: none;
+        position: absolute;
+        width: 100%;
+    }
+    
+    .profileBox {
+        box-shadow: none;
+        margin-right: 0;
+        width: 100%;
     }
     
     .collapsedMenu {

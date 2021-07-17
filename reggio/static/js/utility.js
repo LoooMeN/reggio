@@ -22,7 +22,7 @@ function searchInput() {
 }
 
 function modalHandler() {
-    let openModalTrigger = document.querySelector('#tabletTrigger');
+    let openModalTrigger = document.querySelector('#modalTrigger');
     let modalBg = document.querySelector('#modalBackground');
     let modal = document.querySelector('#sideItemModal');
     let closeModalTrigger = document.querySelector('#closeModal');

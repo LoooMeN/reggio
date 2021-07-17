@@ -22,8 +22,18 @@ function handleCollapsedMenuItems() {
 function triggerMenu() {
     let menu = document.querySelector('.menuBox');
 
-    console.log(menu.classList.contains('collapsedMenu'))
-    menu.classList.contains('collapsedMenu') ? menu.classList.remove('collapsedMenu') : menu.classList.add('collapsedMenu')
+    if (!menu.classList.contains('collapsedMenu')) {
+        menu.classList.add('collapsedMenu')
+        setTimeout(() => {
+            menu.style.display = "none";
+        }, 250);
+    }
+    else {
+        menu.style.display = "flex";
+        setTimeout(() => {
+            menu.classList.remove('collapsedMenu')
+        }, 50);
+    }
 }
 
 function handleErrors() {
@@ -42,39 +52,24 @@ function handleErrors() {
 }
 
 function handleCollapseTablet() {
-    let trigger = document.querySelector('#collapseTrigger');
     let menu = document.querySelector('.menuBox');
 
     if (window.screen.width <= 1500) {
-        trigger.classList.add('triggered')
         menu.classList.add('collapsedMenu')
     }
 }
 
-function handleCollapseProfile() {
-    let profileTrigger = document.querySelector('#triggerProfile');
+function triggerProfile() {
     let profileBox = document.querySelector('#profileBox');
-    let closeProfile = document.querySelector('#closeProfile');
-    let trigger = document.querySelector('#collapseTrigger');
-    let saveButton = document.querySelector('#saveButton');
 
-    if (profileTrigger) {
-        profileTrigger.addEventListener('click', () => {
-            profileBox.classList.remove('collapsedMenu');
-            trigger.style.top = '-100px';
-        });
-        closeProfile.addEventListener('click', () => {
-            profileBox.classList.add('collapsedMenu');
-            trigger.style.top = '31px';
-        });
-    }
+    console.log("flex")
+    profileBox.classList.contains('collapsedMenu') ? profileBox.classList.remove('collapsedMenu') : profileBox.classList.add('collapsedMenu')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     handleCollapsedMenuItems();
     handleErrors();
     handleCollapseTablet();
-    // handleCollapseProfile();
 })
 
 function previewFileChangeAvatar() {
