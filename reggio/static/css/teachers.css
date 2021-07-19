@@ -1,1 +1,1 @@
-.contentMainBody .mainItem .tableWrapper{grid-template-columns:1fr 9fr}
+.contentMainBody .mainItem .tableWrapper{grid-template-columns:1fr 9fr}.contentMainBody .mainItem .tableWrapper .Row>div:last-child{width:unset}

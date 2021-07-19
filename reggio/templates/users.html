@@ -5,14 +5,6 @@
 <script src="{{url_for('static', filename='js/users.js')}}"></script>
 {%endblock%}
 
-{% block menuHeader %}
-<div class="searchWrapper">
-    <img src="{{url_for('static', filename='images/icons/mobileSearch.svg')}}">
-    <p>Пошук</p>
-    <!-- <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук"> -->
-</div>
-{% endblock %}
-
 {% block body %}
     <div class="mainItem">
         <div class="titleWrapper">
@@ -32,7 +24,6 @@
                 <div><p></p></div>
                 <div><p>Піб</p></div>
                 <div><p>Тип</p></div>
-                <div><p>Пароль</p></div>
                 <div><p>Телефон</p></div>
                 <div><p>Емейл</p></div>
                 <div><p>Вайбер</p></div>
@@ -42,10 +33,13 @@
             <div class="Row" searchable=true id={{user.id}}>
                 <div class='image'><img src='{{user.avatar}}'></div>
                 <div searchable=true class='name text'>{{user.name}} {{user.surname}}</div>
+                <div class="mobileOnly fieldDescr">Тип:</div>
                 <div searchable=true class='select'>{{user.userType}}</div>
-                <div searchable=true class='password text'>*****</div>
+                <div class="mobileOnly fieldDescr">Телефон:</div>
                 <div searchable=true class='phone text'>{{user.phone}}</div>
+                <div class="mobileOnly fieldDescr">Емейл:</div>
                 <div searchable=true class='email text'>{{user.email}}</div>
+                <div class="mobileOnly fieldDescr">Вайбер:</div>
                 <div class='viber text link'>
                 {% if not user.viber%}
                     None
@@ -54,7 +48,9 @@
                 {% endif %}
                 </div>
                 <div class="actions">
-                    <img class="editIcon" onclick="editUser(this)" src="{{url_for('static', filename='images/icons/editIcon.svg')}}">
+                    <a class="deleteIcon" href="{{url_for('editUser')}}?id={{user.id}}">
+                        <img class="editIcon" src="{{url_for('static', filename='images/icons/editIcon.svg')}}">
+                    </a>
                     <a class="deleteIcon" href="{{url_for('deleteUser')}}?id={{user.id}}">
                         <img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}">
                     </a>

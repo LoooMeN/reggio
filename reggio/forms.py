@@ -61,7 +61,6 @@ class SignInForm(FlaskForm):
         DataRequired()], render_kw={'autocomplete': "off"})
     submit = SubmitField('Увійти')
 
-
 class CreateUser(FlaskForm):
     username = StringField('Юзернейм', [
         DataRequired()])

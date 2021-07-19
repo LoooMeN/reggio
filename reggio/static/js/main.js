@@ -66,10 +66,34 @@ function triggerProfile() {
     profileBox.classList.contains('collapsedMenu') ? profileBox.classList.remove('collapsedMenu') : profileBox.classList.add('collapsedMenu')
 }
 
+function optimizeTableHeight() {
+    let tableWrapper = document.querySelector('.tableWrapper');
+    let offset = document.querySelector('.titleWrapper').clientHeight;
+
+    if (tableWrapper)
+        tableWrapper.style.height = window.screen.height - offset - 20 + "px";
+}
+
+function tableCellExpandTrigger() {
+    let tableWrapper = document.querySelector('.tableWrapper');
+
+    if (tableWrapper) {
+        let cells = tableWrapper.querySelectorAll('.name');
+
+        cells.forEach((cell) => {
+            cell.addEventListener('click', () => {
+                cell.parentNode.classList.contains('cellExpanded') ? cell.parentNode.classList.remove('cellExpanded') : cell.parentNode.classList.add('cellExpanded')
+            });
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     handleCollapsedMenuItems();
     handleErrors();
     handleCollapseTablet();
+    optimizeTableHeight();
+    tableCellExpandTrigger();
 })
 
 function previewFileChangeAvatar() {

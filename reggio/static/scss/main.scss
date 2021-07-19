@@ -15,6 +15,10 @@
     font-family: 'Roboto';
 }
 
+.mobileOnly {
+    display: none !important;
+}
+
 body {
     display: flex;
     position: relative;
@@ -165,7 +169,6 @@ body {
         }
 
         .tableWrapper {
-            height: calc(100vh - 215px);
             width: 100%;
             overflow-y: auto;
             display: grid;
@@ -182,32 +185,7 @@ body {
 
             .Row {
                 display: contents;
-
-                .relatives {
-                    display: flex;
-                    flex-wrap: wrap;
-
-                    div {
-                        background-color: $base-color;
-                        border-radius: 100px;
-                        padding: 5px 10px;
-                        margin-right: 5px;
-                        color: white;
-                        display: flex;
-                        min-height: 25px;
-                        align-items: center;
-                        justify-content: center;
-
-                        img {
-                            margin-left: 5px;
-                            width: 10px;
-                            height: 15px;
-                            padding-left: 5px;
-                            cursor: pointer;
-                            border-left: 1px solid white;
-                        }
-                    }
-                }
+                overflow: hidden;
 
                 div {
                     display: flex;
@@ -298,15 +276,98 @@ body {
 
 
 @media screen and (max-width: 1500px) {
-    .contentMainBody {
-        .mainItem {
-            width: 100%;
-            min-width: 0;
-            margin-right: 20px;
-        }
-    }
+
 }
 
 @media screen and (max-width: 1100px) {
+    .mobileOnly {
+        display: flex !important;
+        align-items: center;
+    }
 
+    .contentMainBody {
+        .mainItem {
+            margin: 0 10px;
+            overflow: hidden;
+
+            .titleWrapper {
+                margin-top: 2px;
+                margin-bottom: 5px;
+
+                .titleFirstRow {
+                    flex-direction: column;
+                    align-items: flex-start;
+
+                    h1 {
+                        margin-left: 30px;
+                        margin-bottom: 5px;
+                    }
+
+                    #modalTrigger {
+                        width: 100%;
+                        box-sizing: border-box;
+                        text-align: center;
+                    }
+                }
+            }
+
+            .tableWrapper {
+                grid-template-columns: 1fr !important;
+                grid-template-rows: max-content;
+
+                .Row {
+                    display: flex;
+                    flex-wrap: wrap;
+                    background-color: #FFFFFF;
+                    margin-bottom: 5px;
+                    max-height: 46px;
+                    height: 46px;
+                    overflow-x: hidden;
+                    justify-content: flex-start;
+
+                    & > div {
+                        background-color: unset;
+                        box-sizing: border-box;
+
+                        &:nth-child(1) {
+                            width: 10%;
+                        }
+
+                        &:nth-child(2) {
+                            width: 90%;
+                        }
+                    }
+
+                    .fieldDescr {
+                        width: 30% !important;
+                    }
+                }
+
+                .cellExpanded {
+                    max-height: 400px;
+                    height: unset;
+                    overflow-x: visible;
+                    overflow: visible;
+
+                    & > div {
+                        &:nth-child(1) {
+                            width: 10%;
+                        }
+
+                        &:nth-child(2) {
+                            width: 90%;
+                        }
+
+                        &:nth-child(n+4) {
+                            width: 70%;
+                        }
+                    }
+                }
+
+                .firstRow {
+                    display: none;
+                }
+            }
+        }
+    }
 }

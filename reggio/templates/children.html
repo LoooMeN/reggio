@@ -30,6 +30,7 @@
                         <option value="{{parent[1]}}">{{parent[0]}}</option>
                     {% endfor %}
                 </datalist>
+                <div class="mobileOnly fieldDescr">Батьки:</div>
                 <div searchable=true class='relatives text'>
                     {% if child.parents %}
                         {% for parent in child.parents.split(';') %}

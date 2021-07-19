@@ -4,6 +4,14 @@
     .mainItem {
         .tableWrapper {
             grid-template-columns: 1fr 9fr;
+
+            .Row {
+                & > div {
+                    &:last-child {
+                        width: unset;
+                    }
+                }
+            }
         }
     }
 }

@@ -12,10 +12,10 @@ function searchInput() {
         })
         searchString = searchString.toUpperCase();
         if (searchString.includes(input)) {
-            console.log(searchElement)
-            searchElement.style.display = "contents";
+            searchElement.style.display = searchElement.getAttribute('prevState');
         } else {
-            console.log(searchElement)
+            if (searchElement.getAttribute('prevState') && searchElement.style.display != "none")
+                searchElement.setAttribute('prevState', searchElement.style.display)
             searchElement.style.display = "none";
         }
     });

@@ -1,0 +1,56 @@
+{%extends 'main.html'%}
+
+{%block headerIncludes%}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/editUser.css') }}">
+<script src="{{url_for('static', filename='js/users.js')}}"></script>
+{%endblock%}
+
+{% block body %}
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <div class="titleFirstRow">
+                <h1>{{title}}</h1>
+            </div>
+        </div>
+        <div id="editUserForm">
+            <div><label for="name">Ім'я</label><input id="name" name="name" type="text" value="{{user.name}}"></div>
+            <div><label for="surname">Прізвище</label><input id="surname" name="surname" type="text" value="{{user.surname}}"></div>
+            <div><label for="password">Пароль</label><input id="password" name="password" required="" type="password" value=""></div>
+            <div><label for="email">Пошта</label><input id="email" name="email" required="" type="text" value="{{user.email}}"></div>
+            <div><label for="phone">Телефон</label><input id="phone" name="phone" placeholder="+3800000000" type="text" value="{% if user.phone %}{{user.phone}}{% endif %}"></div>
+            <div>
+                {% if not user.viber%}
+                    <label for="viber">Вайбер</label><input id="viber" name="viber" type="text" value="None">
+                {% else %}
+                    <label for="viber">Вайбер</label><input id="viber" name="viber" type="text" value="{{user.viber}}">
+                {% endif %}
+            </div>
+            <input style="display: none;" id="prevType" value="{{user.userType}}">
+            <div><label for="userType">Тип</label><select id="userType" name="userType">
+                <option value="noChange">Не менять</option>
+                <option value="parent">Батьки</option>
+                <option value="admin">Адмін</option>
+                <option value="child">Учень</option>
+                <option value="teacher">Вчитель</option>
+                <option value="tutor">Репетитор</option>
+                <option value="zavhoz">Завхоз</option>
+                <option value="chef">Кухар</option>
+                <option value="accountant">Бухгалтер</option>
+                <option value="financist">Фінансист</option>
+                <option value="lawyer">Юрист</option>
+                <option value="medic">Медик</option>
+                <option value="psychologist">Психолог</option></select>
+            </div>
+            <button onclick="sendRequest({{user.id}})">Сохранить</button>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block endbody %}
+    <script>
+        function relocateUser(query) {
+            window.location.href = '{{url_for("updateUser")}}'+query;
+        }
+    </script>
+{%endblock%}
