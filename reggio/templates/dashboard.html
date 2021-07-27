@@ -1,6 +1,7 @@
 {% extends 'main.html' %}
 
 {%block headerIncludes%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 {%endblock%}
 
 {% block body %}
@@ -8,15 +9,16 @@
         <div class="titleWrapper">
             <div class="titleFirstRow">
             {% if individuals[0] %}
-                <h1>Ваші індивідуалки за останні 2 тижня</h1>
+                <h1>Ваші індивідуалки за останні 2 тижні</h1>
             {% else %}
-                <h1>У вас не було індивідуалок останні 2 тижня</h1>
+                <h1>У вас не було індивідуалок останні 2 тижні</h1>
             {% endif %}
             </div>
         </div>
         {% if individuals[0] %}
             <div class="tableWrapper" search=true>
                 <div class="firstRow Row">
+                    <div></div>
                     {% if user.userType == 'child' %}
                         <div><p>Вчитель</p></div>
                     {% else %}
@@ -30,15 +32,21 @@
                 </div>
                 {% for individual in individuals %}
                 <div class="Row" searchable=true>
+                    <div class='image'><img src='{{user.avatar}}'></div>
                     {% if user.userType == 'child' %}
-                        <div searchable=true>{{individual.teacherName}}</div>
+                        <div searchable=true class="name">{{individual.teacherName}}</div>
                     {% else %}
-                        <div searchable=true>{{individual.studentName}}</div>
+                        <div searchable=true class="name">{{individual.studentName}}</div>
                     {% endif %}
+                    <div class="mobileOnly fieldDescr">Тема:</div>
                     <div searchable=true>{{individual.topic}}</div>
+                    <div class="mobileOnly fieldDescr">Оцінка:</div>
                     <div searchable=true>{{individual.grade}}</div>
+                    <div class="mobileOnly fieldDescr">Коментар:</div>
                     <div searchable=true>{{individual.comment}}</div>
+                    <div class="mobileOnly fieldDescr">Час:</div>
                     <div searchable=true>{{individual.timeSpent}}</div>
+                    <div class="mobileOnly fieldDescr">Дата уроку:</div>
                     <div searchable=true>{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
                 </div>
                 {%endfor%}

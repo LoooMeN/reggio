@@ -30,14 +30,21 @@
                 <div><p>Дата створення</p></div>
             </div>
             {% for individual in individuals %}
-                <div class="Row" searchable=true>
-                    <div searchable=true >{{individual.studentName}}</div>
-                    <div searchable=true >{{individual.timeSpent}}</div>
-                    <div searchable=true >{{individual.grade}}</div>
-                    <div searchable=true >{{individual.topic}}</div>
-                    <div searchable=true >{{individual.comment}}</div>
-                    <div searchable=true >{{individual.creationDate.strftime('%d . %m . %Y')}}</div>
-                    <div searchable=true >{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
+                <div class="Row" searchable="true">
+                    <div>Учень:</div>
+                    <div searchable="true" class="name" >{{individual.studentName}}</div>
+                    <div class="mobileOnly fieldDescription">Час (хв):</div>
+                    <div searchable="true" >{{individual.timeSpent}}</div>
+                    <div class="mobileOnly fieldDescription">Оцінка:</div>
+                    <div searchable="true" >{{individual.grade}}</div>
+                    <div class="mobileOnly fieldDescription">Тема уроку:</div>
+                    <div searchable="true" >{{individual.topic}}</div>
+                    <div class="mobileOnly fieldDescription">Коментар:</div>
+                    <div searchable="true" >{{individual.comment}}</div>
+                    <div class="mobileOnly fieldDescription">Дата уроку:</div>
+                    <div searchable="true" >{{individual.creationDate.strftime('%d . %m . %Y')}}</div>
+                    <div class="mobileOnly fieldDescription">Дата створення:</div>
+                    <div searchable="true" >{{individual.lessonDate.strftime('%d . %m . %Y')}}</div>
                 </div>
             {%endfor%}
             </div>

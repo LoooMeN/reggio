@@ -42,6 +42,13 @@ class Teacher(db.Model):
     name = db.Column(db.String(120))
     surname = db.Column(db.String(120))
 
+class ChildGroup(db.Model):
+    __tablename__ = 'group'
+    id = db.Column(db.Integer, primary_key=True, unique=True)
+    name = db.Column(db.String(120))
+    children = db.Column(db.String(1028))
+    responsible = db.Column(db.String(120))
+
 class IndividualClass(db.Model):
     __tablename__ = 'individualClass'
     id = db.Column(db.Integer, primary_key=True, unique=True)

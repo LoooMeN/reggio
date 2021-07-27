@@ -61,8 +61,6 @@
         position: relative;
         align-items: center;
         justify-content: center;
-        border-image-source: linear-gradient(to left, #A12FA1, #D2830C);
-        border-image-slice: 1;
         border-width: 5px;
     
         p {
@@ -164,8 +162,6 @@
             background-color: $separation-color;
             border-left: 4px solid;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-            border-image-source: linear-gradient(to bottom, #A12FA1, #D2830C);
-            border-image-slice: 1;
             border-width: 5px;
         }
     
@@ -188,8 +184,6 @@
     .menuItemHovered {
         background-color: $separation-color;
         border-left: 4px solid $outline-color;
-        border-image-source: linear-gradient(to bottom, #A12FA1, #D2830C);
-        border-image-slice: 1;
         border-width: 5px;
 
         .dropdownArrow {
@@ -242,7 +236,7 @@
     flex-direction: column;
     justify-content: flex-start;
     height: 100vh;
-    max-height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     position: absolute;
     transition: all 0.3s;
     align-items: center;
@@ -279,7 +273,6 @@
         .whiteBox {
             position: absolute;
             display: flex;
-            background-color: rgba($color: #C4C4C4, $alpha: 0.7);
             justify-content: center;
             align-items: center;
             bottom: 0;
@@ -338,21 +331,18 @@
 
         div:not(:last-child) {
             border-bottom: 1px solid;
-            border-image-source: linear-gradient(to left, #A12FA1, #D2830C);
-            border-image-slice: 1;
             border-width: 2px;
         }
     }
 
     .saveButton {
-        // padding: 0 20px;
         width: 100%;
         height: 37px;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #000000;
-        background: linear-gradient(90deg, #E88B2A 0%, #A42687 100%);
+        background: #FFFFFF;
         cursor: pointer;
     }
 }
@@ -369,15 +359,22 @@
         box-shadow: none;
         position: absolute;
         width: 100%;
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
     }
     
     .profileBox {
         box-shadow: none;
         margin-right: 0;
+
         width: 100%;
+
     }
-    
+
     .collapsedMenu {
+
         left: -100%;
+
     }
+
 }

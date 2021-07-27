@@ -1,0 +1,98 @@
+{% extends 'main.html' %}
+
+{%block headerIncludes%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/childrenGroupPage.css') }}">
+{%endblock%}
+
+{% block body %}
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <div class="titleFirstRow">
+                <h1>Сторінка групи {{title}}</h1>
+                <div id="saveTrigger" draggable="true">
+                    <p>Зберегти</p>
+                </div>
+            </div>
+        </div>
+        <div class="basicContainer">
+            <div class="groupname">
+                <div>Назва групи:</div>
+                <div class="groupName">{{group.name}}</div>
+            </div>
+            <div class="groupResponsible">
+                {% if teacher %}
+                    <div>Відповідальний: </div>
+                    <div class="teacherName">teacher.name</div>
+                    <div class="teacherPhone">teacher.phone</div>
+                    <a class="teacherViber" href="teacher.viber">
+                        <img class="editIcon" src="{{url_for('static', filename='images/icons/viberIcon.svg')}}">
+                    </a>
+                {% else %}
+                    <div>Немає відповідального</div>
+                {% endif %}
+            </div>
+            <div class="groupChildren">
+                {% if children %}
+                    {% for child in children %}
+                        <div class="child" childUserName="{{child.username}}">{{child.surname}}{{child.name}}</div>
+                    {% endfor %}
+                {% else %}
+                    <p>Ще немає дітей</p>
+                {% endif %}
+            </div>
+            <div class="addChild" groupID='{{group.id}}'>
+                <input autocomplete="off" id="newGroupChild" list="childrenList" type="text">
+                <button class="addchild" onclick="addChild()">Додати дитину</button>
+            </div>
+        </div>
+        <datalist id="childrenList">
+            {% for child in childrenList %}
+                <option value="{{child.username}}">{{child.surname}} {{child.name}}</option>
+            {% endfor %}
+        </datalist>
+        <datalist id="teacherList">
+            {% for teacher in teacherList %}
+                <option value="{{teacher.username}}">{{teacher.surname}} {{teacher.name}}</option>
+            {% endfor %}
+        </datalist>
+    </div>
+    <script>
+        function addChild() {
+            let select = document.querySelector("#newGroupChild");
+            let groupChildren = document.querySelector('.groupChildren');
+            let placeholder = groupChildren.querySelector('p');
+            let list = Array.from(document.querySelector('#childrenList').children);
+            let groupID = document.querySelector('.addChild').getAttribute('groupID')
+
+            if (placeholder) {
+                placeholder.remove()
+            }
+
+            let childName = ""
+            list.forEach((elem) => {
+                if (elem.value == select.value) {
+                    childName = elem.innerText
+                }
+            })
+
+            let existingChildren = Array.from(groupChildren.children);
+            existingChildren.forEach((elem) => {
+                if (elem.getAttribute('childUserName') == select.value) {
+                    select.value = ""
+                    alert("Ця дитина вже у групі");
+                    exit ;
+                }
+            })
+            groupChildren.innerHTML += '<div class="child" childUserName="'+ select.value +'">'+childName+'</div>'
+
+            request = "?childUserName=" + select.value + "&groupID=" + groupID
+            axios.get('{{url_for("addChildGroup")}}' + request)
+            select.value = ""
+        }
+
+        function modalHandler() {
+            let saveTrigger = document.querySelector('#saveTrigger');
+        }
+    </script>
+
+{% endblock %}

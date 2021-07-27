@@ -4,7 +4,6 @@ function bindParent(element) {
     parentNode.querySelector('.relatives').innerHTML += '<input autocomplete="off" id="newParent" list="parentList" type="text">';
     let parentNames = parentNode.querySelectorAll('.parent')
     
-    console.log(parentNames)
     parentNames.forEach(element => {
         element.innerHTML += "<img src='static/images/icons/cross.svg' onclick='removeParent(this)'>"
     })
@@ -21,7 +20,6 @@ function sendRequest() {
     prevParents = '';
     children.forEach(element => {
         prevParents += element.innerHTML + ';';
-        console.log(prevParents);
     });
     query += '&parents='+ prevParents + newParent;
     relocateUser(query);

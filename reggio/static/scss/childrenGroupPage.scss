@@ -1,0 +1,48 @@
+#saveTrigger {
+    height: 100%;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px 20px;
+
+    &:hover {
+        color: red;
+        border-color: red;
+    }
+}
+
+.contentMainBody {
+    .mainItem {
+        .basicContainer {
+
+            & > div {
+                border-bottom: 1px solid black;
+                margin-bottom: 20px;
+            }
+
+            .groupname {
+                display: flex;
+                
+                div:first-child {
+                    margin-right: 10px;
+                }
+
+                .groupName {
+                    font-weight: bold;
+                }
+            }
+
+            .groupResponsible {
+                display: flex;
+
+                div {
+                    margin-right: 10px;
+                }
+
+                img {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+
+{%block headerIncludes%}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/childGroups.css') }}">
+{%endblock%}
+
+{% block body %}
+    <div class="mainItem">
+        <div class="titleWrapper">
+            <div class="titleFirstRow">
+                <h1>{{title}}</h1>
+                <div id="modalTrigger" draggable="true">
+                    <p>Додати</p>
+                </div>
+            </div>
+            <div class="searchWrapper">
+                <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
+                <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
+            </div>
+        </div>
+        <div class="tableWrapper" search=true>
+            <div class="firstRow Row">
+                <div><p>Назва</p></div>
+                <div><p>Учні</p></div>
+                <div><p></p></div>
+            </div>
+            {% for group in groups %}
+                <div class="Row" searchable=true>
+                    <div searchable=true class='name text'>{{group.name}}</div>
+                    <div searchable=true class='name text'>{{group.children}}</div>
+                    <div class="mobileOnly fieldDescr">Телефон:</div>
+                    <div class="actions">
+                        <a class="deleteIcon" href="{{url_for('childGroupPage')}}?groupID={{group.id}}">
+                            <img class="editIcon" src="{{url_for('static', filename='images/icons/outerLink.svg')}}">
+                        </a>
+                        <a class="deleteIcon" href="{{url_for('deleteChildGroup')}}?groupID={{group.id}}">
+                            <img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="sideItemWrapper" id='sideItemModal'>
+        <div class="sideItem">
+            <div class="sideItemTitle">
+                <h3>Додати нову групу</h3>
+                <img id='closeModal' src="{{url_for('static', filename='images/icons/plus.svg')}}" alt="avatar preview">
+            </div>
+            <div class="formWrapper">
+                <form method='GET' action="{{url_for('createChildGroup')}}">
+                    <div>
+                        <label for="groupName">Назва</label>
+                        <input type="text" required name="groupName">
+                    </div>
+                    <button>ДОДАТИ</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        modalHandler()
+    </script>
+{% endblock %}

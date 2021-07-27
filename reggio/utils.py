@@ -78,22 +78,19 @@ def defineMenu():
     menu = [(u"Головна", "main", 'peopleIcon')]
     if current_user.userType == 'admin':
         menu.extend([
-            (u"Користувачі", "users", 'peopleIcon'),
-            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses"}, 'peopleIcon')
+            (u"Адмін", {u"Індивідуалки": "adminIndividualClasses", u"Групи": "childrenGroups", u"Користувачі": "users"}, 'peopleIcon'),
         ])
     elif current_user.userType == 'superAdmin':
         menu.extend([
-            (u"Користувачі", "users", 'peopleIcon'),
             (u"Учні", "children", 'peopleIcon'),
-            (u"Вчителі", {u"Список": "teachers", u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
-            (u"Уроки", {u"Индивидуалки": "adminIndividualClasses", }, 'peopleIcon'),
+            (u"Вчителі", {u"Список": "teachers", u"Індивідуалки": "teachersIndividualClasses"}, 'peopleIcon'),
+            (u"Адмін", {u"Індивідуалки": "adminIndividualClasses", u"Групи": "childrenGroups", u"Користувачі": "users", "resetDB": "resetDB"}, 'peopleIcon'),
             (u"Батьки", {u"Список": "parent"}, 'peopleIcon'),
             # (u"Налаштування", {u"Кольори": "color"}, 'peopleIcon'),
-            # ("resetDB", "resetDB", 'peopleIcon')
         ])
     elif current_user.userType == 'teacher':
         menu.extend([
-            (u"Вчителі", {u"Индивидуалки": "teachersIndividualClasses"}, 'peopleIcon'),
+            (u"Вчителі", {u"Індивідуалки": "teachersIndividualClasses"}, 'peopleIcon'),
         ])
     elif current_user.userType == 'parent':
         menu.append((u"Батьки", {u"Список": "parent"}, 'peopleIcon'))

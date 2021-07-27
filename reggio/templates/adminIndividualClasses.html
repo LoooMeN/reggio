@@ -12,10 +12,6 @@
                 <h1>Індивідуалки</h1>
             </div>
             <div class="filtersWrapper">
-                <div class="searchWrapper">
-                    <img src="{{url_for('static', filename='images/icons/searchIcon.svg')}}">
-                    <input type="text" id="searchInput" onkeyup="searchInput()" placeholder="Пошук">
-                </div>
                 <form method="POST">
                     {{ form.hidden_tag() }}
                     <img src="{{url_for('static', filename='images/icons/filter.svg')}}">
@@ -44,26 +40,33 @@
         <div class="tableWrapper" search=true>
             <div class="firstRow Row">
                 <div><input type="checkbox" id="checkAll"></div>
-                <div><p>Створено</p></div>
-                <div><p>Вчитель</p></div>
                 <div><p>Студент</p></div>
+                <div><p>Вчитель</p></div>
                 <div><p>Час (хв)</p></div>
                 <div><p>Оцінка</p></div>
                 <div><p>Тема</p></div>
                 <div><p>Коментар</p></div>
+                <div><p>Створено</p></div>
                 <div><p>Дата уроку</p></div>
                 <div></div>
             </div>
             {% for individualClass in individualClasses %}
                 <div class="Row" searchable=true>
                     <div><input type="checkbox" classid={{individualClass.id}} class='rowSelect'></div>
-                    <div searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</div>
+                    <div searchable=true class="name">{{individualClass.studentName}}</div>
+                    <div class="mobileOnly fieldDescription">Вчитель:</div>
                     <div searchable=true>{{individualClass.teacherName}}</div>
-                    <div searchable=true>{{individualClass.studentName}}</div>
+                    <div class="mobileOnly fieldDescription">Час (хв):</div>
                     <div searchable=true>{{individualClass.timeSpent}}</div>
+                    <div class="mobileOnly fieldDescription">Оцінка:</div>
                     <div searchable=true>{{individualClass.grade}}</div>
+                    <div class="mobileOnly fieldDescription">Тема:</div>
                     <div searchable=true>{{individualClass.topic}}</div>
+                    <div class="mobileOnly fieldDescription">Коментар:</div>
                     <div searchable=true>{{individualClass.comment}}</div>
+                    <div class="mobileOnly fieldDescription">Створено:</div>
+                    <div searchable=true>{{individualClass.creationDate.strftime('%d . %m . %Y')}}</div>
+                    <div class="mobileOnly fieldDescription">Дата уроку:</div>
                     <div searchable=true>{{individualClass.lessonDate.strftime('%d . %m . %Y')}}</div>
                     <div class="actions"><a href="{{url_for('deleteIndividualClasses')}}?ids={{individualClass.id}}&reload=1"><img src="{{url_for('static', filename='images/icons/deleteIcon.svg')}}"></a></div>
                 </div>
@@ -71,11 +74,12 @@
         </div>
         <div class="bottomButtons">
             <button onclick='deleteIndividuals()'>Видалити вибране</button>
-            <button onclick='decheckCheckState()'>Зкинути</button>
+            <button onclick='decheckCheckState()'>Скинути</button>
             <div>
                 <label for="preferredFilename">Ім'я для файла</label>
                 <input type="text" name="preferredFilename" id="preferredFilename">
             </div>
             <button id="downloadButton" onclick="downloadIndividuals()">Завантажити вибране</button>
         </div>
+        <div id="bonusOffset" value=".bottomButtons"></div>
 {% endblock %}

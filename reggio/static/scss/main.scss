@@ -9,6 +9,11 @@
 
 @import "variables.scss";
 
+html {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -104,6 +109,7 @@ body {
 
 .contentMainBody {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     overflow: hidden;
     box-sizing: border-box;
@@ -344,7 +350,7 @@ body {
                 }
 
                 .cellExpanded {
-                    max-height: 400px;
+                    max-height: 800px;
                     height: unset;
                     overflow-x: visible;
                     overflow: visible;
@@ -352,15 +358,21 @@ body {
                     & > div {
                         &:nth-child(1) {
                             width: 10%;
+                            background-color: #f3f3f3;
                         }
 
                         &:nth-child(2) {
                             width: 90%;
+                            background-color: #f3f3f3;
                         }
 
                         &:nth-child(n+4) {
                             width: 70%;
                         }
+                    }
+
+                    .actions {
+                        width: 100% !important;
                     }
                 }
 

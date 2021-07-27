@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <title>Login</title>
 </head>
@@ -37,6 +38,16 @@
             }, 800);
         })
     }
+
+    function fixMobileHeight() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fixMobileHeight();
+        window.addEventListener('resize', fixMobileHeight)
+    })
 </script>
 
 </html>

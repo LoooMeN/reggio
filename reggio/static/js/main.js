@@ -68,10 +68,18 @@ function triggerProfile() {
 
 function optimizeTableHeight() {
     let tableWrapper = document.querySelector('.tableWrapper');
-    let offset = document.querySelector('.titleWrapper').clientHeight;
 
-    if (tableWrapper)
-        tableWrapper.style.height = window.screen.height - offset - 20 + "px";
+    if (tableWrapper) {
+        let offset = document.querySelector('.titleWrapper').scrollHeight + 50;
+        let bonusOffset = document.querySelector('#bonusOffset');
+        
+        if (bonusOffset) {
+            offset += document.querySelector(bonusOffset.getAttribute('value')).scrollHeight;
+        }
+
+        if (tableWrapper)
+            tableWrapper.style.height = window.innerHeight - offset - 20 + "px";
+    }
 }
 
 function tableCellExpandTrigger() {
@@ -88,12 +96,19 @@ function tableCellExpandTrigger() {
     }
 }
 
+function fixMobileHeight() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     handleCollapsedMenuItems();
     handleErrors();
     handleCollapseTablet();
     optimizeTableHeight();
     tableCellExpandTrigger();
+    fixMobileHeight();
+    window.addEventListener('resize', fixMobileHeight)
 })
 
 function previewFileChangeAvatar() {
